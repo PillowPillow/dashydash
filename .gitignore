@@ -2,3 +2,4 @@
 /**/.sublime*
 /**/config.*.json
 /src/**/*.js
+/node_modules
