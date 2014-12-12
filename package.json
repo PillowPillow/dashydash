@@ -1,0 +1,25 @@
+{
+	"name": "Gridstack",
+	"version": "0.1.0",
+	"description": "",
+	"keywords": [
+		"Gridstack",
+		"Grid",
+		"Stack"
+	],
+	"author": "Polochon,Jul13nt",
+	"license": "ISC",
+	"directories": {
+		"dist": "dist"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://gitlab.pillowrc.com:pillowteam/gridstack.git"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"time-grunt": "^1.0.0",
+		"grunt-6to5": "^1.0.0",
+		"grunt-add-comment": "^1.0.1"
+	}
+}
