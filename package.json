@@ -1,14 +1,16 @@
 {
 	"name": "Gridstack",
-	"version": "0.1.0",
+	"version": "0.0.1",
 	"description": "",
 	"keywords": [
 		"Gridstack",
 		"Grid",
-		"Stack"
+		"Stack",
+		"dashboard",
+		"angular"
 	],
-	"author": "Polochon,Jul13nt",
-	"license": "ISC",
+	"author": "Gaignoux Nicolas",
+	"license": "MIT",
 	"directories": {
 		"dist": "dist"
 	},
@@ -16,10 +18,5 @@
 		"type": "git",
 		"url": "git://gitlab.pillowrc.com:pillowteam/gridstack.git"
 	},
-	"devDependencies": {
-		"grunt": "^0.4.5",
-		"time-grunt": "^1.0.0",
-		"grunt-6to5": "^1.0.0",
-		"grunt-add-comment": "^1.0.1"
-	}
+	"devDependencies": {}
 }
