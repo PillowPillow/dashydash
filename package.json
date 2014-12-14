@@ -24,6 +24,7 @@
     "time-grunt": "^1.0.0"
   },
   "dependencies": {
-    "6to5": "^1.15.0"
+    "6to5": "^1.15.0",
+    "grunt-html2js": "^0.2.9"
   }
 }
