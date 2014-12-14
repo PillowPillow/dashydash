@@ -1,20 +1,28 @@
 {
-	"name": "Gridstack",
-	"version": "0.0.0",
-	"description": "",
-	"keywords": [
-		"angular",
-		"grid",
-		"dashboard"
-	],
-	"author": "Gaignoux Nicolas",
-	"license": "MIT",
-	"directories": {
-		"dist": "dist"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git://gitlab.pillowrc.com:pillowteam/gridstack.git"
-	},
-	"devDependencies": {}
+  "name": "Gridstack",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [
+    "angular",
+    "grid",
+    "dashboard"
+  ],
+  "author": "Gaignoux Nicolas",
+  "license": "MIT",
+  "directories": {
+    "dist": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://gitlab.pillowrc.com:pillowteam/gridstack.git"
+  },
+  "devDependencies": {
+    "grunt-6to5": "^1.0.1",
+    "grunt": "^0.4.5",
+    "grunt-add-comment": "^1.1.5",
+    "johto-require": "^0.1.1"
+  },
+  "dependencies": {
+    "6to5": "^1.15.0"
+  }
 }
