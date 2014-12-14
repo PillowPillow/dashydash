@@ -1,0 +1,15 @@
+.*.swp
+._*
+.DS_Store
+.git
+.gitignore
+.hg
+.lock-wscript
+.svn
+.wafpickle-*
+CVS
+npm-debug.log
+/examples
+/lib/**/*.es6
+/node_modules
+/bower_components
