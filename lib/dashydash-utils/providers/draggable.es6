@@ -102,7 +102,7 @@ angular.module('Dashydash-utils')
 				}
 
 				get container() {
-					return angular.element(this._container);
+					return angular.element($document[0].querySelector(this._container));
 				}
 				set container(value = 'body') {
 					this._container = value;
