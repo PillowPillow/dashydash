@@ -98,6 +98,7 @@ function Grunt(grunt) {
 	grunt.initConfig(Configuration);
 
 	grunt.registerTask('es6', ['6to5:dist', 'johto_require:6to5', 'add_comment']);
+	grunt.registerTask('dev', ['es6', 'html2js']);
 }
 
 module.exports = Grunt;
