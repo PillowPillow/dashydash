@@ -1,8 +1,8 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.draggable', function() {
 
-		this.$get = ['$document', '$timeout', '$window', 'DRAGGABLE_EXCLUDED_ELEMENTS', 
-			($document, $timeout, $window, DRAGGABLE_EXCLUDED_ELEMENTS) => {
+		this.$get = ['$document', '$timeout', 'DRAGGABLE_EXCLUDED_ELEMENTS', 
+			($document, $timeout, DRAGGABLE_EXCLUDED_ELEMENTS) => {
 
 			class Draggable {
 
@@ -18,7 +18,7 @@ angular.module('Dashydash-utils')
 					this.min = { left:0,top:0 };
 					this.max = { left:9999,top:9999 };
 
-					this.documentNode = $document[0];
+					this.document = $document[0];
 
 					this.ondragStart = ondragStart;
 					this.ondragStop = ondragStop;
@@ -56,11 +56,16 @@ angular.module('Dashydash-utils')
 						event.stopPropagation();
 					};
 					this.$$mouseMove = (event) => {
+
+						if(this._isMoved(event))
+							return false;
+
 						this.max.left = this._getContainerWidth() - 1;
+
 						this._updateMousePosition(event);
 
 						var diff = {};
-						diff.x = this.mouse.current.x - this.mouse.last.x + this.offset.x,
+						diff.x = this.mouse.current.x - this.mouse.last.x + this.offset.x;
 						diff.y = this.mouse.current.y - this.mouse.last.y + this.offset.y;
 
 						this.offset.x = this.offset.y = 0;
@@ -102,16 +107,16 @@ angular.module('Dashydash-utils')
 				}
 
 				get container() {
-					return angular.element($document[0].querySelector(this._container));
+					return angular.element(this.document.querySelector(this._container));
 				}
-				set container(value = 'body') {
+				set container(value) {
 					this._container = value;
 				}
 
 				get handle() {
 					return this._handle !== '' ? angular.element(this.element[0].querySelector(this._handle)) : this.element;
 				}
-				set handle(value = '') {
+				set handle(value) {
 					//disable the handler modification if the draggable is currently enabled
 					this._handle = this.enabled ? this._handle : value;
 				}
@@ -159,6 +164,11 @@ angular.module('Dashydash-utils')
 				_getContainerWidth() {
 					return parseInt(this.container.css('width'), 10);
 				}
+
+				_isMoved(event) {
+					return event.pageX === this.mouse.last.x || event.pageY === this.mouse.last.y;
+				}
+
 
 				enable() {
 					$timeout(() => {
