@@ -3,6 +3,7 @@ angular.module('Dashydash-utils')
 		return {
 			scope: {},
 			restrict: 'EAC',
+			controllerAs: 'ddDraggable',
 			controller: ['Dashydash-utils.providers.draggable', 
 			function(DraggableProvider) {
 
