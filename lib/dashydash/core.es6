@@ -1,1 +1,1 @@
-angular.module('Dashydash', ['Dashydash-templates']);
+angular.module('Dashydash', ['Dashydash-templates', 'Dashydash-utils']);
