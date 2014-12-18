@@ -25,12 +25,17 @@
 	<body ng-app="app">
 
 		<!-- content -->
-		hello
-		<dd-grid></dd-grid>
+		<dd-grid>
+			<dd-item>Hello world</dd-item>
+		</dd-grid>
+
+		<section dd-draggable style="position:absolute;">Hello hello</section>
 		<!-- content -->
 
 		<!-- scripts -->
 			<!-- libraries -->
+			<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+			<script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
 			<script src="../bower_components/angular/angular.min.js"></script>
 			<script src="../bower_components/angular/dist/draggabilly.pkgd.min.js"></script>
 			<!-- libraries -->
@@ -39,6 +44,12 @@
 			<script src="../lib/dashydash/directives/ddGrid.js"></script>
 
 			<script src="../lib/dashydash-templates/core.js"></script>
+
+			<script src="../lib/dashydash-utils/core.js"></script>
+			<script src="../lib/dashydash-utils/constants/draggable.js"></script>
+			<script src="../lib/dashydash-utils/services/utils.js"></script>
+			<script src="../lib/dashydash-utils/providers/draggable.js"></script>
+			<script src="../lib/dashydash-utils/directives/ddDraggable.js"></script>
 			<!-- src -->
 			<!-- dist -->
 			<!-- <script src="../dist/dashydash.min.js"></script> -->
