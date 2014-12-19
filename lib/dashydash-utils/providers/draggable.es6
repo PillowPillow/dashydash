@@ -41,6 +41,7 @@ angular.module('Dashydash-utils')
 						if(~DRAGGABLE_EXCLUDED_ELEMENTS.indexOf(event.target.nodeName.toLowerCase()) || event.which !== 1)
 							return false;
 
+						this._updateMousePosition(event);
 						this._updateLastMousePosition();
 						this._updatePosition();
 						this._updateSize();
@@ -64,38 +65,16 @@ angular.module('Dashydash-utils')
 
 						this._updateMousePosition(event);
 
-						var diff = {};
-						diff.x = this.mouse.current.x - this.mouse.last.x + this.offset.x;
-						diff.y = this.mouse.current.y - this.mouse.last.y + this.offset.y;
+						var pxMoved = this._getPixelMoved();
 
 						this.offset.x = this.offset.y = 0;
 
 						this._updateLastMousePosition();
 
-						var dX = diff.x,
-							dY = diff.y;
-						if (this.position.x + dX < this.min.left) {
-							diff.x = this.min.left - this.position.x;
-							this.offset.x = dX - diff.x;
-						}
-						else
-						if (this.position.x + this.size.width + dX > this.max.left) {
-							diff.x = this.max.left - this.position.x - this.size.width;
-							this.offset.x = dX - diff.x;
-						}
+						this._fixLeftBoundary(pxMoved);
+						this._fixTopBoundary(pxMoved);
 
-						if (this.position.y + dY < this.min.top) {
-							diff.y = this.min.top - this.position.y;
-							this.offset.y = dY - diff.y;
-						}
-						else
-						if (this.position.y + this.size.height + dY > this.max.top) {
-							diff.y = this.max.top - this.position.y - this.size.height;
-							this.offset.y = dY - diff.y;
-						}
-
-						this.position.x += diff.x;
-						this.position.y += diff.y;
+						this._movePosition(pxMoved);
 
 						this._updatePositionStyle();
 
@@ -145,6 +124,12 @@ angular.module('Dashydash-utils')
 				_updatePosition() {
 					this.position.x = this.posX;
 					this.position.y = this.posY;
+					console.log(this.position)
+				}
+
+				_movePosition(position = {x:0,y:0}) {
+					this.position.x += position.x;
+					this.position.y += position.y;
 				}
 
 				_updateMousePosition(event) {
@@ -162,13 +147,49 @@ angular.module('Dashydash-utils')
 				}
 
 				_getContainerWidth() {
-					return parseInt(this.container.css('width'), 10);
+					return this.container[0].offsetWidth;
 				}
 
 				_isMoved(event) {
 					return event.pageX === this.mouse.last.x || event.pageY === this.mouse.last.y;
 				}
 
+				_getPixelMoved() {
+					var x = this.mouse.current.x - this.mouse.last.x + this.offset.x,
+						y = this.mouse.current.y - this.mouse.last.y + this.offset.y;
+
+					return {x,y};
+				}
+
+				_fixLeftBoundary(pxMoved) {
+
+					var dX = pxMoved.x;
+
+					if (this.position.x + dX < this.min.left) {
+						pxMoved.x = this.min.left - this.position.x;
+						this.offset.x = dX - pxMoved.x;
+					}
+					else
+						if (this.position.x + this.size.width + dX > this.max.left) {
+							pxMoved.x = this.max.left - this.position.x - this.size.width;
+							this.offset.x = dX - pxMoved.x;
+						}
+				}
+
+				_fixTopBoundary(pxMoved) {
+
+					var dY = pxMoved.y;
+
+					if (this.position.y + dY < this.min.top) {
+						pxMoved.y = this.min.top - this.position.y;
+						this.offset.y = dY - pxMoved.y;
+					}
+					else
+						if (this.position.y + this.size.height + dY > this.max.top) {
+							pxMoved.y = this.max.top - this.position.y - this.size.height;
+							this.offset.y = dY - pxMoved.y;
+						}
+				}
 
 				enable() {
 					$timeout(() => {
