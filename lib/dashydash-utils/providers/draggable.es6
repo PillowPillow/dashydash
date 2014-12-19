@@ -51,14 +51,12 @@ angular.module('Dashydash-utils')
 						$document.on('mousemove', this.$$mouseMove);
 						$document.on('mouseup', this.$$mouseUp);
 
-						this.ondragStart(event);
-
 						event.preventDefault();
 						event.stopPropagation();
 					};
 					this.$$mouseMove = (event) => {
 
-						if(this._isMoved(event))
+						if(!this._isMoved(event))
 							return false;
 
 						this.max.left = this._getContainerWidth() - 1;
@@ -124,7 +122,6 @@ angular.module('Dashydash-utils')
 				_updatePosition() {
 					this.position.x = this.posX;
 					this.position.y = this.posY;
-					console.log(this.position)
 				}
 
 				_movePosition(position = {x:0,y:0}) {
@@ -151,7 +148,7 @@ angular.module('Dashydash-utils')
 				}
 
 				_isMoved(event) {
-					return event.pageX === this.mouse.last.x || event.pageY === this.mouse.last.y;
+					return event.pageX !== this.mouse.last.x || event.pageY !== this.mouse.last.y;
 				}
 
 				_getPixelMoved() {
