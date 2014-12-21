@@ -6,7 +6,7 @@ angular.module('Dashydash-utils')
 
 			class Draggable {
 
-				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, scrollSensitivity = 20, scrollSpeed = 20) {
+				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w','ne','nw','se','sw'], scrollSensitivity = 20, scrollSpeed = 20) {
 
 					this.element = $node;
 
@@ -29,6 +29,8 @@ angular.module('Dashydash-utils')
 
 					this.scrollSensitivity = scrollSensitivity,
 					this.scrollSpeed = scrollSpeed;
+
+					this.allowedDirections = directions;
 
 					this.enabled = false;
 
@@ -72,8 +74,8 @@ angular.module('Dashydash-utils')
 
 						this._updateLastMousePosition();
 
-						this._fixLeftBoundary(pxMoved);
-						this._fixTopBoundary(pxMoved);
+						this._fixLeftRightBoundaries(pxMoved);
+						this._fixTopBottomBoundaries(pxMoved);
 
 						this._movePosition(pxMoved);
 
@@ -129,8 +131,50 @@ angular.module('Dashydash-utils')
 				}
 
 				_movePosition(position = {x:0,y:0}) {
-					this.position.x += position.x;
-					this.position.y += position.y;
+
+					if(this._isAllowedToMoveTowardTop(position) && this._isMovedTowardTop(position))
+						this.position.y += position.y;
+					else
+					if(this._isAllowedToMoveTowardBottom(position) && this._isMovedTowardBottom(position))
+						this.position.y += position.y;
+
+					if(this._isAllowedToMoveTowardLeft(position) && this._isMovedTowardLeft(position))
+						this.position.x += position.x;
+					else
+					if(this._isAllowedToMoveTowardRight(position) && this._isMovedTowardRight(position))
+						this.position.x += position.x;
+				}
+
+				_isAllowedToMoveTowardTop() {
+					return !!~this.allowedDirections.indexOf('n') || !!~this.allowedDirections.indexOf('ne') ||!!~this.allowedDirections.indexOf('nw');
+				}
+
+				_isAllowedToMoveTowardBottom() {
+					return !!~this.allowedDirections.indexOf('s') || !!~this.allowedDirections.indexOf('se') || !!~this.allowedDirections.indexOf('sw');
+				}
+
+				_isAllowedToMoveTowardRight() {
+					return !!~this.allowedDirections.indexOf('e') || !!~this.allowedDirections.indexOf('ne') ||!!~this.allowedDirections.indexOf('se');
+				}
+
+				_isAllowedToMoveTowardLeft() {
+					return !!~this.allowedDirections.indexOf('w') || !!~this.allowedDirections.indexOf('nw') ||!!~this.allowedDirections.indexOf('sw');
+				}
+
+				_isMovedTowardTop(pxMoved) {
+					return pxMoved.y < 0;
+				}
+
+				_isMovedTowardBottom(pxMoved) {
+					return pxMoved.y > 0;
+				}
+
+				_isMovedTowardLeft(pxMoved) {
+					return pxMoved.x < 0;
+				}
+
+				_isMovedTowardRight(pxMoved) {
+					return pxMoved.x > 0;
 				}
 
 				_updateMousePosition(event) {
@@ -162,7 +206,7 @@ angular.module('Dashydash-utils')
 					return {x,y};
 				}
 
-				_fixLeftBoundary(pxMoved) {
+				_fixLeftRightBoundaries(pxMoved) {
 
 					var dX = pxMoved.x;
 
@@ -171,13 +215,13 @@ angular.module('Dashydash-utils')
 						this.offset.x = dX - pxMoved.x;
 					}
 					else
-						if (this.position.x + this.size.width + dX > this.max.left) {
-							pxMoved.x = this.max.left - this.position.x - this.size.width;
-							this.offset.x = dX - pxMoved.x;
-						}
+					if (this.position.x + this.size.width + dX > this.max.left) {
+						pxMoved.x = this.max.left - this.position.x - this.size.width;
+						this.offset.x = dX - pxMoved.x;
+					}
 				}
 
-				_fixTopBoundary(pxMoved) {
+				_fixTopBottomBoundaries(pxMoved) {
 
 					var dY = pxMoved.y;
 
@@ -186,10 +230,10 @@ angular.module('Dashydash-utils')
 						this.offset.y = dY - pxMoved.y;
 					}
 					else
-						if (this.position.y + this.size.height + dY > this.max.top) {
-							pxMoved.y = this.max.top - this.position.y - this.size.height;
-							this.offset.y = dY - pxMoved.y;
-						}
+					if (this.position.y + this.size.height + dY > this.max.top) {
+						pxMoved.y = this.max.top - this.position.y - this.size.height;
+						this.offset.y = dY - pxMoved.y;
+					}
 				}
 
 				_isLeftClicked(event) {
