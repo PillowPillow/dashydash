@@ -40,7 +40,7 @@ angular.module('Dashydash-utils')
 
 						this.offset.x = this.offset.y = 0;
 
-						this.ondragStop(event);
+						this.ondragStop(event, this);
 					};
 					this.$$mouseDown = (event) => {
 						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
@@ -51,7 +51,7 @@ angular.module('Dashydash-utils')
 						this._updatePosition();
 						this._updateSize();
 
-						this.ondragStart(event);
+						this.ondragStart(event, this);
 
 						$document.on('mousemove', this.$$mouseMove);
 						$document.on('mouseup', this.$$mouseUp);
@@ -82,7 +82,7 @@ angular.module('Dashydash-utils')
 						this._updatePositionStyle();
 
 						this._scroll(event);
-						this.ondrag(event);
+						this.ondrag(event, this, pxMoved);
 
 						event.stopPropagation();
 						event.preventDefault();
