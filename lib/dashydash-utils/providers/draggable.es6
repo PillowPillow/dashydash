@@ -6,7 +6,7 @@ angular.module('Dashydash-utils')
 
 			class Draggable {
 
-				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = ['ne','nw','se','sw'], scrollSensitivity = 20, scrollSpeed = 20) {
+				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = [], scrollSensitivity = 20, scrollSpeed = 20) {
 
 					this.element = $node;
 
@@ -78,6 +78,9 @@ angular.module('Dashydash-utils')
 						this._fixLeftRightBoundaries(pxMoved);
 						this._fixTopBottomBoundaries(pxMoved);
 
+						if(this._isRestrictedToMoveDiagonaly(pxMoved))
+							this._applyDiagonalRestrictions(pxMoved);
+
 						this._movePosition(pxMoved);
 
 						this._updatePositionStyle();
@@ -101,7 +104,7 @@ angular.module('Dashydash-utils')
 					return this._handle !== '' ? angular.element(this.element[0].querySelector(this._handle)) : this.element;
 				}
 				set handle(value) {
-					//disable the handler modification if the draggable is currently enabled
+					//disables the handler modification if the draggable is currently enabled
 					this._handle = this.enabled ? this._handle : value;
 				}
 
@@ -146,24 +149,82 @@ angular.module('Dashydash-utils')
 						this.position.x += position.x;
 				}
 
+				_applyDiagonalRestrictions(position = {x:0,y:0}) {
+
+					var currentPosition = {x:position.x, y:position.y};
+
+					var valAbs = Math.abs(position.y);
+					if(this._isAllowedToMoveTowardTopRight(currentPosition) && this._isMovedTowardTopRight(currentPosition)) {
+						position.x = position.y = valAbs;
+						position.y *= -1;
+					}
+					else
+					if(this._isAllowedToMoveTowardTopLeft(currentPosition) && this._isMovedTowardTopLeft(currentPosition))
+						position.x = position.y = valAbs *= -1;
+					else
+					if(this._isAllowedToMoveTowardBottomLeft(currentPosition) && this._isMovedTowardBottomLeft(currentPosition)) {
+						position.x = position.y = valAbs;
+						position.x *= -1;
+					}
+					else
+					if(this._isAllowedToMoveTowardBottomRight(currentPosition) && this._isMovedTowardBottomRight(currentPosition))
+						position.x = position.y = valAbs;
+					else
+						position.x = position.y = 0;
+
+
+				}
+
 				_isRestrictedToMoveDiagonaly() {
-					return !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('nw') || !!~this.allowedDirections.indexOf('se') || !!~this.allowedDirections.indexOf('sw');
+					return !!~this.diagonalRestrictions.indexOf('ne') || !!~this.diagonalRestrictions.indexOf('nw') || !!~this.diagonalRestrictions.indexOf('se') || !!~this.diagonalRestrictions.indexOf('sw');
+				}
+
+				_isMovedTowardTopLeft(position) {
+					return this._isMovedTowardTop(position) && this._isMovedTowardLeft(position);
+				}
+
+				_isMovedTowardTopRight(position) {
+					return this._isMovedTowardTop(position) && this._isMovedTowardRight(position);
+				}
+
+				_isMovedTowardBottomLeft(position) {
+					return this._isMovedTowardBottom(position) && this._isMovedTowardLeft(position);
+				}
+
+				_isMovedTowardBottomRight(position) {
+					return this._isMovedTowardBottom(position) && this._isMovedTowardRight(position);
 				}
 
 				_isAllowedToMoveTowardTop() {
-					return !!~this.allowedDirections.indexOf('n') || !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('nw');
+					return !!~this.allowedDirections.indexOf('n');
 				}
 
 				_isAllowedToMoveTowardBottom() {
-					return !!~this.allowedDirections.indexOf('s') || !!~this.allowedDirections.indexOf('se') || !!~this.allowedDirections.indexOf('sw');
+					return !!~this.allowedDirections.indexOf('s');
 				}
 
 				_isAllowedToMoveTowardRight() {
-					return !!~this.allowedDirections.indexOf('e') || !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('se');
+					return !!~this.allowedDirections.indexOf('e');
 				}
 
 				_isAllowedToMoveTowardLeft() {
-					return !!~this.allowedDirections.indexOf('w') || !!~this.allowedDirections.indexOf('nw') || !!~this.allowedDirections.indexOf('sw');
+					return !!~this.allowedDirections.indexOf('w');
+				}
+
+				_isAllowedToMoveTowardTopLeft() {
+					return !!~this.diagonalRestrictions.indexOf('ne');
+				}
+
+				_isAllowedToMoveTowardBottomLeft() {
+					return !!~this.diagonalRestrictions.indexOf('se');
+				}
+
+				_isAllowedToMoveTowardTopRight() {
+					return !!~this.diagonalRestrictions.indexOf('nw');
+				}
+
+				_isAllowedToMoveTowardBottomRight() {
+					return !!~this.diagonalRestrictions.indexOf('sw');
 				}
 
 				_isMovedTowardTop(pxMoved) {
