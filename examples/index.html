@@ -16,6 +16,16 @@
 
 	<!-- design -->
 		<!-- styles -->
+		<link rel="stylesheet" href="../styles/dashydash.css">
+		<link rel="stylesheet" href="../styles/dragdash.css">
+		<style>
+			.test-block {
+				border: 1px solid black;
+				width: 90px;
+				height: 90px;
+				display: block;
+			}
+		</style>
 		<!-- styles -->
 		<!-- fonts -->
 		<!-- fonts -->
@@ -26,10 +36,10 @@
 
 		<!-- content -->
 		<dd-grid>
-			<dd-item>Hello world</dd-item>
+			<dd-item dd-draggable class="test-block">Hello world</dd-item>
 		</dd-grid>
 
-		<section dd-draggable style="position:absolute;border:1px solid black;width:90px;height:30px;display:block;top:30px;left:30px;">Hello hello</section>
+		<section dd-draggable class="test-block">Hello hello</section>
 		<!-- content -->
 
 		<!-- scripts -->
