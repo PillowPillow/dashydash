@@ -5,3 +5,4 @@ npm-debug.log
 /**/.sublime*
 /dist
 /lib/**/*.js
+.sass-cache/513a2b9cdd7ba4e1f3df0b3d3ad1003e929d58dd/core.scssc
