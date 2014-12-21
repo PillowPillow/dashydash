@@ -6,7 +6,7 @@ angular.module('Dashydash-utils')
 
 			class Draggable {
 
-				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w','ne','nw','se','sw'], scrollSensitivity = 20, scrollSpeed = 20) {
+				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = ['ne','nw','se','sw'], scrollSensitivity = 20, scrollSpeed = 20) {
 
 					this.element = $node;
 
@@ -31,6 +31,7 @@ angular.module('Dashydash-utils')
 					this.scrollSpeed = scrollSpeed;
 
 					this.allowedDirections = directions;
+					this.diagonalRestrictions = diagonalRestrictions;
 
 					this.enabled = false;
 
@@ -145,8 +146,12 @@ angular.module('Dashydash-utils')
 						this.position.x += position.x;
 				}
 
+				_isRestrictedToMoveDiagonaly() {
+					return !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('nw') || !!~this.allowedDirections.indexOf('se') || !!~this.allowedDirections.indexOf('sw');
+				}
+
 				_isAllowedToMoveTowardTop() {
-					return !!~this.allowedDirections.indexOf('n') || !!~this.allowedDirections.indexOf('ne') ||!!~this.allowedDirections.indexOf('nw');
+					return !!~this.allowedDirections.indexOf('n') || !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('nw');
 				}
 
 				_isAllowedToMoveTowardBottom() {
@@ -154,11 +159,11 @@ angular.module('Dashydash-utils')
 				}
 
 				_isAllowedToMoveTowardRight() {
-					return !!~this.allowedDirections.indexOf('e') || !!~this.allowedDirections.indexOf('ne') ||!!~this.allowedDirections.indexOf('se');
+					return !!~this.allowedDirections.indexOf('e') || !!~this.allowedDirections.indexOf('ne') || !!~this.allowedDirections.indexOf('se');
 				}
 
 				_isAllowedToMoveTowardLeft() {
-					return !!~this.allowedDirections.indexOf('w') || !!~this.allowedDirections.indexOf('nw') ||!!~this.allowedDirections.indexOf('sw');
+					return !!~this.allowedDirections.indexOf('w') || !!~this.allowedDirections.indexOf('nw') || !!~this.allowedDirections.indexOf('sw');
 				}
 
 				_isMovedTowardTop(pxMoved) {
