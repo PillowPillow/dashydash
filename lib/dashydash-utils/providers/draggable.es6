@@ -1,12 +1,12 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.draggable', function() {
 
-		this.$get = ['$document', '$timeout', 'DRAGGABLE_EXCLUDED_ELEMENTS', 
-			($document, $timeout, DRAGGABLE_EXCLUDED_ELEMENTS) => {
+		this.$get = ['$document', '$window', '$timeout', 'DRAGGABLE_EXCLUDED_ELEMENTS', 
+			($document, $window, $timeout, DRAGGABLE_EXCLUDED_ELEMENTS) => {
 
 			class Draggable {
 
-				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}) {
+				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, scrollSensitivity = 20, scrollSpeed = 20) {
 
 					this.element = $node;
 
@@ -27,6 +27,9 @@ angular.module('Dashydash-utils')
 					this._container = container;
 					this._handle = handle;
 
+					this.scrollSensitivity = scrollSensitivity,
+					this.scrollSpeed = scrollSpeed;
+
 					this.enabled = false;
 
 					this.$$mouseUp = (event) => {
@@ -38,7 +41,7 @@ angular.module('Dashydash-utils')
 						this.ondragStop(event);
 					};
 					this.$$mouseDown = (event) => {
-						if(~DRAGGABLE_EXCLUDED_ELEMENTS.indexOf(event.target.nodeName.toLowerCase()) || event.which !== 1)
+						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
 							return false;
 
 						this._updateMousePosition(event);
@@ -76,6 +79,7 @@ angular.module('Dashydash-utils')
 
 						this._updatePositionStyle();
 
+						this._scroll(event);
 						this.ondrag(event);
 
 						event.stopPropagation();
@@ -186,6 +190,29 @@ angular.module('Dashydash-utils')
 							pxMoved.y = this.max.top - this.position.y - this.size.height;
 							this.offset.y = dY - pxMoved.y;
 						}
+				}
+
+				_isLeftClicked(event) {
+					return event.which === 1;
+				}
+
+				_shouldBeHandled(event) {
+					return !!~DRAGGABLE_EXCLUDED_ELEMENTS.indexOf(event.target.nodeName.toLowerCase());
+				}
+
+				/*currently chrome only*/
+				_scroll(event) {
+					if (event.pageY - this.document.body.scrollTop < this.scrollSensitivity)
+						this.document.body.scrollTop = this.document.body.scrollTop - this.scrollSpeed;
+					else
+						if ($window.innerHeight - (event.pageY - this.document.body.scrollTop) < this.scrollSensitivity)
+							this.document.body.scrollTop = this.document.body.scrollTop + this.scrollSpeed;
+
+					if (event.pageX - this.document.body.scrollLeft < this.scrollSensitivity)
+						this.document.body.scrollLeft = this.document.body.scrollLeft - this.scrollSpeed;
+					else
+						if ($window.innerWidth - (event.pageX - this.document.body.scrollLeft) < this.scrollSensitivity)
+							this.document.body.scrollLeft = this.document.body.scrollLeft + this.scrollSpeed;
 				}
 
 				enable() {
