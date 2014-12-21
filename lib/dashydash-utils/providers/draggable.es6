@@ -176,7 +176,7 @@ angular.module('Dashydash-utils')
 				}
 
 				_isRestrictedToMoveDiagonaly() {
-					return !!~this.diagonalRestrictions.indexOf('ne') || !!~this.diagonalRestrictions.indexOf('nw') || !!~this.diagonalRestrictions.indexOf('se') || !!~this.diagonalRestrictions.indexOf('sw');
+					return this.diagonalRestrictions.length > 0;
 				}
 
 				_isMovedTowardTopLeft(position) {
