@@ -35,11 +35,13 @@
 	<body ng-app="app">
 
 		<!-- content -->
-		<dd-grid>
+	<!-- 	<dd-grid>
 			<dd-item dd-draggable class="test-block" style="top: 120px;left: 120px;">Hello world</dd-item>
-		</dd-grid>
+		</dd-grid> -->
 
-		<section dd-draggable class="test-block" style="top: 120px;left: 120px;">Hello hello</section>
+		<section dd-resizable dd-draggable class="test-block" style="top: 120px;left: 120px;">
+			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler">X</dd-resize-handler>
+		</section>
 		<!-- content -->
 
 		<!-- scripts -->
@@ -56,7 +58,10 @@
 			<script src="../lib/dashydash-utils/constants/draggable.js"></script>
 			<script src="../lib/dashydash-utils/services/utils.js"></script>
 			<script src="../lib/dashydash-utils/providers/draggable.js"></script>
+			<script src="../lib/dashydash-utils/providers/resizeHandler.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddDraggable.js"></script>
+			<script src="../lib/dashydash-utils/directives/ddResizeHandler.js"></script>
+			<script src="../lib/dashydash-utils/directives/ddResizable.js"></script>
 			<!-- src -->
 			<!-- dist -->
 			<!-- <script src="../dist/dashydash.min.js"></script> -->
