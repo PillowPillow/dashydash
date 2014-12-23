@@ -19,6 +19,10 @@
 		<link rel="stylesheet" href="../styles/dashydash.css">
 		<link rel="stylesheet" href="../styles/dragdash.css">
 		<style>
+			html, body {
+				padding: 0;
+				margin: 0;
+			}
 			.test-block {
 				border: 1px solid black;
 				width: 90px;
@@ -39,8 +43,9 @@
 			<dd-item dd-draggable class="test-block" style="top: 120px;left: 120px;">Hello world</dd-item>
 		</dd-grid> -->
 
-		<section dd-resizable dd-draggable class="test-block" style="top: 120px;left: 120px;">
-			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler">X</dd-resize-handler>
+		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
+		<section dd-resizable class="test-block" style="top: 120px;left: 120px;">
+			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler" style="position: absolute; right: 0px; bottom: 0px;">X</dd-resize-handler>
 		</section>
 		<!-- content -->
 
