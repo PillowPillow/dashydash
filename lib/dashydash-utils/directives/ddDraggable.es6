@@ -1,20 +1,17 @@
 angular.module('Dashydash-utils')
-	.directive('ddDraggable', function() {
+	.directive('ddDraggable', ['Dashydash-utils.providers.draggable', function(DraggableProvider) {
 		return {
-			scope: {},
-			restrict: 'EAC',
-			controllerAs: 'ddDraggable',
-			controller: ['Dashydash-utils.providers.draggable', 
-			function(DraggableProvider) {
-
-				this.initialize = function($node, ...options) {
-					return new DraggableProvider($node, ...options);
-				};
-			}],
+			scope: {
+				container: '=ddDraggableContainer'
+			},
+			restrict: 'EA',
 			link: function($scope, $node, attributes, controller) {
 
-				controller.initialize($node).enable();
+				initialize($node, $scope.container).enable();
 
+				function initialize($node, ...options) {
+					return new DraggableProvider($node, ...options);
+				};
 			}
 		};
-	});
+	}]);
