@@ -6,7 +6,7 @@ angular.module('Dashydash-utils')
 
 			class Draggable {
 
-				constructor($node, container = 'body', handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = [], scrollSensitivity = 20, scrollSpeed = 20) {
+				constructor($node, container = null, handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = [], scrollSensitivity = 20, scrollSpeed = 20) {
 
 					this.element = $node;
 
@@ -24,7 +24,7 @@ angular.module('Dashydash-utils')
 					this.ondragStop = ondragStop;
 					this.ondrag = ondrag;
 
-					this._container = container;
+					this.container = container;
 					this._handle = handle;
 
 					this.scrollSensitivity = scrollSensitivity,
@@ -41,7 +41,7 @@ angular.module('Dashydash-utils')
 
 						this.offset.x = this.offset.y = 0;
 
-						this.ondragStop(event, this);
+						this.$$ondragStop(event, this);
 					};
 					this.$$mouseDown = (event) => {
 						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
@@ -52,7 +52,7 @@ angular.module('Dashydash-utils')
 						this._updatePosition();
 						this._updateSize();
 
-						this.ondragStart(event, this);
+						this.$$ondragStart(event, this);
 
 						$document.on('mousemove', this.$$mouseMove);
 						$document.on('mouseup', this.$$mouseUp);
@@ -66,10 +66,12 @@ angular.module('Dashydash-utils')
 							return false;
 
 						this.max.left = this._getContainerWidth() - 1;
+						this.max.top = this._getContainerHeight() - 1;
 
 						this._updateMousePosition(event);
 
-						var pxMoved = this._getPixelMoved();
+						var pxMoved = this._getPixelMoved(),
+							delta = this._getDelta();
 
 						this.offset.x = this.offset.y = 0;
 
@@ -86,7 +88,7 @@ angular.module('Dashydash-utils')
 						this._updatePositionStyle();
 
 						this._scroll(event);
-						this.ondrag(event, this, pxMoved);
+						this.$$ondrag(event, this, delta);
 
 						event.stopPropagation();
 						event.preventDefault();
@@ -94,10 +96,10 @@ angular.module('Dashydash-utils')
 				}
 
 				get container() {
-					return angular.element(this.document.querySelector(this._container));
+					return !!this._container ? angular.element(this._container) : $document;
 				}
 				set container(value) {
-					this._container = value;
+					this._container = typeof value !== 'string' ? value : this.document.querySelector(value);
 				}
 
 				get handle() {
@@ -108,20 +110,28 @@ angular.module('Dashydash-utils')
 					this._handle = this.enabled ? this._handle : value;
 				}
 
+				get elementRect() {
+					return this.element[0].getBoundingClientRect();
+				}
+
 				get sizeW() {
-					return this.element[0].offsetWidth;
+					// return this.element[0].offsetWidth;
+					return ~~this.elementRect.width;
 				}
 				get sizeH() {
-					return this.element[0].offsetHeight;
+					// return this.element[0].offsetHeight;
+					return ~~this.elementRect.height;
 				}
 
 				get posX() {
-					var val = parseInt(this.element.css('left'), 10);
-					return isNaN(val) ? 0 : val;
+					// var val = parseInt(this.element.css('left'), 10);
+					// return isNaN(val) ? 0 : val;
+					return this.elementRect.x;
 				}
 				get posY() {
-					var val =  parseInt(this.element.css('top'), 10);
-					return isNaN(val) ? 0 : val;
+					// var val =  parseInt(this.element.css('top'), 10);
+					// return isNaN(val) ? 0 : val;
+					return this.elementRect.y;
 				}
 
 				_updateSize() {
@@ -171,8 +181,6 @@ angular.module('Dashydash-utils')
 						position.x = position.y = valAbs;
 					else
 						position.x = position.y = 0;
-
-
 				}
 
 				_isRestrictedToMoveDiagonaly() {
@@ -261,13 +269,26 @@ angular.module('Dashydash-utils')
 					return this.container[0].offsetWidth;
 				}
 
+				_getContainerHeight() {
+					return this.container[0].offsetHeight !== 0 ? this.container[0].offsetHeight : 9999;
+				}
+
 				_isMoved(event) {
 					return event.pageX !== this.mouse.last.x || event.pageY !== this.mouse.last.y;
 				}
 
 				_getPixelMoved() {
-					var x = this.mouse.current.x - this.mouse.last.x + this.offset.x,
-						y = this.mouse.current.y - this.mouse.last.y + this.offset.y;
+
+					var delta = this._getDelta(),
+						x = delta.x + this.offset.x,
+						y = delta.y + this.offset.y;
+
+					return {x,y};
+				}
+
+				_getDelta() {
+					var x = this.mouse.current.x - this.mouse.last.x,
+						y = this.mouse.current.y - this.mouse.last.y;
 
 					return {x,y};
 				}
@@ -323,6 +344,18 @@ angular.module('Dashydash-utils')
 					else
 						if ($window.innerWidth - (event.pageX - this.document.body.scrollLeft) < this.scrollSensitivity)
 							this.document.body.scrollLeft = this.document.body.scrollLeft + this.scrollSpeed;
+				}
+
+				$$ondrag(...parameters) {
+					this.ondrag(...parameters);
+				}
+
+				$$ondragStart(...parameters) {
+					this.ondragStart(...parameters);
+				}
+
+				$$ondragStop(...parameters) {
+					this.ondragStop(...parameters);
 				}
 
 				enable() {
