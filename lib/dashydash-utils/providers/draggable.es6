@@ -42,6 +42,9 @@ angular.module('Dashydash-utils')
 						this.offset.x = this.offset.y = 0;
 
 						this.$$ondragStop(event, this);
+
+						event.preventDefault();
+						event.stopPropagation();
 					};
 					this.$$mouseDown = (event) => {
 						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
@@ -65,8 +68,10 @@ angular.module('Dashydash-utils')
 						if(!this._isMoved(event))
 							return false;
 
-						this.max.left = this._getContainerWidth() - 1;
-						this.max.top = this._getContainerHeight() - 1;
+						this.min.left = this.containerPosX;
+						this.min.top = this.containerPosY;
+						this.max.left = this.containerPosX + this.containerSizeW - 2;
+						this.max.top = this.containerPosY + this.containerSizeH - 2;
 
 						this._updateMousePosition(event);
 
@@ -85,14 +90,18 @@ angular.module('Dashydash-utils')
 
 						this._movePosition(pxMoved);
 
-						this._updatePositionStyle();
+						this.$$ondrag(event, this, delta, pxMoved);
+						this._updateElementStyle();
 
 						this._scroll(event);
-						this.$$ondrag(event, this, delta);
 
 						event.stopPropagation();
 						event.preventDefault();
 					};
+				}
+
+				get containerRect() {
+					return !!this._container ? this.container[0].getBoundingClientRect() : this._getDocumentRect();
 				}
 
 				get container() {
@@ -100,6 +109,20 @@ angular.module('Dashydash-utils')
 				}
 				set container(value) {
 					this._container = typeof value !== 'string' ? value : this.document.querySelector(value);
+				}
+
+				get containerSizeW() {
+					return ~~this.containerRect.width;
+				}
+				get containerSizeH() {
+					return ~~this.containerRect.height;
+				}
+
+				get containerPosX() {
+					return ~~this.containerRect.left;
+				}
+				get containerPosY() {
+					return ~~this.containerRect.top;
 				}
 
 				get handle() {
@@ -115,23 +138,17 @@ angular.module('Dashydash-utils')
 				}
 
 				get sizeW() {
-					// return this.element[0].offsetWidth;
 					return ~~this.elementRect.width;
 				}
 				get sizeH() {
-					// return this.element[0].offsetHeight;
 					return ~~this.elementRect.height;
 				}
 
 				get posX() {
-					// var val = parseInt(this.element.css('left'), 10);
-					// return isNaN(val) ? 0 : val;
-					return this.elementRect.x;
+					return ~~this.elementRect.left;
 				}
 				get posY() {
-					// var val =  parseInt(this.element.css('top'), 10);
-					// return isNaN(val) ? 0 : val;
-					return this.elementRect.y;
+					return ~~this.elementRect.top;
 				}
 
 				_updateSize() {
@@ -261,20 +278,20 @@ angular.module('Dashydash-utils')
 					this.mouse.last.y = this.mouse.current.y;
 				}
 
-				_updatePositionStyle() {
-					this.element.css({ 'top': this.position.y + 'px','left': this.position.x + 'px' });
-				}
-
-				_getContainerWidth() {
-					return this.container[0].offsetWidth;
-				}
-
-				_getContainerHeight() {
-					return this.container[0].offsetHeight !== 0 ? this.container[0].offsetHeight : 9999;
+				_updateElementStyle() {
+					this.element.css({ 'top': this._getPosYByContainer() + 'px','left': this._getPosXByContainer() + 'px' });
 				}
 
 				_isMoved(event) {
 					return event.pageX !== this.mouse.last.x || event.pageY !== this.mouse.last.y;
+				}
+
+				_getPosXByContainer() {
+					return this.position.x - this.containerPosX;
+				}
+
+				_getPosYByContainer() {
+					return this.position.y - this.containerPosY;
 				}
 
 				_getPixelMoved() {
@@ -344,6 +361,10 @@ angular.module('Dashydash-utils')
 					else
 						if ($window.innerWidth - (event.pageX - this.document.body.scrollLeft) < this.scrollSensitivity)
 							this.document.body.scrollLeft = this.document.body.scrollLeft + this.scrollSpeed;
+				}
+
+				_getDocumentRect() {
+					return { width: ~~this.document.body.clientWidth, height: 99999, x: 0, y: 0 };
 				}
 
 				$$ondrag(...parameters) {
