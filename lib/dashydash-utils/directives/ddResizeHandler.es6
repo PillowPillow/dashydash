@@ -8,7 +8,7 @@ angular.module('Dashydash-utils')
 				initialize($scope.type, $scope.target, $node).enable();
 
 				function initialize(type, target, $node, ...options) {
-					return new ResizeHandlerProvider(type, target, $node, ...options);
+					return new ResizeHandlerProvider(type, target, $node, target, ...options);
 				}
 			}
 		};
