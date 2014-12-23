@@ -40,13 +40,18 @@ angular.module('Dashydash-utils')
 				}
 
 				_updateElementStyle() {
-					console.log('sd')
 					this.target.css({
 						top: this.targetPosition.x + 'px',
 						left: this.targetPosition.y + 'px',
 						width: this.targetSize.width + 'px',
 						height: this.targetSize.height + 'px'
 					});
+				}
+
+				_shouldBeDragged(pxMoved) {
+					var status = super(pxMoved);
+
+					return true;
 				}
 
 				$$ondrag(...parameters) {
@@ -64,6 +69,7 @@ angular.module('Dashydash-utils')
 					// bottom right
 					this.targetSize.width += parameters[2].x;
 					this.targetSize.height += parameters[2].y;
+					super(...parameters);
 				}
 
 				$$ondragStart(...parameters) {
@@ -72,11 +78,11 @@ angular.module('Dashydash-utils')
 					// this.targetSize.height = this.targetSizeH;
 					// this.targetPosition.x = this.targetPosY;
 					// this.targetPosition.y = this.targetPosX;
-					this.ondragStart(...parameters);
+					super(...parameters);
 				}
 
 				$$ondragStop(...parameters) {
-					this.ondragStop(...parameters);
+					super(...parameters);
 				}
 			}
 

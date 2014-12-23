@@ -78,6 +78,9 @@ angular.module('Dashydash-utils')
 						var pxMoved = this._getPixelMoved(),
 							delta = this._getDelta();
 
+						if(!this._shouldBeDragged(pxMoved))
+							return false;
+
 						this.offset.x = this.offset.y = 0;
 
 						this._updateLastMousePosition();
@@ -198,6 +201,10 @@ angular.module('Dashydash-utils')
 						position.x = position.y = valAbs;
 					else
 						position.x = position.y = 0;
+				}
+
+				_shouldBeDragged() {
+					return true;
 				}
 
 				_isRestrictedToMoveDiagonaly() {
