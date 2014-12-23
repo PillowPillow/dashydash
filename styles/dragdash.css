@@ -1,5 +1,45 @@
-[dd-draggable] {
+[dd-draggable], dd-draggable {
 	position: absolute;
 	top: 0px;
 	left: 0px;
+}
+
+[dd-resizable], dd-resizable {
+	position: relative;
+}
+
+[dd-resizable], dd-resizable {
+	position: relative;
+}
+
+[dd-resizable] > .dd-resizable-handler-container > .dd-resizable-handler-n, 
+dd-resizable > .dd-resizable-handler-container > .dd-resizable-handler-n {
+	position: absolute;
+	top: 0px;
+	left: 50%;
+}
+
+[dd-resizable] > .dd-resizable-handler-container > .dd-resizable-handler-s, 
+dd-resizable > .dd-resizable-handler-container > .dd-resizable-handler-s {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+}
+
+[dd-resizable] > .dd-resizable-handler-container > .dd-resizable-handler-w, 
+dd-resizable > .dd-resizable-handler-container > .dd-resizable-handler-w {
+	position: absolute;
+	top: 50%;
+	left: 0px;
+}
+
+[dd-resizable] > .dd-resizable-handler-container > .dd-resizable-handler-e, 
+dd-resizable > .dd-resizable-handler-container > .dd-resizable-handler-e {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+}
+
+.resize-handler {
+	/*position: absolute;*/
 }
