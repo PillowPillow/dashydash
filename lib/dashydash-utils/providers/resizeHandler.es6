@@ -14,6 +14,11 @@ angular.module('Dashydash-utils')
 					this.targetPosition = { x:0, y:0 };
 					this.targetSize = { width:0, height:0 };
 
+
+					this.targetSize.width = this.targetSizeW;
+					this.targetSize.height = this.targetSizeH;
+					this.targetPosition.x = this.targetPosY;
+					this.targetPosition.y = this.targetPosX;
 				}
 
 				get targetRect() {
@@ -28,13 +33,14 @@ angular.module('Dashydash-utils')
 				}
 
 				get targetPosX() {
-					return this.targetRect.x;
+					return ~~this.targetRect.left;
 				}
 				get targetPosY() {
-					return this.targetRect.y;
+					return ~~this.targetRect.top;
 				}
 
-				_updateSizeStyle() {
+				_updateElementStyle() {
+					console.log('sd')
 					this.target.css({
 						top: this.targetPosition.x + 'px',
 						left: this.targetPosition.y + 'px',
@@ -46,25 +52,26 @@ angular.module('Dashydash-utils')
 				$$ondrag(...parameters) {
 					
 					// top left
-					// this.targetPosition.x += parameters[2].y;
-					// this.targetPosition.y += parameters[2].x;
+					// if(parameters[3].x !== 0 && parameters[3].y !== 0) 
+						// this.targetPosition.x += parameters[2].y;
+						// this.targetPosition.y += parameters[2].x;
+
 					// this.targetSize.width += parameters[2].x * -1;
 					// this.targetSize.height += parameters[2].y * -1;
 					
 
+
 					// bottom right
 					this.targetSize.width += parameters[2].x;
 					this.targetSize.height += parameters[2].y;
-
-					this._updateSizeStyle();
 				}
 
 				$$ondragStart(...parameters) {
 
-					this.targetSize.width = this.targetSizeW;
-					this.targetSize.height = this.targetSizeH;
-					this.targetPosition.x = this.targetPosX;
-					this.targetPosition.y = this.targetPosY;
+					// this.targetSize.width = this.targetSizeW;
+					// this.targetSize.height = this.targetSizeH;
+					// this.targetPosition.x = this.targetPosY;
+					// this.targetPosition.y = this.targetPosX;
 					this.ondragStart(...parameters);
 				}
 
