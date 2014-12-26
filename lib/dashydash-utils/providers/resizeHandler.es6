@@ -1,19 +1,21 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.resizeHandler', function() {
 
-		this.$get = ['Dashydash-utils.providers.draggable', 
-		(DraggableProvider) => {
+		this.$get = ['Dashydash-utils.services.utils', 'Dashydash-utils.providers.draggable', 'DRAGGABLE_CONFIGURATION', 
+		(utils, Draggable, DRAGGABLE_CONFIGURATION) => {
 
-			class ResizeHandler extends DraggableProvider {
+			class ResizeHandler extends Draggable {
 
-				constructor(type, target, ...options) {
+				constructor({type: type, target:target, element:$node, container:container, onresizeStart:onresizeStart, onresizeStop:onresizeStop, onresize:onresize}) {
 
-					super(...options);
+					var configuration = {element:$node, container:container, onresizeStart:onresizeStart, onresizeStop:onresizeStop, onresize:onresize};
+					utils.extend(configuration, DRAGGABLE_CONFIGURATION, configuration);
+
+					super(configuration);
 
 					this.target = target;
 					this.targetPosition = { x:0, y:0 };
 					this.targetSize = { width:0, height:0 };
-
 
 					this.targetSize.width = this.targetSizeW;
 					this.targetSize.height = this.targetSizeH;
