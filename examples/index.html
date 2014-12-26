@@ -39,14 +39,20 @@
 	<body ng-app="app">
 
 		<!-- content -->
-	<!-- 	<dd-grid>
-			<dd-item dd-draggable class="test-block" style="top: 120px;left: 120px;">Hello world</dd-item>
-		</dd-grid> -->
+		<dd-grid>
+			<dd-widget>Hello world</dd-widget>
+		</dd-grid>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
-		<section dd-resizable class="test-block" style="top: 120px;left: 120px;">
+		<!-- <section dd-resizable class="test-block" style="top: 120px;left: 120px;">
 			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler" style="position: absolute; right: 0px; bottom: 0px;">X</dd-resize-handler>
-		</section>
+		</section> -->
+		<!-- <section ng-controller="app.controllers.app as AppCtrl">
+			<dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable>
+		</section> -->
+
+
+
 		<!-- content -->
 
 		<!-- scripts -->
@@ -54,25 +60,32 @@
 			<script src="../bower_components/angular/angular.min.js"></script>
 			<!-- libraries -->
 			<!-- src -->
-			<script src="../lib/dashydash/core.js"></script>
-			<script src="../lib/dashydash/directives/ddGrid.js"></script>
-
 			<script src="../lib/dashydash-templates/core.js"></script>
 
 			<script src="../lib/dashydash-utils/core.js"></script>
 			<script src="../lib/dashydash-utils/constants/draggable.js"></script>
 			<script src="../lib/dashydash-utils/services/utils.js"></script>
+			<script src="../lib/dashydash-utils/providers/domElement.js"></script>
 			<script src="../lib/dashydash-utils/providers/draggable.js"></script>
 			<script src="../lib/dashydash-utils/providers/resizeHandler.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddDraggable.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddResizeHandler.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddResizable.js"></script>
+
+			<script src="../lib/dashydash/core.js"></script>
+			<script src="../lib/dashydash/providers/grid.js"></script>
+			<script src="../lib/dashydash/providers/placeholder.js"></script>
+			<script src="../lib/dashydash/providers/widget.js"></script>
+			<script src="../lib/dashydash/directives/ddGrid.js"></script>
+			<script src="../lib/dashydash/directives/ddWidget.js"></script>
+			<script src="../lib/dashydash/directives/ddPlaceholder.js"></script>
 			<!-- src -->
 			<!-- dist -->
 			<!-- <script src="../dist/dashydash.min.js"></script> -->
 			<!-- dist -->
 			<!-- features -->
 			<script src="modules/app/core.js"></script>
+			<script src="modules/app/controllers/app.js"></script>
 			<!-- features -->
 		<!-- scripts -->
 	
