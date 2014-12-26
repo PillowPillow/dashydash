@@ -1,14 +1,14 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.draggable', function() {
 
-		this.$get = ['$document', '$window', '$timeout', 'DRAGGABLE_EXCLUDED_ELEMENTS', 
-			($document, $window, $timeout, DRAGGABLE_EXCLUDED_ELEMENTS) => {
+		this.$get = ['$document', '$window', '$timeout', 'Dashydash-utils.providers.DOMElement', 'DRAGGABLE_EXCLUDED_ELEMENTS',
+			($document, $window, $timeout, DOMElement, DRAGGABLE_EXCLUDED_ELEMENTS) => {
 
-			class Draggable {
+			class Draggable extends DOMElement{
 
-				constructor($node, container = null, handle = '', ondragStart = () => {}, ondragStop = () => {}, ondrag = () => {}, directions = ['n','s','e','w'], diagonalRestrictions = [], scrollSensitivity = 20, scrollSpeed = 20) {
+				constructor({element:$node, container:container, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
 
-					this.element = $node;
+					super({element:$node, container:container});
 
 					this.size = { width:0,height:0 };
 					this.position = { x:0,y:0 };
@@ -23,11 +23,9 @@ angular.module('Dashydash-utils')
 					this.ondragStart = ondragStart;
 					this.ondragStop = ondragStop;
 					this.ondrag = ondrag;
-
-					this.container = container;
 					this._handle = handle;
 
-					this.scrollSensitivity = scrollSensitivity,
+					this.scrollSensitivity = scrollSensitivity;
 					this.scrollSpeed = scrollSpeed;
 
 					this.allowedDirections = directions;
@@ -103,55 +101,12 @@ angular.module('Dashydash-utils')
 					};
 				}
 
-				get containerRect() {
-					return !!this._container ? this.container[0].getBoundingClientRect() : this._getDocumentRect();
-				}
-
-				get container() {
-					return !!this._container ? angular.element(this._container) : $document;
-				}
-				set container(value) {
-					this._container = typeof value !== 'string' ? value : this.document.querySelector(value);
-				}
-
-				get containerSizeW() {
-					return ~~this.containerRect.width;
-				}
-				get containerSizeH() {
-					return ~~this.containerRect.height;
-				}
-
-				get containerPosX() {
-					return ~~this.containerRect.left;
-				}
-				get containerPosY() {
-					return ~~this.containerRect.top;
-				}
-
 				get handle() {
 					return this._handle !== '' ? angular.element(this.element[0].querySelector(this._handle)) : this.element;
 				}
 				set handle(value) {
 					//disables the handler modification if the draggable is currently enabled
 					this._handle = this.enabled ? this._handle : value;
-				}
-
-				get elementRect() {
-					return this.element[0].getBoundingClientRect();
-				}
-
-				get sizeW() {
-					return ~~this.elementRect.width;
-				}
-				get sizeH() {
-					return ~~this.elementRect.height;
-				}
-
-				get posX() {
-					return ~~this.elementRect.left;
-				}
-				get posY() {
-					return ~~this.elementRect.top;
 				}
 
 				_updateSize() {
