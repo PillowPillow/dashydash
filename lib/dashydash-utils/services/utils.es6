@@ -7,20 +7,16 @@ angular.module('Dashydash-utils')
 
 		return prototype;
 
-		function extend(toExtend = {}, src = {}, strict = true) {
+		function extend(target, ...sources) {
 
-			var extended = {};
-			angular.extend(extended, src, toExtend);
-			if(strict) {
-
-				let keys = Object.keys(extended);
-				for(let i = 0; i<keys.length; i++) {
-					if(!src[keys[i]])
-						delete extended[keys[i]];
-				}
+			for(var i = 0; i<sources.length; i++)  {
+				let source = sources[i];
+				for(let key in source)
+					if(target[key] === null || target[key] === undefined)
+						target[key] = source[key];
 			}
 
-			return extended;
+			return target;
 		}
 
 	});
