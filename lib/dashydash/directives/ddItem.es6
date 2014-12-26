@@ -1,10 +1,10 @@
 angular.module('Dashydash')
-	.directive('ddWidget', function(){
+	.directive('ddItem', function(){
 		return {
 			scope: {},
 			require: '^ddGrid',
 			restrict: 'EA',
-			templateUrl: 'ddWidget.jade',
+			templateUrl: 'ddItem.jade',
 			transclude: true,
 			link: function($scope, $node, attributes, controller) {
 				console.log(controller)

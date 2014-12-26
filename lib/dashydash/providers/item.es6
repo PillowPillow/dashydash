@@ -1,15 +1,15 @@
 angular.module('Dashydash')
-	.provider('Dashydash.providers.widget', function() {
+	.provider('Dashydash.providers.item', function() {
 		
 		this.$get = () => {
 
-			class Widget {
+			class Item {
 
 				constructor() {
 
 				}
 			}
 
-			return Widget;
+			return Item;
 		};
 	});
