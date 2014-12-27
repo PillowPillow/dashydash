@@ -1,6 +1,6 @@
 angular.module('Dashydash-utils')
-	.constant('DRAGGABLE_EXCLUDED_ELEMENTS', ['select', 'input', 'textarea', 'button'])
-	.constant('DRAGGABLE_CONFIGURATION', {
+	.constant('Dashydash-utils.constants.draggableExcludedElements', ['select', 'input', 'textarea', 'button'])
+	.constant('Dashydash-utils.constants.draggableConfiguration', {
 		container: null, 
 		handle: '', 
 		ondragStart: () => {}, 

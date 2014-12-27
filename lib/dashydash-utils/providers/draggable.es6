@@ -1,7 +1,7 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.draggable', function() {
 
-		this.$get = ['$document', '$window', '$timeout', 'Dashydash-utils.providers.DOMElement', 'DRAGGABLE_EXCLUDED_ELEMENTS',
+		this.$get = ['$document', '$window', '$timeout', 'Dashydash-utils.providers.DOMElement', 'Dashydash-utils.constants.draggableExcludedElements',
 			($document, $window, $timeout, DOMElement, DRAGGABLE_EXCLUDED_ELEMENTS) => {
 
 			class Draggable extends DOMElement{

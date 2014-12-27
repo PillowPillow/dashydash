@@ -1,7 +1,7 @@
 angular.module('Dashydash-utils')
 	.provider('Dashydash-utils.providers.resizeHandler', function() {
 
-		this.$get = ['Dashydash-utils.services.utils', 'Dashydash-utils.providers.draggable', 'DRAGGABLE_CONFIGURATION', 
+		this.$get = ['Dashydash-utils.services.utils', 'Dashydash-utils.providers.draggable', 'Dashydash-utils.constants.draggableConfiguration', 
 		(utils, Draggable, DRAGGABLE_CONFIGURATION) => {
 
 			class ResizeHandler extends Draggable {

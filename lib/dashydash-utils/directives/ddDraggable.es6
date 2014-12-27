@@ -10,7 +10,7 @@ angular.module('Dashydash-utils')
 			},
 			restrict: 'EA',
 			require: 'ddDraggable',
-			controller: ['Dashydash-utils.services.utils', 'Dashydash-utils.providers.draggable', 'DRAGGABLE_CONFIGURATION', 
+			controller: ['Dashydash-utils.services.utils', 'Dashydash-utils.providers.draggable', 'Dashydash-utils.constants.draggableConfiguration', 
 			function(utils, Draggable, DRAGGABLE_CONFIGURATION) {
 
 				this.initialize = function(configuration = {}) {
