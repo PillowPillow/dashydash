@@ -11,16 +11,7 @@ angular.module('Dashydash')
 			restrict: 'EA',
 			templateUrl: 'ddItem.jade',
 			transclude: true,
-			controller: ['Dashydash-utils.services.utils', 'Dashydash.providers.item', 
-			function(utils, Item) {
-
-				this.initialize = function(configuration = {}) {
-					this.item = new Item(configuration);
-					return this.item;
-				};
-
-
-			}],
+			controller: 'Dashydash.controllers.ddItem',
 			controllerAs: '_ddItem',
 			link: function($scope, $node, attributes, controllers) {
 
