@@ -10,15 +10,7 @@ angular.module('Dashydash')
 			transclude: true,
 			templateUrl: 'ddGrid.jade',
 			require: 'ddGrid',
-			controller: ['Dashydash-utils.services.utils', 'Dashydash.providers.grid', 
-			function(utils, Grid) {
-
-				this.initialize = function(configuration = {}) {
-					this.grid = new Grid(configuration);
-					return this.grid;
-				};
-
-			}],
+			controller: 'Dashydash.controllers.ddGrid',
 			controllerAs: '_ddGrid',
 			link: function($scope, $node, attributes, controller) {
 
