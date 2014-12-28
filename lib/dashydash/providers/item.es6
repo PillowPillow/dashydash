@@ -5,11 +5,38 @@ angular.module('Dashydash')
 
 			class Item {
 
-				constructor() {
-					this.position = { current:{x:0,y:0}, last:{x:0,y:0} };
-					this.size = { current:{width:0, height:0}, last:{width:0, height:0} };
+				constructor({row:row, column: col, width:width, height:height}) {
+					this.position = { current:{x:row,y:col}, last:{x:row,y:col} };
+					this.size = { current:{w:width,h:height}, last:{w:width,h:height} };
 				}
 
+				_updatePosition({x,y}) {
+					this.position.current.x = x;
+					this.position.current.y = y;
+				}
+
+				_updateLastPosition() {
+					this.position.last.x = this.position.current.x;
+					this.position.last.x = this.position.current.y;
+				}
+
+				_updateSize({w,h}) {
+					this.size.current.w = w;
+					this.size.current.h = h;
+				}
+
+				_updateLastSize() {
+					this.size.last.w = this.size.current.w;
+					this.size.last.h = this.size.current.h;
+				}
+
+				_isMoved({x,y}) {
+					return x !== this.position.current.x || y !== this.position.current.y;
+				}
+
+				_isSizeUpdated({w, h}) {
+					return w !== this.size.current.w || h !== this.size.current.h;
+				}
 
 				moveTo({x,y}) {
 
@@ -23,18 +50,16 @@ angular.module('Dashydash')
 					return moved;
 				}
 
-				_updatePosition({x,y}) {
-					this.position.current.x = x;
-					this.position.current.y = y;
-				}
+				updateSize({w, h}) {
 
-				_updateLastPosition() {
-					this.position.last.x = this.position.current.x;
-					this.position.last.x = this.position.current.y;
-				}
+					var updated = this._isSizeUpdated({w,h});
 
-				_isMoved({x,y}) {
-					return x !== this.position.current.x || y !== this.position.current.y;
+					if(updated) {
+						this._updateLastSize();
+						this._updateSize({w,h});
+					}
+
+					return updated;
 				}
 			}
 
