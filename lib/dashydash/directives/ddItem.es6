@@ -1,8 +1,9 @@
 angular.module('Dashydash')
 	.directive('ddItem', [
+	'$timeout',
 	'Dashydash.services.nodeBuilder', 
 	'Dashydash.constants.positionableElementDOMAttributes',
-	function(nodeBuilder, DOM_ATTRIBUTES) {
+	function($timeout, nodeBuilder, DOM_ATTRIBUTES) {
 		return {
 			scope: true,
 			require: ['^ddGrid', 'ddItem'],
@@ -16,10 +17,18 @@ angular.module('Dashydash')
 						if(attributeDefined)
 							return nodeBuilder.compile($node)($scope);
 
-						$scope.row = 99;
-						$scope.col = 99;
-						$scope.width = 99;
-						$scope.height = 99;
+						$scope.row = attributes.initRow || 0;
+						$scope.col = attributes.initCol || 0;
+						$scope.width = attributes.initWidth || 1;
+						$scope.height = attributes.initHeight || 1;
+
+						function move() {
+							$scope.row = ~~(Math.random()*4);
+							$scope.col = ~~(Math.random()*4);
+							$timeout(move, 1000)
+						}
+
+						move();
 
 						var gridController = controllers[0],
 							itemController = controllers[1];

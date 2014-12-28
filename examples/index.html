@@ -23,12 +23,100 @@
 				padding: 0;
 				margin: 0;
 			}
+
+			* {
+				box-sizing: border-box;
+			}
+
 			.test-block {
 				border: 1px solid black;
 				width: 90px;
 				height: 90px;
 				display: block;
 			}
+
+			dd-grid {
+				position: relative;
+				width: 100%;
+			}
+
+			dd-item {
+				border: 1px solid grey;
+				position: absolute;
+				-webkit-transition: all .25s ease-in;
+				   -moz-transition: all .25s ease-in;
+				    -ms-transition: all .25s ease-in;
+				     -o-transition: all .25s ease-in;
+				        transition: all .25s ease-in;
+			}
+
+			dd-item[dd-row="0"] {
+				left: 0px;
+			}
+
+			dd-item[dd-col="0"] {
+				top: 0px;
+			}
+
+			dd-item[dd-row="1"] {
+				left: 100px;
+			}
+
+			dd-item[dd-col="1"] {
+				top: 50px;
+			}
+
+			dd-item[dd-row="2"] {
+				left: 200px;
+			}
+
+			dd-item[dd-col="2"] {
+				top: 100px;
+			}
+
+			dd-item[dd-row="3"] {
+				left: 300px;
+			}
+
+			dd-item[dd-col="3"] {
+				top: 150px;
+			}
+
+			dd-item[dd-row="4"] {
+				left: 400px;
+			}
+
+			dd-item[dd-col="4"] {
+				top: 200px;
+			}
+
+			dd-item[dd-width="1"] {
+				width: 100px;
+			}
+
+			dd-item[dd-height="1"] {
+				height: 50px;
+				line-height: 50px;
+			}
+
+			dd-item[dd-width="2"] {
+				width: 200px;
+			}
+
+			dd-item[dd-height="2"] {
+				height: 100px;
+				line-height: 100px;
+			}
+
+			dd-item[dd-width="3"] {
+				width: 100px;
+			}
+
+			dd-item[dd-height="3"] {
+				height: 150px;
+				line-height: 150px;
+			}
+
 		</style>
 		<!-- styles -->
 		<!-- fonts -->
@@ -40,9 +128,9 @@
 
 		<!-- content -->
 		<dd-grid>
-			<dd-item init-row=9>[Hello world]</dd-item>
-			<dd-item>[Hello world]</dd-item>
-			<dd-item>[Hello world]</dd-item>
+			<dd-item init-row=0 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
+			<dd-item init-row=1 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
+			<dd-item init-row=2 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
 		</dd-grid>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
