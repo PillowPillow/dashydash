@@ -7,7 +7,6 @@ angular.module('Dashydash-utils')
 			class Draggable extends DOMElement{
 
 				constructor({element:$node, container:container, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
-
 					super({element:$node, container:container});
 
 					this.size = { width:0,height:0 };
