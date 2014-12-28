@@ -6,19 +6,18 @@ angular.module('Dashydash')
 
 			class Grid {
 
-				constructor({element:$node, container:container, columns:columns, rows:rows}) {
+				constructor({element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
 
 					this.grid = [];
+					this.items = [];
 					
 					this.rows = rows;
 					this.columns = columns;
 
-					this.itemWidth = 100;
-					this.itemHeight = 50;
+					this.itemWidth = itemWidth || 100;
+					this.itemHeight = itemHeight || 50;
 
 					this.placeholder = null;
-
-					this.createEmptyGrid();
 
 				}
 
@@ -34,32 +33,29 @@ angular.module('Dashydash')
 					$rootScope.$apply();
 				}
 
-				_getCenterPosition({x,y}) {
-					return { x:this._getCenterPosX(x), y:this._getCenterPosY(y) };
+				_getPosition({x,y}) {
+					return { x:this._pixelToColumn(x), y:this._pixelToRow(y) };
 				}
 
-				_getCenterPosX(posX = 0) {
+				_pixelToColumn(posX = 0) {
 					return ~~( (posX + this.itemHalfWidth) / this.itemWidth );
 				}
 
-				_getCenterPosY(posY = 0) {
+				_pixelToRow(posY = 0) {
 					return ~~( (posY + this.itemHalfHeight) / this.itemHeight );
 				}
 
-				createEmptyGrid() {
+				_putItem(item) {
 
-					this.grid = [];
+					if(!this.grid[item.position.current.y])
+						this.grid[item.position.current.y] = [];
 
-					for(var row = 0; row<this.rows; row++) {
-						this.grid[row] = [];
-						for(var col = 0; col<this.columns; col++)
-							this.grid[row][col] = null;
-					}
+					this.grid[item.position.current.y][this.position.current.x] = item;
 				}
 
 				itemDragStart(item, ...args) {
 
-					var position = this._getCenterPosition(args[1].position);
+					var position = this._getPosition(args[1].position);
 					this.placeholder.enableAnimation();
 					this.placeholder.moveTo(position);
 					this.placeholder.updateSize(item.size.current);
@@ -68,7 +64,7 @@ angular.module('Dashydash')
 
 				itemDragged(item, ...args) {
 
-					var position = this._getCenterPosition(args[1].position);
+					var position = this._getPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
 					isMoved && item.moveTo(this.placeholder.position.current) && this._forceViewUpdate();
 				}
@@ -77,6 +73,31 @@ angular.module('Dashydash')
 					this.placeholder.disableAnimation();
 					item.moveTo(this.placeholder.position.current);
 					this._forceViewUpdate();
+				}
+
+				getItem({row:row, column:col}) {
+					var size = {x:1,y:1},
+						itemFound = null;
+
+					loopOnRows:for(var y = row; y>=0; y--) {
+						size.x = 1;
+						for(let x = col; x>=0; x--) {
+							if(!!this.grid[y]) {
+								let item = this.grid[y][x];
+								if(item && item.size.current.height >= size.x && item.size.current.width >= size.y) {
+									itemFound = item;
+									break loopOnRows;
+								}
+							}
+							size.x++;
+						}
+						size.y++;
+					}
+					return itemFound;	
+				}
+
+				registerItem(item) {
+					this.items.push(item);
 				}
 
 			}

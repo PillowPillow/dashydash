@@ -11,7 +11,7 @@ angular.module('Dashydash')
 			controller: 'Dashydash.controllers.gridItem',
 			controllerAs: '_ddItem',
 			compile: (node) => {
-				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class': 'class'});
+				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class':'class'});
 				return {
 					post: ($scope, $node, attributes, controllers) => {
 						if(attributeDefined) {
