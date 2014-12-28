@@ -11,7 +11,7 @@ angular.module('Dashydash')
 			controller: 'Dashydash.controllers.item',
 			controllerAs: '_ddItem',
 			compile: (node) => {
-				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES);
+				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class': 'class'});
 				return {
 					post: ($scope, $node, attributes, controllers) => {
 						if(attributeDefined)
@@ -20,6 +20,7 @@ angular.module('Dashydash')
 						$scope.col = attributes.initCol || 0;
 						$scope.width = attributes.initWidth || 1;
 						$scope.height = attributes.initHeight || 1;
+						$scope.class = {};
 
 						var gridController = controllers[0],
 							itemController = controllers[1];
@@ -29,6 +30,7 @@ angular.module('Dashydash')
 						
 						bind('y').as('row').from(itemController.item.position.current).to($scope).apply();
 						bind('x').as('col').from(itemController.item.position.current).to($scope).apply();
+						bind('isDragged').as('item-dragged').from(itemController.item).to($scope.class).apply();
 
 					}
 				};
