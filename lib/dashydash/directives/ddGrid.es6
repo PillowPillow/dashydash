@@ -12,12 +12,14 @@ angular.module('Dashydash')
 			require: 'ddGrid',
 			controller: 'Dashydash.controllers.ddGrid',
 			controllerAs: '_ddGrid',
-			link: function($scope, $node, attributes, controller) {
+			compile: () => {
+				return {
+					pre: ($scope, $node, attributes, controller) => {
 
-				var config = {element: $node, container: $scope.container, rows: $scope.row, columns: $scope.col};
-
-				controller.initialize(config);
-
+						var config = {element: $node, container: $scope.container, rows: $scope.row, columns: $scope.col};
+						controller.initialize(config);
+					}
+				};
 			}
 		};
 	});
