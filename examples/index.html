@@ -29,7 +29,12 @@
 
 		<!-- content -->
 		<dd-grid ng-init="items = [1,2,3,4]">
-			<dd-item ng-repeat="i in items track by $index" init-row={{$index}} init-col={{$index}} init-width=1 init-height=1>[Hello world]</dd-item>
+			<dd-item ng-repeat="i in items track by $index" init-row={{$index}} init-col={{$index}} init-width=1 init-height=1>
+				<input type="text" ng-model="row">
+				<input type="text" ng-model="col">
+				<input type="text" ng-model="width">
+				<input type="text" ng-model="height">
+			</dd-item>
 		</dd-grid>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->

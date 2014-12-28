@@ -34,35 +34,24 @@ angular.module('Dashydash')
 					var posX = ~~((args[1].position.x + 50)/100),
 						posY = ~~((args[1].position.y + 25)/50);
 
-					if(posX !== this.placeholder.position.current.x || posY !== this.placeholder.position.current.y) {
-
-						this.placeholder.position.last.x = this.placeholder.position.current.x;
-						this.placeholder.position.last.x = this.placeholder.position.current.y;
-						this.placeholder.position.current.x = posX;
-						this.placeholder.position.current.y = posY;
-
-						$rootScope.$apply();
-					}
+					this.placeholder.moveTo({x:posX, y:posY});
+					this._forceViewUpdate();
 				}
 
 				itemDragged(...args) {
 					var posX = ~~((args[1].position.x + 50)/100),
 						posY = ~~((args[1].position.y + 25)/50);
 
-					if(posX !== this.placeholder.position.current.x || posY !== this.placeholder.position.current.y) {
-
-						this.placeholder.position.last.x = this.placeholder.position.current.x;
-						this.placeholder.position.last.x = this.placeholder.position.current.y;
-						this.placeholder.position.current.x = posX;
-						this.placeholder.position.current.y = posY;
-
-						this.placeholder.itemDragged = true;
-						$rootScope.$apply();
-					}
+					var isMoved = this.placeholder.moveTo({x:posX, y:posY});
+					isMoved && this._forceViewUpdate();
 				}
 
 				itemDragStop() {
 					this.placeholder.itemDragged = false;
+					this._forceViewUpdate();
+				}
+
+				_forceViewUpdate() {
 					$rootScope.$apply();
 				}
 

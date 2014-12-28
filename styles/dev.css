@@ -20,6 +20,10 @@ body {
 	width: 100%;
 }
 
+dd-item input {
+    width: 40px;
+}
+
 dd-placeholder.item-dragged, dd-item:not(.item-dragged) {
 	-webkit-transition: all .2s linear;
 	   -moz-transition: all .2s linear;
@@ -43,6 +47,11 @@ dd-placeholder {
 	color: white;
 	font-size: 8px;
 	z-index: 0;
+}
+
+
+dd-placeholder:not(.item-dragged) {
+	display: none;
 }
 
 dd-item {
