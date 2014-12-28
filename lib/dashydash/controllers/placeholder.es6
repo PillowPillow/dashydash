@@ -1,6 +1,6 @@
 angular.module('Dashydash')
 	.controller('Dashydash.controllers.placeholder', [
-	'Dashydash.providers.Placeholder',
+	'Dashydash.providers.placeholder',
 	function(Placeholder) {
 		
 		this.initialize = function(configuration = {}) {
