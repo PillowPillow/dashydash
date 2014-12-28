@@ -28,7 +28,6 @@ angular.module('Dashydash')
 						for(var col = 0; col<this.columns; col++)
 							this.grid[row][col] = null;
 					}
-
 				}
 
 				itemDragStart(...args) {
@@ -65,10 +64,6 @@ angular.module('Dashydash')
 				itemDragStop() {
 					this.placeholder.itemDragged = false;
 					$rootScope.$apply();
-				}
-
-				setPlaceholder(element) {
-					this.placeholder = element;
 				}
 
 			}
