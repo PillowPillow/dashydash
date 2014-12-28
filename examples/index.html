@@ -28,10 +28,8 @@
 	<body ng-app="app">
 
 		<!-- content -->
-		<dd-grid>
-			<dd-item init-row=0 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
-			<dd-item init-row=1 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
-			<dd-item init-row=2 init-col=0 init-width=1 init-height=1>[Hello world]</dd-item>
+		<dd-grid ng-init="items = [1,2,3,4]">
+			<dd-item ng-repeat="i in items track by $index" init-row={{$index}} init-col={{$index}} init-width=1 init-height=1>[Hello world]</dd-item>
 		</dd-grid>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
