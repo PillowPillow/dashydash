@@ -1,1 +1,1 @@
-angular.module('Dashydash', ['Dashydash-templates', 'Dashydash-utils']);
+angular.module('Dashydash', ['Dashydash-templates', 'Dashydash-utils', 'PropertyBinder']);
