@@ -62,6 +62,7 @@ angular.module('Dashydash')
 					var position = this._getCenterPosition(args[1].position);
 					this.placeholder.enableAnimation();
 					this.placeholder.moveTo(position);
+					this.placeholder.updateSize(item.size.current);
 					this._forceViewUpdate();
 				}
 

@@ -7,9 +7,9 @@ angular.module('Dashydash')
 
 			class Placeholder extends Item {
 
-				constructor({element:$node, grid: grid}) {
+				constructor({element:$node, grid: grid, row:row, column: col, width:width, height:height}) {
 					
-					super({element:$node});
+					super({row:row, column: col, width:width, height:height});
 
 					this.element = $node;
 					this.grid = grid;
