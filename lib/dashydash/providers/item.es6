@@ -7,6 +7,7 @@ angular.module('Dashydash')
 
 				constructor() {
 					this.position = { current:{x:0,y:0}, last:{x:0,y:0} };
+					this.size = { current:{width:0, height:0}, last:{width:0, height:0} };
 				}
 
 
