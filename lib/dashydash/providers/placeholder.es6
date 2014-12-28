@@ -1,10 +1,11 @@
 angular.module('Dashydash')
 	.provider('Dashydash.providers.placeholder',  function() {
 	
-		this.$get = ['Dashydash-utils.providers.DOMElement',
-		(DOMElement) => {
+		this.$get = [
+		'Dashydash.providers.item', 
+		(Item) => {
 
-			class Placeholder extends DOMElement {
+			class Placeholder extends Item {
 
 				constructor({element:$node, grid: grid}) {
 					
@@ -14,39 +15,13 @@ angular.module('Dashydash')
 					this.grid = grid;
 
 					this.itemDragged = false;
-
-					this.position = { current:{x:0,y:0}, last:{x:0,y:0} };
 				}
 
-
-				moveTo({x,y}) {
-
-					this._enableAnimation();
-					var moved = this._isMoved({x,y});
-					
-					if(moved) {
-						this._updateLastPosition();
-						this._updatePosition({x,y});
-					}
-					
-					return moved;
+				enableAnimation() {
+					this.itemDragged = true;
 				}
 
-				_updatePosition({x,y}) {
-					this.position.current.x = x;
-					this.position.current.y = y;
-				}
-
-				_updateLastPosition() {
-					this.position.last.x = this.position.current.x;
-					this.position.last.x = this.position.current.y;
-				}
-
-				_isMoved({x,y}) {
-					return x !== this.position.current.x || y !== this.position.current.y;
-				}
-
-				_enableAnimation() {
+				disableAnimation() {
 					this.itemDragged = true;
 				}
 			}
