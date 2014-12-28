@@ -15,7 +15,6 @@ angular.module('Dashydash')
 					post: ($scope, $node, attributes, controllers) => {
 						if(attributeDefined)
 							return nodeBuilder.compile($node)($scope);
-						console.log('item')
 						$scope.row = attributes.initRow || 0;
 						$scope.col = attributes.initCol || 0;
 						$scope.width = attributes.initWidth || 1;
@@ -23,7 +22,6 @@ angular.module('Dashydash')
 
 						var gridController = controllers[0],
 							itemController = controllers[1];
-							console.log(gridController, gridController.grid)
 						var config = {element: $node, grid: gridController.grid, rows: $scope.row, columns: $scope.col};
 
 						itemController.initialize(config);

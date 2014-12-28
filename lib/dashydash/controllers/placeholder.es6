@@ -6,6 +6,7 @@ angular.module('Dashydash')
 		this.initialize = function(configuration = {}) {
 
 			this.placeholder = new Placeholder(configuration);
+			configuration.grid.setPlaceholder(this.placeholder);
 			return this.placeholder;
 		};
 
