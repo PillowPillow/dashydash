@@ -35,19 +35,22 @@
 				display: block;
 			}
 
-			dd-grid {
+			.dd-container {
 				position: relative;
 				width: 100%;
 			}
 
-			dd-item {
-				border: 1px solid grey;
-				position: absolute;
+			dd-placeholder {
 				-webkit-transition: all .25s ease-in;
 				   -moz-transition: all .25s ease-in;
 				    -ms-transition: all .25s ease-in;
 				     -o-transition: all .25s ease-in;
 				        transition: all .25s ease-in;
+			}
+
+			dd-item {
+				border: 1px solid grey;
+				position: absolute;
 			}
 
 			dd-item[dd-row="0"] {
@@ -137,9 +140,9 @@
 		<!-- <section dd-resizable class="test-block" style="top: 120px;left: 120px;">
 			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler" style="position: absolute; right: 0px; bottom: 0px;">X</dd-resize-handler>
 		</section> -->
-		<!-- <section ng-controller="app.controllers.app as AppCtrl">
+		<!-- <section ng-controller="app.controllers.app as AppCtrl"> -->
 			<dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable>
-		</section> -->
+		<!-- </section> -->
 
 
 

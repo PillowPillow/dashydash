@@ -81,7 +81,7 @@ function Grunt(grunt) {
 
 	grunt.initConfig(Configuration);
 
-	grunt.registerTask('es6', ['6to5:dist' 'add_comment']);
+	grunt.registerTask('es6', ['6to5:dist', 'add_comment']);
 	grunt.registerTask('dev', ['6to5:dist', 'html2js']);
 }
 
