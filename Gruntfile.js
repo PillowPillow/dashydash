@@ -5,7 +5,6 @@ function Grunt(grunt) {
 	var Configuration = {},
 		tasks = [
 			'grunt-6to5',
-			'johto-require',
 			'grunt-add-comment',
 			'grunt-html2js'
 		];
@@ -32,21 +31,6 @@ function Grunt(grunt) {
 
 	Configuration.package = grunt.file.readJSON('package.json');
 
-	Configuration.johto_require = {
-		'6to5': {
-			options: {
-				match: 'Symbol|Promise|regeneratorRuntime',
-				insert: 'require("6to5/polyfill");'
-			},
-			files: [{
-				expand: true,
-				cwd: __dirname,
-				src: ( pathOption ? [ pathOption.name.replace('.es6', '.js') ] :  ['lib/**/*.js']),
-				dest: __dirname
-			}]
-		}
-	};
-
 	Configuration['6to5'] = {
 		options: {
 			sourceMap: false
@@ -56,7 +40,7 @@ function Grunt(grunt) {
 				expand: true,
 				cwd: __dirname,
 				ext: '.js',
-				src: ( pathOption ? pathOption.name : ['lib/**/*.es6'] ),
+				src: ( pathOption ? pathOption.name : ['examples/**/*.es6', 'lib/**/*.es6'] ),
 				dest: __dirname
 			}]
 		}
@@ -97,8 +81,8 @@ function Grunt(grunt) {
 
 	grunt.initConfig(Configuration);
 
-	grunt.registerTask('es6', ['6to5:dist', 'johto_require:6to5', 'add_comment']);
-	grunt.registerTask('dev', ['es6', 'html2js']);
+	grunt.registerTask('es6', ['6to5:dist' 'add_comment']);
+	grunt.registerTask('dev', ['6to5:dist', 'html2js']);
 }
 
 module.exports = Grunt;
