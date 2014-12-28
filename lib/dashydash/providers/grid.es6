@@ -39,11 +39,11 @@ angular.module('Dashydash')
 				}
 
 				_getCenterPosX(posX = 0) {
-					return ~~( (posX + (this.itemHalfWidth / 2) ) / this.itemWidth );
+					return ~~( (posX + this.itemHalfWidth) / this.itemWidth );
 				}
 
 				_getCenterPosY(posY = 0) {
-					return ~~( (posY + (this.itemHalfHeight / 2) ) / this.itemHeight );
+					return ~~( (posY + this.itemHalfHeight) / this.itemHeight );
 				}
 
 				createEmptyGrid() {
