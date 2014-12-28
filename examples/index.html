@@ -41,81 +41,94 @@
 			}
 
 			dd-placeholder {
-				-webkit-transition: all .25s ease-in;
-				   -moz-transition: all .25s ease-in;
-				    -ms-transition: all .25s ease-in;
-				     -o-transition: all .25s ease-in;
-				        transition: all .25s ease-in;
+				-webkit-transition: all .25s linear;
+				   -moz-transition: all .25s linear;
+				    -ms-transition: all .25s linear;
+				     -o-transition: all .25s linear;
+				        transition: all .25s linear;
+			}
+
+			dd-item, dd-placeholder {
+				position: absolute;
+			}
+
+			dd-placeholder {
+				background-color: black;
+				pointer-event: none;
+				color: white;
+				font-size: 8px;
+				z-index: 0;
 			}
 
 			dd-item {
 				border: 1px solid grey;
-				position: absolute;
+				background: white;
+				z-index: 1;
 			}
 
-			dd-item[dd-row="0"] {
+			dd-item[dd-row="0"], dd-placeholder[dd-row="0"] {
 				left: 0px;
 			}
 
-			dd-item[dd-col="0"] {
+			dd-item[dd-col="0"], dd-placeholder[dd-col="0"] {
 				top: 0px;
 			}
 
-			dd-item[dd-row="1"] {
+			dd-item[dd-row="1"], dd-placeholder[dd-row="1"] {
 				left: 100px;
 			}
 
-			dd-item[dd-col="1"] {
+			dd-item[dd-col="1"], dd-placeholder[dd-col="1"] {
 				top: 50px;
 			}
 
-			dd-item[dd-row="2"] {
+			dd-item[dd-row="2"], dd-placeholder[dd-row="2"] {
 				left: 200px;
 			}
 
-			dd-item[dd-col="2"] {
+			dd-item[dd-col="2"], dd-placeholder[dd-col="2"] {
 				top: 100px;
 			}
 
-			dd-item[dd-row="3"] {
+			dd-item[dd-row="3"], dd-placeholder[dd-row="3"] {
 				left: 300px;
 			}
 
-			dd-item[dd-col="3"] {
+			dd-item[dd-col="3"], dd-placeholder[dd-col="3"] {
 				top: 150px;
 			}
 
-			dd-item[dd-row="4"] {
+			dd-item[dd-row="4"], dd-placeholder[dd-row="4"] {
 				left: 400px;
 			}
 
-			dd-item[dd-col="4"] {
+			dd-item[dd-col="4"], dd-placeholder[dd-col="4"] {
 				top: 200px;
 			}
 
-			dd-item[dd-width="1"] {
+			dd-item[dd-width="1"], dd-placeholder[dd-width="1"] {
 				width: 100px;
 			}
 
-			dd-item[dd-height="1"] {
+			dd-item[dd-height="1"], dd-placeholder[dd-height="1"] {
 				height: 50px;
 				line-height: 50px;
 			}
 
-			dd-item[dd-width="2"] {
+			dd-item[dd-width="2"], dd-placeholder[dd-width="2"] {
 				width: 200px;
 			}
 
-			dd-item[dd-height="2"] {
+			dd-item[dd-height="2"], dd-placeholder[dd-height="2"] {
 				height: 100px;
 				line-height: 100px;
 			}
 
-			dd-item[dd-width="3"] {
+			dd-item[dd-width="3"], dd-placeholder[dd-width="3"] {
 				width: 100px;
 			}
 
-			dd-item[dd-height="3"] {
+			dd-item[dd-height="3"], dd-placeholder[dd-height="3"] {
 				height: 150px;
 				line-height: 150px;
 			}
@@ -141,7 +154,7 @@
 			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler" style="position: absolute; right: 0px; bottom: 0px;">X</dd-resize-handler>
 		</section> -->
 		<!-- <section ng-controller="app.controllers.app as AppCtrl"> -->
-			<dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable>
+			<!-- <dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable> -->
 		<!-- </section> -->
 
 
