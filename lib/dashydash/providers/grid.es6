@@ -1,8 +1,8 @@
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
-		this.$get = ['$document',
-			($document) => {
+		this.$get = ['$document', '$rootScope',
+			($document, $rootScope) => {
 
 			class Grid {
 
@@ -32,9 +32,18 @@ angular.module('Dashydash')
 				}
 
 				itemDragged(...args) {
-					console.log(args[1].position);
-					// this.placeholder.x = 
+					var posX = ~~((args[1].position.x + 50)/100),
+						posY = ~~((args[1].position.y + 25)/50);
 
+					if(posX !== this.placeholder.position.current.x || posY !== this.placeholder.position.current.y) {
+
+						this.placeholder.position.last.x = this.placeholder.position.current.x;
+						this.placeholder.position.last.x = this.placeholder.position.current.y;
+						this.placeholder.position.current.x = posX;
+						this.placeholder.position.current.y = posY;
+
+						$rootScope.$apply();
+					}
 				}
 
 				setPlaceholder(element) {

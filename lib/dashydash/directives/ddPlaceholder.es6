@@ -1,6 +1,10 @@
 angular.module('Dashydash')
-	.directive('ddPlaceholder', ['$timeout', 'Dashydash.services.nodeBuilder', 'Dashydash.constants.positionableElementDOMAttributes',
-	function($timeout, nodeBuilder, DOM_ATTRIBUTES) {
+	.directive('ddPlaceholder', [
+	'Dashydash.services.nodeBuilder',
+	'Dashydash.constants.positionableElementDOMAttributes',
+	'PropertyBinder.services.binder',
+	'$timeout',
+	function(nodeBuilder, DOM_ATTRIBUTES, bind, $timeout) {
 		return {
 			scope: true,
 			restrict: 'EA',
@@ -16,16 +20,19 @@ angular.module('Dashydash')
 						if(attributeDefined)
 							return nodeBuilder.compile($node)($scope);
 
-						$scope.row = 0;
-						$scope.col = 99;
-						$scope.width = 99;
-						$scope.height = 99;
+						// $scope.row = 0;
+						// $scope.col = 99;
+						$scope.width = 1;
+						$scope.height = 1;
 
 						var gridController = controllers[0],
 							placeholderController = controllers[1];
 						var config = {element: $node, grid: gridController.grid};
 
 						placeholderController.initialize(config);
+						
+						bind('y').as('col').from(placeholderController.placeholder.position.current).to($scope).apply();
+						bind('x').as('row').from(placeholderController.placeholder.position.current).to($scope).apply();
 					}
 				};
 			}
