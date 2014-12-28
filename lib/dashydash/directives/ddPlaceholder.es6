@@ -31,8 +31,8 @@ angular.module('Dashydash')
 
 						placeholderController.initialize(config);
 						
-						bind('y').as('col').from(placeholderController.placeholder.position.current).to($scope).apply();
-						bind('x').as('row').from(placeholderController.placeholder.position.current).to($scope).apply();
+						bind('y').as('row').from(placeholderController.placeholder.position.current).to($scope).apply();
+						bind('x').as('col').from(placeholderController.placeholder.position.current).to($scope).apply();
 					}
 				};
 			}

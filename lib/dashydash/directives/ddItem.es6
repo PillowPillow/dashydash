@@ -2,7 +2,8 @@ angular.module('Dashydash')
 	.directive('ddItem', [
 	'Dashydash.services.nodeBuilder', 
 	'Dashydash.constants.positionableElementDOMAttributes',
-	function(nodeBuilder, DOM_ATTRIBUTES) {
+	'PropertyBinder.services.binder',
+	function(nodeBuilder, DOM_ATTRIBUTES, bind) {
 		return {
 			scope: true,
 			require: ['^ddGrid', 'ddItem'],
@@ -22,9 +23,12 @@ angular.module('Dashydash')
 
 						var gridController = controllers[0],
 							itemController = controllers[1];
-						var config = {element: $node, grid: gridController.grid, rows: $scope.row, columns: $scope.col};
+						var config = {element: $node, grid: gridController.grid, row: $scope.row, column: $scope.col};
 
 						itemController.initialize(config);
+						
+						bind('y').as('row').from(itemController.item.position.current).to($scope).apply();
+						bind('x').as('col').from(itemController.item.position.current).to($scope).apply();
 
 					}
 				};
