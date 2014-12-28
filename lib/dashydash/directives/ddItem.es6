@@ -14,8 +14,10 @@ angular.module('Dashydash')
 				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class': 'class'});
 				return {
 					post: ($scope, $node, attributes, controllers) => {
-						if(attributeDefined)
+						if(attributeDefined) {
+							$node.removeAttr('ng-repeat')
 							return nodeBuilder.compile($node)($scope);
+						}
 						$scope.row = attributes.initRow || 0;
 						$scope.col = attributes.initCol || 0;
 						$scope.width = attributes.initWidth || 1;
