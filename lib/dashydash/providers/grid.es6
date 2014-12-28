@@ -32,7 +32,9 @@ angular.module('Dashydash')
 				}
 
 				itemDragged(...args) {
-					console.log(...args);
+					console.log(args[1].position);
+					// this.placeholder.x = 
+
 				}
 
 				setPlaceholder(element) {
