@@ -13,6 +13,8 @@ angular.module('Dashydash')
 					this.element = $node;
 					this.grid = grid;
 
+					this.itemDragged = false;
+
 					this.position = { current:{x:0,y:0}, last:{x:0,y:0} };
 				}
 			}

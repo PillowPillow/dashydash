@@ -31,7 +31,7 @@ angular.module('Dashydash')
 
 				}
 
-				itemDragged(...args) {
+				itemDragStart(...args) {
 					var posX = ~~((args[1].position.x + 50)/100),
 						posY = ~~((args[1].position.y + 25)/50);
 
@@ -44,6 +44,27 @@ angular.module('Dashydash')
 
 						$rootScope.$apply();
 					}
+				}
+
+				itemDragged(...args) {
+					var posX = ~~((args[1].position.x + 50)/100),
+						posY = ~~((args[1].position.y + 25)/50);
+
+					if(posX !== this.placeholder.position.current.x || posY !== this.placeholder.position.current.y) {
+
+						this.placeholder.position.last.x = this.placeholder.position.current.x;
+						this.placeholder.position.last.x = this.placeholder.position.current.y;
+						this.placeholder.position.current.x = posX;
+						this.placeholder.position.current.y = posY;
+
+						this.placeholder.itemDragged = true;
+						$rootScope.$apply();
+					}
+				}
+
+				itemDragStop() {
+					this.placeholder.itemDragged = false;
+					$rootScope.$apply();
 				}
 
 				setPlaceholder(element) {

@@ -17,24 +17,28 @@ angular.module('Dashydash')
 
 					this.position = { current:{x:row,y:col}, last:{x:row,y:col} };
 
+					this.isDragged = false;
+
 					this._initDraggableBehaviour({
 						element: $node,  
+						ondragStart: (...args) => {
+							this.isDragged = true;
+							this.grid.itemDragStart(...args);
+						},
 						ondrag: (...args) => this.grid.itemDragged(...args),
 						ondragStop: (...args) => {
 							var posX = ~~((args[1].position.x + 50)/100),
 								posY = ~~((args[1].position.y + 25)/50);
 
 							if(posX !== this.position.current.x || posY !== this.position.current.y) {
-
 								this.position.last.x = this.position.current.x;
 								this.position.last.y = this.position.current.y;
 								this.position.current.x = posX;
 								this.position.current.y = posY;
-
-								$rootScope.$apply();
 							}
 							this.element.removeAttr('style');
-							console.log(this.position)
+							this.isDragged = false;
+							this.grid.itemDragStop(...args);
 						}
 					});
 
