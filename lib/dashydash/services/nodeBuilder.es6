@@ -12,17 +12,15 @@ angular.module('Dashydash')
 		function addAttributesfn(node, attributes = {}) {
 
 			var keys = Object.keys(attributes),
-				isThereAnAlreadyDefinedAttribute = false;
+				heDefinedAnAttribute = false;
 
 			for(let i = 0; i<keys.length; i++)
-				if(node.attr(keys[i]) === undefined)
+				if(node.attr(keys[i]) === undefined) {
 					node.attr(keys[i], attributes[keys[i]]);
-				else {
-					isThereAnAlreadyDefinedAttribute = true;
-					break;
+					heDefinedAnAttribute = true;
 				}
 
-			return isThereAnAlreadyDefinedAttribute;
+			return heDefinedAnAttribute;
 		}
 
 		function compilefn($node) {
