@@ -1,5 +1,5 @@
 angular.module('Dashydash-utils')
-	.controller('Dashydash-utils.controllers.ddDraggable', [
+	.controller('Dashydash-utils.controllers.draggable', [
 	'Dashydash-utils.services.utils', 
 	'Dashydash-utils.providers.draggable', 
 	'Dashydash-utils.constants.draggableConfiguration', 

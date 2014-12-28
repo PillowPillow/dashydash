@@ -5,7 +5,7 @@ angular.module('Dashydash')
 			scope: true,
 			restrict: 'EA',
 			require: '^ddGrid',
-			controller: 'Dashydash.controllers.ddPlaceholder',
+			controller: 'Dashydash.controllers.placeholder',
 			controllerAs: '_ddPlaceholder',
 			compile: (node) => {
 				

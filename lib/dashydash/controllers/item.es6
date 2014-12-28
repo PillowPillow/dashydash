@@ -1,8 +1,8 @@
 angular.module('Dashydash')
-	.controller('Dashydash.controllers.ddItem', [
+	.controller('Dashydash.controllers.item', [
 	'Dashydash-utils.services.utils', 
 	'Dashydash.providers.item', 
-	function(utils, Item, Draggable, DRAGGABLE_CONFIGURATION) {
+	function(utils, Item) {
 
 		this.initialize = function(configuration = {}) {
 

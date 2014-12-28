@@ -4,7 +4,7 @@ angular.module('Dashydash-utils')
 			scope: {},
 			restrict: 'EA',
 			require: 'ddResizeHandler',
-			controller: 'Dashydash-utils.controllers.ddResizeHandler',
+			controller: 'Dashydash-utils.controllers.resizeHandler',
 			controllerAs: '_ddResizeHandler',
 			link: function($scope, $node, attributes, controller) {
 

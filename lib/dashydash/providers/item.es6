@@ -11,8 +11,9 @@ angular.module('Dashydash')
 
 				constructor({element:$node, grid:grid}) {
 
+					this.element = $node;
 					this.grid = grid;
-					console.log(_ref)
+
 					this._initDraggableBehaviour({
 						element: $node,  
 						ondrag: (...args) => this.grid.itemDragged(...args)

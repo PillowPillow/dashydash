@@ -5,8 +5,10 @@ angular.module('Dashydash')
 
 			class Placeholder {
 
-				constructor() {
+				constructor({element:$node, grid: grid}) {
 					
+					this.element = $node;
+					this.grid = grid;
 				}
 			}
 

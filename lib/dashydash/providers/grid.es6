@@ -1,19 +1,19 @@
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
-		this.$get = ['$document', 'Dashydash-utils.providers.DOMElement',
-			($document, DOMElement) => {
+		this.$get = ['$document',
+			($document) => {
 
-			class Grid extends DOMElement {
+			class Grid {
 
 				constructor({element:$node, container:container, columns:columns, rows:rows}) {
-
-					super({element:$node, container:container});
 
 					this.grid = [];
 					
 					this.rows = rows;
 					this.columns = columns;
+
+					this.placeholder = null;
 
 					this.createEmptyGrid();
 
@@ -29,6 +29,14 @@ angular.module('Dashydash')
 							this.grid[row][col] = null;
 					}
 
+				}
+
+				itemDragged(...args) {
+					console.log(...args);
+				}
+
+				setPlaceholder(element) {
+					this.placeholder = element;
 				}
 
 			}

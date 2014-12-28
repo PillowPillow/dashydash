@@ -10,7 +10,7 @@ angular.module('Dashydash-utils')
 			},
 			restrict: 'EA',
 			require: 'ddDraggable',
-			controller: 'Dashydash-utils.controllers.ddDraggable',
+			controller: 'Dashydash-utils.controllers.draggable',
 			controllerAs: '_ddDraggable',
 			link: function($scope, $node, attributes, controller) {
 

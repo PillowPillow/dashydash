@@ -10,7 +10,7 @@ angular.module('Dashydash')
 			transclude: true,
 			templateUrl: 'ddGrid.jade',
 			require: 'ddGrid',
-			controller: 'Dashydash.controllers.ddGrid',
+			controller: 'Dashydash.controllers.grid',
 			controllerAs: '_ddGrid',
 			compile: () => {
 				return {

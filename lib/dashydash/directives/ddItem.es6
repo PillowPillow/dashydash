@@ -7,7 +7,7 @@ angular.module('Dashydash')
 			scope: true,
 			require: ['^ddGrid', 'ddItem'],
 			restrict: 'EA',
-			controller: 'Dashydash.controllers.ddItem',
+			controller: 'Dashydash.controllers.item',
 			controllerAs: '_ddItem',
 			compile: (node) => {
 				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES);
