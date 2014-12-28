@@ -8,7 +8,7 @@ angular.module('Dashydash')
 			scope: true,
 			require: ['^ddGrid', 'ddItem'],
 			restrict: 'EA',
-			controller: 'Dashydash.controllers.item',
+			controller: 'Dashydash.controllers.gridItem',
 			controllerAs: '_ddItem',
 			compile: (node) => {
 				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class': 'class'});

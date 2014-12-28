@@ -13,10 +13,37 @@ angular.module('Dashydash')
 					this.rows = rows;
 					this.columns = columns;
 
+					this.itemWidth = 100;
+					this.itemHeight = 50;
+
 					this.placeholder = null;
 
 					this.createEmptyGrid();
 
+				}
+
+				get itemHalfWidth() {
+					return this.itemWidth / 2;
+				}
+
+				get itemHalfHeight() {
+					return this.itemHeight / 2;
+				}
+
+				_forceViewUpdate() {
+					$rootScope.$apply();
+				}
+
+				_getCenterPosition({x,y}) {
+					return { x:this._getCenterPosX(x), y:this._getCenterPosY(y) };
+				}
+
+				_getCenterPosX(posX = 0) {
+					return ~~( (posX + (this.itemHalfWidth / 2) ) / this.itemWidth );
+				}
+
+				_getCenterPosY(posY = 0) {
+					return ~~( (posY + (this.itemHalfHeight / 2) ) / this.itemHeight );
 				}
 
 				createEmptyGrid() {
@@ -30,29 +57,25 @@ angular.module('Dashydash')
 					}
 				}
 
-				itemDragStart(...args) {
-					var posX = ~~((args[1].position.x + 50)/100),
-						posY = ~~((args[1].position.y + 25)/50);
+				itemDragStart(item, ...args) {
 
-					this.placeholder.moveTo({x:posX, y:posY});
+					var position = this._getCenterPosition(args[1].position);
+					this.placeholder.enableAnimation();
+					this.placeholder.moveTo(position);
 					this._forceViewUpdate();
 				}
 
-				itemDragged(...args) {
-					var posX = ~~((args[1].position.x + 50)/100),
-						posY = ~~((args[1].position.y + 25)/50);
+				itemDragged(item, ...args) {
 
-					var isMoved = this.placeholder.moveTo({x:posX, y:posY});
+					var position = this._getCenterPosition(args[1].position);
+					var isMoved = this.placeholder.moveTo(position);
 					isMoved && this._forceViewUpdate();
 				}
 
-				itemDragStop() {
-					this.placeholder.itemDragged = false;
+				itemDragStop(item) {
+					this.placeholder.disableAnimation();
+					item.moveTo(this.placeholder.position.current);
 					this._forceViewUpdate();
-				}
-
-				_forceViewUpdate() {
-					$rootScope.$apply();
 				}
 
 			}
