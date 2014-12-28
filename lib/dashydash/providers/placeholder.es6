@@ -22,7 +22,7 @@ angular.module('Dashydash')
 				}
 
 				disableAnimation() {
-					this.itemDragged = true;
+					this.itemDragged = false;
 				}
 			}
 
