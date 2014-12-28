@@ -69,7 +69,7 @@ angular.module('Dashydash')
 
 					var position = this._getCenterPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
-					isMoved && this._forceViewUpdate();
+					isMoved && item.moveTo(this.placeholder.position.current) && this._forceViewUpdate();
 				}
 
 				itemDragStop(item) {
