@@ -11,23 +11,23 @@ angular.module('Dashydash')
 				}
 
 				_updatePosition({x,y}) {
-					this.position.current.x = x;
-					this.position.current.y = y;
+					this.position.current.x = parseInt(x, 10);
+					this.position.current.y = parseInt(y, 10);
 				}
 
 				_updateLastPosition() {
-					this.position.last.x = this.position.current.x;
-					this.position.last.y = this.position.current.y;
+					this.position.last.x = parseInt(this.position.current.x, 10);
+					this.position.last.y = parseInt(this.position.current.y, 10);
 				}
 
 				_updateSize({w,h}) {
-					this.size.current.w = w;
-					this.size.current.h = h;
+					this.size.current.w = parseInt(w, 10);
+					this.size.current.h = parseInt(h, 10);
 				}
 
 				_updateLastSize() {
-					this.size.last.w = this.size.current.w;
-					this.size.last.h = this.size.current.h;
+					this.size.last.w = parseInt(this.size.current.w, 10);
+					this.size.last.h = parseInt(this.size.current.h, 10);
 				}
 
 				_isMoved({x,y}) {
@@ -39,8 +39,8 @@ angular.module('Dashydash')
 				}
 
 				moveBack() {
-					this.position.current.x = this.position.last.x;
-					this.position.current.y = this.position.last.y;
+					this.position.current.x = parseInt(this.position.last.x, 10);
+					this.position.current.y = parseInt(this.position.last.y, 10);
 				}
 
 				moveTo({x,y}, final = true) {
