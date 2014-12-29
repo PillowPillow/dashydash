@@ -45,6 +45,18 @@ angular.module('Dashydash')
 
 				moveTo({x,y}, final = true) {
 
+					if(x === undefined)
+						x = this.position.current.x;
+
+					if(y === undefined)
+						y = this.position.current.y;
+
+					if(x<0)
+						x = 0;
+
+					if(y<0)
+						y = 0;
+
 					var moved = this._isMoved({x,y});
 
 					if(moved) {
@@ -53,6 +65,22 @@ angular.module('Dashydash')
 					}
 
 					return moved;
+				}
+
+				moveUp() {
+					return this.moveTo({ y:this.position.current.y -1 });
+				}
+
+				moveDown() {
+					return this.moveTo({ y:this.position.current.y +1 });
+				}
+
+				moveLeft() {
+					return this.moveTo({ y:this.position.current.x -1 });
+				}
+
+				moveRight() {
+					return this.moveTo({ y:this.position.current.x +1 });
 				}
 
 				updateSize({w, h}) {

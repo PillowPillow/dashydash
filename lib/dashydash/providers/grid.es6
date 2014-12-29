@@ -9,6 +9,7 @@ angular.module('Dashydash')
 				constructor({element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
 
 					this.grid = [];
+					this.items = [];
 					
 					this.rows = rows;
 					this.columns = columns;
@@ -48,6 +49,10 @@ angular.module('Dashydash')
 					return !(src instanceof Array) ? [src] : src;
 				}
 
+				_isItemAlreadyRegistered(item) {
+					return !!item && ~this.items.indexOf(item);
+				}
+
 				_putItem(item) {
 
 					if(!this.grid[item.position.current.y])
@@ -77,7 +82,9 @@ angular.module('Dashydash')
 					var isMoved = this.placeholder.moveTo(position);
 					if(isMoved) {
 						item.moveTo(this.placeholder.position.current, false);
-						this.getItemsFromRegion(item.position.current, item.size.current, item);
+						let overlappedItem = this.getItemsFromRegion(item.position.current, item.size.current, item);
+						if(overlappedItem.length > 0)
+							overlappedItem[0].moveDown();
 						this._forceViewUpdate();
 					} 
 				}
@@ -134,11 +141,10 @@ angular.module('Dashydash')
 					return itemFound;	
 				}
 
-				registerItems(items = []) {
-					this._putItems(items);
-				}
-
 				registerItem(item) {
+					if(this._isItemAlreadyRegistered(item))
+						this.items.push(item);
+
 					this._putItem(item);
 				}
 

@@ -18,6 +18,7 @@ angular.module('Dashydash')
 					this.grid = grid;
 
 					this.isDragged = false;
+					this.temporarilyMoved = false;
 
 					this._initDraggableBehaviour({
 						element: $node,  
