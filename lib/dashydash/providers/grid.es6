@@ -45,6 +45,10 @@ angular.module('Dashydash')
 					return ~~( (posY + this.itemHalfHeight) / this.itemHeight );
 				}
 
+				_belongTo(item, list = []) {
+					return !!item && ~list.indexOf(item);
+				}
+
 				_putItem(item) {
 
 					if(!this.grid[item.position.current.y])
@@ -75,7 +79,31 @@ angular.module('Dashydash')
 					this._forceViewUpdate();
 				}
 
-				getItem({row:row, column:col}) {
+				getItemsFromRegion({x:col,y:row,width:w,height:h}, excludedItems = []) {
+					
+					if(!w || !h)
+						w = h = 1;
+
+					if(!(excludedItems instanceof Array))
+						excludedItems = [excludedItems];
+
+					var colMax = col + w,
+						rowMax = row + h;
+
+					var items = [];
+
+					for(var x = col; x<colMax; x++) {
+						for(var y = row; y<rowMax; y++) {
+							let item = this.getItem({x,y});
+							if(!this._belongTo(excludedItems) && !this._belongTo(items))
+								items.push(item);
+						}
+					}
+
+					return items;
+				}
+
+				getItem({x:col, y:row}, excludedItems = []) {
 					var size = {x:1,y:1},
 						itemFound = null;
 
@@ -84,7 +112,7 @@ angular.module('Dashydash')
 						for(let x = col; x>=0; x--) {
 							if(!!this.grid[y]) {
 								let item = this.grid[y][x];
-								if(item && item.size.current.height >= size.x && item.size.current.width >= size.y) {
+								if(!this._belongTo(excludedItems) && item.size.current.height >= size.x && item.size.current.width >= size.y) {
 									itemFound = item;
 									break loopOnRows;
 								}

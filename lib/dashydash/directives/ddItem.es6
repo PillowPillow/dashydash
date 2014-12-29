@@ -6,8 +6,8 @@ angular.module('Dashydash')
 	function(nodeBuilder, DOM_ATTRIBUTES, bind) {
 		return {
 			scope: true,
-			require: ['^ddGrid', 'ddItem'],
 			restrict: 'EA',
+			require: ['^ddGrid', 'ddItem'],
 			controller: 'Dashydash.controllers.gridItem',
 			controllerAs: '_ddItem',
 			compile: (node) => {
@@ -37,7 +37,6 @@ angular.module('Dashydash')
 						bind('w').as('width').from(itemController.item.size.current).to($scope).apply();
 						bind('h').as('height').from(itemController.item.size.current).to($scope).apply();
 						bind('isDragged').as('item-dragged').from(itemController.item).to($scope.class).apply();
-
 					}
 				};
 			}
