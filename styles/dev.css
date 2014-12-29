@@ -8,12 +8,14 @@ body {
 	box-sizing: border-box;
 }
 
-.test-block {
-	border: 1px solid black;
-	width: 90px;
-	height: 90px;
-	display: block;
-}
+.dark-primary-color    { background: #C2185B; }
+.default-primary-color { background: #E91E63; }
+.light-primary-color   { background: #F8BBD0; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #00BCD4; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }
 
 .dd-container {
 	position: relative;
@@ -57,7 +59,6 @@ dd-placeholder:not(.item-dragged) {
 
 dd-item {
 	text-align: center;
-	border: 1px solid grey;
 	background: white;
 	z-index: 1;
 }

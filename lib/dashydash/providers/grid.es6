@@ -9,7 +9,6 @@ angular.module('Dashydash')
 				constructor({element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
 
 					this.grid = [];
-					this.items = [];
 					
 					this.rows = rows;
 					this.columns = columns;
@@ -49,12 +48,23 @@ angular.module('Dashydash')
 					return !!item && ~list.indexOf(item);
 				}
 
+				_toArray(src) {
+					return !(src instanceof Array) ? [src] : src;
+				}
+
 				_putItem(item) {
 
 					if(!this.grid[item.position.current.y])
 						this.grid[item.position.current.y] = [];
 
 					this.grid[item.position.current.y][this.position.current.x] = item;
+				}
+
+				_putItems(items = []) {
+
+					items = this._toArray(items);
+					for(var i =0; i<items; i++)
+						this._putItem(items[i]);
 				}
 
 				itemDragStart(item, ...args) {
@@ -83,9 +93,8 @@ angular.module('Dashydash')
 					
 					if(!w || !h)
 						w = h = 1;
-
-					if(!(excludedItems instanceof Array))
-						excludedItems = [excludedItems];
+					
+					excludedItems = this._toArray(excludedItems);
 
 					var colMax = col + w,
 						rowMax = row + h;
@@ -107,6 +116,8 @@ angular.module('Dashydash')
 					var size = {x:1,y:1},
 						itemFound = null;
 
+					excludedItems = this._toArray(excludedItems);
+
 					loopOnRows:for(var y = row; y>=0; y--) {
 						size.x = 1;
 						for(let x = col; x>=0; x--) {
@@ -124,8 +135,8 @@ angular.module('Dashydash')
 					return itemFound;	
 				}
 
-				registerItem(item) {
-					this.items.push(item);
+				addsItems(items = []) {
+					this._putItems(items);
 				}
 
 			}
