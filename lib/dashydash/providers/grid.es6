@@ -44,10 +44,6 @@ angular.module('Dashydash')
 					return ~~( (posY + this.itemHalfHeight) / this.itemHeight );
 				}
 
-				_belongTo(item, list = []) {
-					return !!item && ~list.indexOf(item);
-				}
-
 				_toArray(src) {
 					return !(src instanceof Array) ? [src] : src;
 				}
@@ -68,7 +64,6 @@ angular.module('Dashydash')
 				}
 
 				itemDragStart(item, ...args) {
-					console.log(this.grid)
 					var position = this._getPosition(args[1].position);
 					this.placeholder.enableAnimation();
 					this.placeholder.moveTo(position);
@@ -82,7 +77,7 @@ angular.module('Dashydash')
 					var isMoved = this.placeholder.moveTo(position);
 					if(isMoved) {
 						item.moveTo(this.placeholder.position.current, false);
-						console.log(this.getItemsFromRegion(this.placeholder.position.current, this.placeholder.size.current));
+						this.getItemsFromRegion(item.position.current, item.size.current, item);
 						this._forceViewUpdate();
 					} 
 				}
@@ -108,7 +103,7 @@ angular.module('Dashydash')
 					for(var x = col; x<colMax; x++) {
 						for(var y = row; y<rowMax; y++) {
 							let item = this.getItem({x,y});
-							if(!!item && !this._belongTo(excludedItems) && !this._belongTo(items))
+							if(!!item && !item.belongTo(excludedItems) && !item.belongTo(items))
 								items.push(item);
 						}
 					}
@@ -127,9 +122,7 @@ angular.module('Dashydash')
 						for(let x = col; x>=0; x--) {
 							if(!!this.grid[y]) {
 								let item = this.grid[y][x];
-								if(!!item && !this._belongTo(excludedItems) && item.size.current.h >= size.x && item.size.current.w >= size.y) {
-
-									console.log(item.element, item.size.current.h, size.x, item.size.current.w, size.y);
+								if(!!item && !item.belongTo(excludedItems) && item.size.current.h >= size.x && item.size.current.w >= size.y) {
 									itemFound = item;
 									break loopOnRows;
 								}

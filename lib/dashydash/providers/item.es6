@@ -66,6 +66,10 @@ angular.module('Dashydash')
 
 					return updated;
 				}
+
+				belongTo(list = []) {
+					return ~list.indexOf(this);
+				}
 			}
 
 			return Item;
