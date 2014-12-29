@@ -17,8 +17,6 @@ angular.module('Dashydash')
 					this.element = $node;
 					this.grid = grid;
 
-					this.position = { current:{x:row,y:col}, last:{x:row,y:col} };
-
 					this.isDragged = false;
 
 					this._initDraggableBehaviour({

@@ -32,10 +32,14 @@ angular.module('Dashydash')
 
 						itemController.initialize(config);
 						
-						bind('y').as('row').from(itemController.item.position.current).to($scope).apply();
-						bind('x').as('col').from(itemController.item.position.current).to($scope).apply();
-						bind('w').as('width').from(itemController.item.size.current).to($scope).apply();
-						bind('h').as('height').from(itemController.item.size.current).to($scope).apply();
+						bind(['y','x'])
+							.as({'y':'row','x':'col'})
+							.from(itemController.item.position.current)
+							.to($scope).apply();
+						bind(['w','h'])
+							.as({'w':'width','h':'height'})
+							.from(itemController.item.size.current)
+							.to($scope).apply();
 						bind('isDragged').as('item-dragged').from(itemController.item).to($scope.class).apply();
 					}
 				};

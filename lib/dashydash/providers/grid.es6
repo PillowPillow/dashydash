@@ -80,7 +80,10 @@ angular.module('Dashydash')
 
 					var position = this._getPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
-					isMoved && item.moveTo(this.placeholder.position.current, false) && this._forceViewUpdate();
+					if(isMoved) {
+						item.moveTo(this.placeholder.position.current, false)
+						this._forceViewUpdate();
+					} 
 				}
 
 				itemDragStop(item) {
@@ -89,15 +92,15 @@ angular.module('Dashydash')
 					this._forceViewUpdate();
 				}
 
-				getItemsFromRegion({x:col,y:row,width:w,height:h}, excludedItems = []) {
+				getItemsFromRegion({x:col,y:row},{w:width,h:height}, excludedItems = []) {
 					
-					if(!w || !h)
-						w = h = 1;
+					if(!width || !height)
+						width = height = 1;
 					
 					excludedItems = this._toArray(excludedItems);
 
-					var colMax = col + w,
-						rowMax = row + h;
+					var colMax = col + width,
+						rowMax = row + height;
 
 					var items = [];
 
