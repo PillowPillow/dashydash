@@ -7,6 +7,8 @@ angular.module('Dashydash')
 		this.initialize = function(configuration = {}) {
 
 			this.item = new GridItem(configuration);
+
+			this.item.grid.registerItem(this.item);
 			return this.item;
 		};
 

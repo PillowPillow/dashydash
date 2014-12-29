@@ -25,7 +25,6 @@ angular.module('Dashydash')
 						ondrag: (...args) => this._ondrag(...args),
 						ondragStop: (...args) => this._ondragStop(...args)
 					});
-
 				}
 
 				_ondragStart(...args) {
