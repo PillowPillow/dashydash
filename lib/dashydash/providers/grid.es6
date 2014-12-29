@@ -85,8 +85,7 @@ angular.module('Dashydash')
 
 				itemDragStop(item) {
 					this.placeholder.disableAnimation();
-					// item.moveTo(this.placeholder.position.current);
-					item.moveBack();
+					item.moveTo(this.placeholder.position.current);
 					this._forceViewUpdate();
 				}
 
