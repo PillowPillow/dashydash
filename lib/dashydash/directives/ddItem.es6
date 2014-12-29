@@ -19,10 +19,10 @@ angular.module('Dashydash')
 							return nodeBuilder.compile($node)($scope);
 						}
 
-						var row = attributes.initRow || 0,
-							col = attributes.initCol || 0,
-							width = attributes.initWidth || 1,
-							height = attributes.initHeight || 1;
+						var row = parseInt(attributes.initRow, 10) || 0,
+							col = parseInt(attributes.initCol, 10) || 0,
+							width = parseInt(attributes.initWidth, 10) || 1,
+							height = parseInt(attributes.initHeight, 10) || 1;
 
 						$scope.class = {};
 
