@@ -17,7 +17,7 @@ angular.module('Dashydash')
 
 				_updateLastPosition() {
 					this.position.last.x = this.position.current.x;
-					this.position.last.x = this.position.current.y;
+					this.position.last.y = this.position.current.y;
 				}
 
 				_updateSize({w,h}) {
@@ -38,12 +38,17 @@ angular.module('Dashydash')
 					return w !== this.size.current.w || h !== this.size.current.h;
 				}
 
-				moveTo({x,y}) {
+				moveBack() {
+					this.position.current.x = this.position.last.x;
+					this.position.current.y = this.position.last.y;
+				}
+
+				moveTo({x,y}, final = true) {
 
 					var moved = this._isMoved({x,y});
 
 					if(moved) {
-						this._updateLastPosition();
+						final && this._updateLastPosition();
 						this._updatePosition({x,y});
 					}
 

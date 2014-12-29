@@ -80,12 +80,13 @@ angular.module('Dashydash')
 
 					var position = this._getPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
-					isMoved && item.moveTo(this.placeholder.position.current) && this._forceViewUpdate();
+					isMoved && item.moveTo(this.placeholder.position.current, false) && this._forceViewUpdate();
 				}
 
 				itemDragStop(item) {
 					this.placeholder.disableAnimation();
-					item.moveTo(this.placeholder.position.current);
+					// item.moveTo(this.placeholder.position.current);
+					item.moveBack();
 					this._forceViewUpdate();
 				}
 
