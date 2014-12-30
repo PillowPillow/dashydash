@@ -95,20 +95,23 @@ angular.module('Dashydash')
 
 					this.placeholder.disableAnimation();
 					item.moveTo(this.placeholder.position.current);
-					this.moveDownRegion(item, true);
+					this.moveDownRegion(item, undefined, true);
 					this._saveLocations();
 					this._forceViewUpdate();
 				}
 
-				moveDownRegion(item, final = false) {
-					var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, item), i;
+				moveDownRegion(item, excludedItems = [], final = false) {
+					excludedItems = this._toArray(excludedItems);
+					excludedItems.push(item);
+
+					var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, excludedItems), i;
 
 					for(i = 0; i<regionItems.length; i++) {
 						let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
 						regionItems[i].moveDown(nbToMove, final);
 					}
 					for(i = 0; i<regionItems.length; i++)
-						this.moveDownRegion(regionItems[i], final);
+						this.moveDownRegion(regionItems[i], excludedItems, final);
 				}
 
 				getItemsFromRegion({x:col,y:row},{w:width,h:height}, excludedItems = []) {
