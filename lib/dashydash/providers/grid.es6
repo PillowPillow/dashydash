@@ -10,7 +10,6 @@ angular.module('Dashydash')
 
 					this.grid = [];
 					this.items = [];
-					this.temporarilyMovedItems = [];
 					
 					this.rows = rows;
 					this.columns = columns;
@@ -28,6 +27,10 @@ angular.module('Dashydash')
 
 				get itemHalfHeight() {
 					return this.itemHeight / 2;
+				}
+
+				_resetGrid() {
+					this.grid.splice(0);
 				}
 
 				_forceViewUpdate() {
@@ -51,21 +54,29 @@ angular.module('Dashydash')
 				}
 
 				_isItemAlreadyRegistered(item) {
-					return !!item && !~this.items.indexOf(item);
+					return !!item && !item.belongTo(this.items);
 				}
 
 				_rollbackPositions(excludedItems = []) {
 					for(var i = 0; i<this.items.length; i++)
-						if(!~excludedItems.indexOf(this.items[i]))
+						if(!this.items[i].belongTo(excludedItems))
 							this.items[i].moveBack();
 				}
 
 				_saveLocations(excludedItems = []) {
 
-					this.grid = [];
+					this._resetGrid();
 					for(var i = 0; i<this.items.length; i++)
-						if(!~excludedItems.indexOf(this.items[i]))
+						if(!this.items[i].belongTo(excludedItems))
 							this.items[i].saveLocation();
+				}
+
+				_saveGridState(excludedItems = []) {
+
+					this._resetGrid();
+					for(var i = 0; i<this.items.length; i++)
+						if(!this.items[i].belongTo(excludedItems))
+							this.saveItemLocation(this.items[i]);
 				}
 
 				itemDragStart(item, ...args) {
@@ -80,13 +91,14 @@ angular.module('Dashydash')
 				itemDragged(item, ...args) {
 
 					this._rollbackPositions();
-
+					this._saveGridState();
 					var position = this._getPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
 
 					if(isMoved) {
 						item.moveTo(this.placeholder.position.current);
 						this.moveDownRegion(item);
+						this._saveGridState();
 						this._forceViewUpdate();
 					} 
 				}
