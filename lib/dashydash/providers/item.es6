@@ -20,16 +20,15 @@ angular.module('Dashydash')
 					this.position.last.y = parseInt(this.position.current.y, 10);
 				}
 
-				_updateSize({w,h}) {
-					this.size.current.w = parseInt(w, 10);
-					this.size.current.h = parseInt(h, 10);
-				}
-
 				_updateLastSize() {
 					this.size.last.w = parseInt(this.size.current.w, 10);
 					this.size.last.h = parseInt(this.size.current.h, 10);
 				}
 
+				_updateSize({w,h}) {
+					this.size.current.w = parseInt(w, 10);
+					this.size.current.h = parseInt(h, 10);
+				}
 				_isMoved({x,y}) {
 					return x !== this.position.current.x || y !== this.position.current.y;
 				}
@@ -60,27 +59,28 @@ angular.module('Dashydash')
 					var moved = this._isMoved({x,y});
 
 					if(moved) {
-						final && this._updateLastPosition();
+						if(final)
+							this._updateLastPosition();
 						this._updatePosition({x,y});
 					}
 
 					return moved;
 				}
 
-				moveUp() {
-					return this.moveTo({ y:this.position.current.y -1 });
+				moveUp(nbToMove = 1, final = false) {
+					return this.moveTo({ y:this.position.current.y -nbToMove }, final);
 				}
 
-				moveDown() {
-					return this.moveTo({ y:this.position.current.y +1 });
+				moveDown(nbToMove = 1, final = false) {
+					return this.moveTo({ y:this.position.current.y +nbToMove }, final);
 				}
 
-				moveLeft() {
-					return this.moveTo({ y:this.position.current.x -1 });
+				moveLeft(nbToMove = 1, final = false) {
+					return this.moveTo({ y:this.position.current.x -nbToMove }, final);
 				}
 
-				moveRight() {
-					return this.moveTo({ y:this.position.current.x +1 });
+				moveRight(nbToMove = 1, final = false) {
+					return this.moveTo({ y:this.position.current.x +nbToMove }, final);
 				}
 
 				updateSize({w, h}) {

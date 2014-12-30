@@ -10,6 +10,7 @@ angular.module('Dashydash')
 
 					this.grid = [];
 					this.items = [];
+					this.temporarilyMovedItems = [];
 					
 					this.rows = rows;
 					this.columns = columns;
@@ -50,49 +51,64 @@ angular.module('Dashydash')
 				}
 
 				_isItemAlreadyRegistered(item) {
-					return !!item && ~this.items.indexOf(item);
+					return !!item && !~this.items.indexOf(item);
 				}
 
-				_putItem(item) {
-
-					if(!this.grid[item.position.current.y])
-						this.grid[item.position.current.y] = [];
-
-					this.grid[item.position.current.y][item.position.current.x] = item;
+				_rollbackPositions(excludedItems = []) {
+					for(var i = 0; i<this.items.length; i++)
+						if(!~excludedItems.indexOf(this.items[i]))
+							this.items[i].moveBack();
 				}
 
-				_putItems(items = []) {
+				_saveLocations(excludedItems = []) {
 
-					items = this._toArray(items);
-					for(var i =0; i<items; i++)
-						this._putItem(items[i]);
+					this.grid = [];
+					for(var i = 0; i<this.items.length; i++)
+						if(!~excludedItems.indexOf(this.items[i]))
+							this.items[i].saveLocation();
 				}
 
 				itemDragStart(item, ...args) {
 					var position = this._getPosition(args[1].position);
+
 					this.placeholder.enableAnimation();
-					this.placeholder.moveTo(position);
+					this.placeholder.moveTo(position, false);
 					this.placeholder.updateSize(item.size.current);
 					this._forceViewUpdate();
 				}
 
 				itemDragged(item, ...args) {
 
+					this._rollbackPositions();
+
 					var position = this._getPosition(args[1].position);
 					var isMoved = this.placeholder.moveTo(position);
+
 					if(isMoved) {
-						item.moveTo(this.placeholder.position.current, false);
-						let overlappedItem = this.getItemsFromRegion(item.position.current, item.size.current, item);
-						if(overlappedItem.length > 0)
-							overlappedItem[0].moveDown();
+						item.moveTo(this.placeholder.position.current);
+						this.moveDownRegion(item);
 						this._forceViewUpdate();
 					} 
 				}
 
 				itemDragStop(item) {
+
 					this.placeholder.disableAnimation();
 					item.moveTo(this.placeholder.position.current);
+					this.moveDownRegion(item, true);
+					this._saveLocations();
 					this._forceViewUpdate();
+				}
+
+				moveDownRegion(item, final = false) {
+					var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, item), i;
+
+					for(i = 0; i<regionItems.length; i++) {
+						let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
+						regionItems[i].moveDown(nbToMove, final);
+					}
+					for(i = 0; i<regionItems.length; i++)
+						this.moveDownRegion(regionItems[i], final);
 				}
 
 				getItemsFromRegion({x:col,y:row},{w:width,h:height}, excludedItems = []) {
@@ -129,7 +145,7 @@ angular.module('Dashydash')
 						for(let x = col; x>=0; x--) {
 							if(!!this.grid[y]) {
 								let item = this.grid[y][x];
-								if(!!item && !item.belongTo(excludedItems) && item.size.current.h >= size.x && item.size.current.w >= size.y) {
+								if(!!item && !item.belongTo(excludedItems) && item.size.current.h >= size.y && item.size.current.w >= size.x) {
 									itemFound = item;
 									break loopOnRows;
 								}
@@ -141,11 +157,26 @@ angular.module('Dashydash')
 					return itemFound;	
 				}
 
+				saveItemLocation(item) {
+
+					if(!this.grid[item.position.current.y])
+						this.grid[item.position.current.y] = [];
+
+					this.grid[item.position.current.y][item.position.current.x] = item;
+				}
+
+				saveItemsLocation(items = []) {
+
+					items = this._toArray(items);
+					for(var i =0; i<items; i++)
+						this.saveItemLocation(items[i]);
+				}
+
 				registerItem(item) {
 					if(this._isItemAlreadyRegistered(item))
 						this.items.push(item);
 
-					this._putItem(item);
+					this.saveItemLocation(item);
 				}
 
 			}

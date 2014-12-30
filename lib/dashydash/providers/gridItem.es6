@@ -18,7 +18,7 @@ angular.module('Dashydash')
 					this.grid = grid;
 
 					this.isDragged = false;
-					this.temporarilyMoved = false;
+					this.movedByOverlapping = false;
 
 					this._initDraggableBehaviour({
 						element: $node,  
@@ -57,6 +57,12 @@ angular.module('Dashydash')
 				
 				enableAnimation() {
 					this.isDragged = false;
+				}
+
+				saveLocation() {
+					this._updateLastPosition();
+					this._updateLastPosition();
+					this.grid.saveItemLocation(this);
 				}
 				
 				disableAnimation() {
