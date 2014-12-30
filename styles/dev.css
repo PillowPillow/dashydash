@@ -163,6 +163,76 @@ dd-placeholder[dd-row="9"] {
 	top: 450px;
 }
 
+dd-item[dd-col="10"],
+dd-placeholder[dd-col="10"] {
+	left: 1000px;
+}
+
+dd-item[dd-row="10"],
+dd-placeholder[dd-row="10"] {
+	top: 500px;
+}
+
+dd-item[dd-col="11"],
+dd-placeholder[dd-col="11"] {
+	left: 1100px;
+}
+
+dd-item[dd-row="11"],
+dd-placeholder[dd-row="11"] {
+	top: 550px;
+}
+
+dd-item[dd-col="12"],
+dd-placeholder[dd-col="12"] {
+	left: 1200px;
+}
+
+dd-item[dd-row="12"],
+dd-placeholder[dd-row="12"] {
+	top: 600px;
+}
+
+dd-item[dd-col="13"],
+dd-placeholder[dd-col="13"] {
+	left: 1300px;
+}
+
+dd-item[dd-row="13"],
+dd-placeholder[dd-row="13"] {
+	top: 650px;
+}
+
+dd-item[dd-col="14"],
+dd-placeholder[dd-col="14"] {
+	left: 1400px;
+}
+
+dd-item[dd-row="14"],
+dd-placeholder[dd-row="14"] {
+	top: 700px;
+}
+
+dd-item[dd-col="15"],
+dd-placeholder[dd-col="15"] {
+	left: 1500px;
+}
+
+dd-item[dd-row="15"],
+dd-placeholder[dd-row="15"] {
+	top: 750px;
+}
+
+dd-item[dd-col="16"],
+dd-placeholder[dd-col="16"] {
+	left: 1600px;
+}
+
+dd-item[dd-row="16"],
+dd-placeholder[dd-row="16"] {
+	top: 800px;
+}
+
 dd-item[dd-width="1"],
 dd-placeholder[dd-width="1"] {
 	width: 100px;
@@ -193,3 +263,22 @@ dd-placeholder[dd-height="3"] {
 	height: 150px;
 }
 
+dd-item[dd-width="4"],
+dd-placeholder[dd-width="4"] {
+	width: 400px;
+}
+
+dd-item[dd-height="4"],
+dd-placeholder[dd-height="4"] {
+	height: 200px;
+}
+
+dd-item[dd-width="5"],
+dd-placeholder[dd-width="5"] {
+	width: 500px;
+}
+
+dd-item[dd-height="5"],
+dd-placeholder[dd-height="5"] {
+	height: 250px;
+}
