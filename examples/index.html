@@ -28,8 +28,34 @@
 	<body ng-app="app">
 
 		<!-- content -->
-		<dd-grid ng-init="colors = ['dark-primary-color','default-primary-color','light-primary-color','accent-color']">
+	<!-- 	<dd-grid ng-init="colors = ['dark-primary-color','default-primary-color','light-primary-color','accent-color']">
 			<dd-item ng-repeat="i in colors track by $index" class={{i}} init-row={{$index}} init-col={{$index}} init-width=1 init-height=1>
+				<input type="number" ng-model="row">
+				<input type="number" ng-model="col">
+				<input type="number" ng-model="width">
+				<input type="number" ng-model="height">
+			</dd-item>
+		</dd-grid>  -->
+		<dd-grid>
+			<dd-item class='dark-primary-color' init-row=0 init-col=1 init-width=1 init-height=1>
+				<input type="number" ng-model="row">
+				<input type="number" ng-model="col">
+				<input type="number" ng-model="width">
+				<input type="number" ng-model="height">
+			</dd-item>
+			<dd-item class='default-primary-color' init-row=0 init-col=2 init-width=1 init-height=1>
+				<input type="number" ng-model="row">
+				<input type="number" ng-model="col">
+				<input type="number" ng-model="width">
+				<input type="number" ng-model="height">
+			</dd-item>
+			<dd-item class='light-primary-color' init-row=1 init-col=1 init-width=1 init-height=1>
+				<input type="number" ng-model="row">
+				<input type="number" ng-model="col">
+				<input type="number" ng-model="width">
+				<input type="number" ng-model="height">
+			</dd-item>
+			<dd-item class='accent-color' init-row=1 init-col=2 init-width=1 init-height=1>
 				<input type="number" ng-model="row">
 				<input type="number" ng-model="col">
 				<input type="number" ng-model="width">
