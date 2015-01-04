@@ -19,7 +19,7 @@ angular.module('Dashydash')
 					this.itemHeight = itemHeight || 50;
 
 					this.placeholder = null;
-					this.floating = true;
+					this.floating = false;
 				}
 
 				get itemHalfWidth() {
