@@ -1,3 +1,4 @@
+var grid;
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
@@ -18,7 +19,7 @@ angular.module('Dashydash')
 					this.itemHeight = itemHeight || 50;
 
 					this.placeholder = null;
-					this.floating = false;
+					this.floating = true;
 				}
 
 				get itemHalfWidth() {
@@ -31,6 +32,7 @@ angular.module('Dashydash')
 
 				_resetGrid() {
 					this.grid.splice(0);
+					grid = this.grid;
 				}
 
 				_forceViewUpdate() {
@@ -108,12 +110,11 @@ angular.module('Dashydash')
 				}
 
 				_softRemoveItemFromGrid(item = undefined) {
-					console.log('soft remove')
-					return this._removeItemFromGridWithCurrentPosition(item) || this._removeItemFromGridWithLastPosition(item);
+					var removed = this._removeItemFromGridWithCurrentPosition(item) || this._removeItemFromGridWithLastPosition(item);
+					return removed;
 				}
 
 				_hardRemoveItemFromGrid(item = undefined) {
-					console.log('hard remove');
 					var removed = false;
 
 					if(item !== undefined)
@@ -129,9 +130,9 @@ angular.module('Dashydash')
 				}
 
 				_removeItemFromGrid(item) {
-					var removed = this._softRemoveFromGrid(item);
+					var removed = this._softRemoveItemFromGrid(item);
 					if(!removed)
-						removed = this._hardRemoveFromGrid(item);
+						removed = this._hardRemoveItemFromGrid(item);
 					return removed;
 				}
 
@@ -139,25 +140,40 @@ angular.module('Dashydash')
 					return this.items.indexOf(item);
 				}
 
-				floatUp(item) {
+				packUpItem(item, excludedItems = [], saveInGrid = true) {
 
 					if(this.floating) return;
 
-					var highest = null;
-					for(var y = item.position.current.y -1; y>=0; y--) {
+					excludedItems = this._toArray(excludedItems);
+					excludedItems.push(item);
 
-						let items = this.getItemsFromRegion(item.position.current, item.size.current, item);
+					var {x,y} = item.position.current,
+						highest = null,
+						moved = false;
+
+					for(var row = y -1; row>=0; row--) {
+
+						let items = this.getItemsFromRegion({x,y:row}, item.size.current, excludedItems);
 						if(items.length > 0)
 							break;
 
-						highest = y;
+						highest = row;
 					}
 
-					if(highest !== null)
-						item.moveTo({y:highest}, false);
+					if(highest !== null) {
+						if(saveInGrid)
+							this._removeItemFromGrid(item);
+
+						moved = item.moveTo({x,y:highest}, false);
+
+						if(saveInGrid) 
+							this.saveItemLocation(item);
+					}
+
+					return moved;
 				}
 
-				floatItemsUp() {
+				packUpItems() {
 					if(this.floating) return;
 
 					for(var y = 0, colLength = this.grid.length; y < colLength; y++) {
@@ -165,14 +181,26 @@ angular.module('Dashydash')
 						var row = this.grid[y];
 						if(!row) continue;
 
-						for(var x = 0, rowLength = row.length; x < rowLength; ++x)
-							if(row[x]) this.floatUp(row[x]);
+						for(var x = 0, rowLength = row.length; x < rowLength; x++)
+							if(row[x]) this.packUpItem(row[x]);
 					}
+				}
+
+				updateGridFromDraggedItemPosition(item, final = false) {
+
+					this.moveDownRegion(item, undefined, final);
+					this._saveGridState();
+
+					if(!this.floating)
+						this.packUpItems();
+
+					this.placeholder.moveTo(item.position.current);
 				}
 
 				itemDragStart(item, ...args) {
 					var position = this._getPosition(args[1].position);
 
+					this._saveGridState();
 					this.placeholder.enableAnimation();
 					this.placeholder.moveTo(position, false);
 					this.placeholder.updateSize(item.size.current);
@@ -181,25 +209,22 @@ angular.module('Dashydash')
 
 				itemDragged(item, ...args) {
 
-					this._rollbackPositions();
+					if(this.floating) 
+						this._rollbackPositions();
+
 					this._saveGridState();
 					var position = this._getPosition(args[1].position);
-					var isMoved = this.placeholder.moveTo(position);
+					var isMoved = item.moveTo(position);
 
 					if(isMoved) {
-						item.moveTo(this.placeholder.position.current);
-						this.moveDownRegion(item);
-						this.floatItemsUp();
-						this._saveGridState();
+						this.updateGridFromDraggedItemPosition(item);
 						this._forceViewUpdate();
 					} 
 				}
 
 				itemDragStop(item) {
-
 					this.placeholder.disableAnimation();
-					item.moveTo(this.placeholder.position.current);
-					this.moveDownRegion(item, undefined, true);
+					this.placeholder.moveTo(item.position.current);
 					this._saveLocations();
 					this._forceViewUpdate();
 				}
