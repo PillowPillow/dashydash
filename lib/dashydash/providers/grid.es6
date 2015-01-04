@@ -18,7 +18,7 @@ angular.module('Dashydash')
 					this.itemHeight = itemHeight || 50;
 
 					this.placeholder = null;
-
+					this.floating = false;
 				}
 
 				get itemHalfWidth() {
@@ -53,7 +53,7 @@ angular.module('Dashydash')
 					return !(src instanceof Array) ? [src] : src;
 				}
 
-				_isItemAlreadyRegistered(item) {
+				_isItemRegistered(item) {
 					return !!item && !item.belongTo(this.items);
 				}
 
@@ -79,6 +79,97 @@ angular.module('Dashydash')
 							this.saveItemLocation(this.items[i]);
 				}
 
+				_removeItemFromGridWithCurrentPosition(item) {
+					var removed = false;
+					if(item !== undefined) {
+						if(!!this.grid[item.position.current.y]) {
+							let itemFromCurrentPosition = this.grid[item.position.current.y][item.position.current.x];
+							if(!!itemFromCurrentPosition && itemFromCurrentPosition === item) {
+								delete this.grid[item.position.current.y][item.position.current.x];
+								removed = true;
+							}
+						}
+					}
+					return removed;
+				}
+
+				_removeItemFromGridWithLastPosition(item) {
+					var removed = false;
+					if(item !== undefined) {
+						if(!!this.grid[item.position.last.y]) {
+							let itemFromLastPosition = this.grid[item.position.last.y][item.position.last.x];
+							if(!!itemFromLastPosition && itemFromLastPosition === item) {
+								delete this.grid[item.position.last.y][item.position.last.x];
+								removed = true;
+							}
+						}
+					}
+					return removed;
+				}
+
+				_softRemoveItemFromGrid(item = undefined) {
+					console.log('soft remove')
+					return this._removeItemFromGridWithCurrentPosition(item) || this._removeItemFromGridWithLastPosition(item);
+				}
+
+				_hardRemoveItemFromGrid(item = undefined) {
+					console.log('hard remove');
+					var removed = false;
+
+					if(item !== undefined)
+						for(var y = 0; y<this.grid.length; y++)
+							for(var x = 0; x<this.grid[y].length; x++)
+								if(!!this.grid[y][x] && this.grid[y][x] === item) {
+									delete this.grid[y][x];
+									removed = true;
+									break;
+								}
+
+					return removed;
+				}
+
+				_removeItemFromGrid(item) {
+					var removed = this._softRemoveFromGrid(item);
+					if(!removed)
+						removed = this._hardRemoveFromGrid(item);
+					return removed;
+				}
+
+				_getItemIndex(item) {
+					return this.items.indexOf(item);
+				}
+
+				floatUp(item) {
+
+					if(this.floating) return;
+
+					var highest = null;
+					for(var y = item.position.current.y -1; y>=0; y--) {
+
+						let items = this.getItemsFromRegion(item.position.current, item.size.current, item);
+						if(items.length > 0)
+							break;
+
+						highest = y;
+					}
+
+					if(highest !== null)
+						item.moveTo({y:highest}, false);
+				}
+
+				floatItemsUp() {
+					if(this.floating) return;
+
+					for(var y = 0, colLength = this.grid.length; y < colLength; y++) {
+
+						var row = this.grid[y];
+						if(!row) continue;
+
+						for(var x = 0, rowLength = row.length; x < rowLength; ++x)
+							if(row[x]) this.floatUp(row[x]);
+					}
+				}
+
 				itemDragStart(item, ...args) {
 					var position = this._getPosition(args[1].position);
 
@@ -98,6 +189,7 @@ angular.module('Dashydash')
 					if(isMoved) {
 						item.moveTo(this.placeholder.position.current);
 						this.moveDownRegion(item);
+						this.floatItemsUp();
 						this._saveGridState();
 						this._forceViewUpdate();
 					} 
@@ -187,11 +279,22 @@ angular.module('Dashydash')
 						this.saveItemLocation(items[i]);
 				}
 
-				registerItem(item) {
-					if(this._isItemAlreadyRegistered(item))
+				attachItem(item) {
+					if(this._isItemRegistered(item))
 						this.items.push(item);
 
 					this.saveItemLocation(item);
+				}
+
+				detachItem(item) {
+					var detached = false;
+					if(this._isItemRegistered(item)) {
+						detached = this._removeItemFromGrid(item);
+						if(detached)
+							this.items.splice(this._getItemIndex(), 1);
+					}
+					console.log(detached?'detaché':'erreur lors du detachement');
+					return detached;
 				}
 
 			}

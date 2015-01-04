@@ -8,7 +8,7 @@ angular.module('Dashydash')
 
 			this.item = new GridItem(configuration);
 
-			this.item.grid.registerItem(this.item);
+			this.item.attach(configuration.grid);
 			return this.item;
 		};
 
