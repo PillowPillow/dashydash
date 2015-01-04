@@ -6,7 +6,7 @@ angular.module('Dashydash')
 			class Item {
 
 				constructor({row:row, column: col, width:width, height:height}) {
-					this.position = { current:{x:row,y:col}, last:{x:row,y:col} };
+					this.position = { current:{x:col,y:row}, last:{x:col,y:row} };
 					this.size = { current:{w:width,h:height}, last:{w:width,h:height} };
 				}
 
