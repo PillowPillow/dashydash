@@ -10,12 +10,12 @@ angular.module('Dashydash')
 
 			class GridItem extends Item {
 
-				constructor({element:$node, grid:grid, row:row, column:col, width:width, height:height}) {
+				constructor({element:$node, row:row, column:col, width:width, height:height}) {
 
 					super({row:row, column: col, width:width, height:height});
 
 					this.element = $node;
-					this.grid = grid;
+					this.grid = undefined;
 
 					this.isDragged = false;
 					this.movedByOverlapping = false;
@@ -28,19 +28,26 @@ angular.module('Dashydash')
 					});
 				}
 
+				get isAttached() {
+					return this.grid !== undefined && this.grid !== null;
+				}
+
 				_ondragStart(...args) {
 					this.disableAnimation();
-					this.grid.itemDragStart(this, ...args);
+					if(this.isAttached)
+						this.grid.itemDragStart(this, ...args);
 				}
 
 				_ondrag(...args) {
-					this.grid.itemDragged(this, ...args);
+					if(this.isAttached)
+						this.grid.itemDragged(this, ...args);
 				}
 
 				_ondragStop(...args) {
 					this.enableAnimation();
 					this._clearDragStyle();
-					this.grid.itemDragStop(this, ...args);
+					if(this.isAttached)
+						this.grid.itemDragStop(this, ...args);
 				}
 
 				_initDraggableBehaviour(configuration = {}) {
@@ -55,12 +62,23 @@ angular.module('Dashydash')
 					this.element.removeAttr('style');
 				}
 				
+				attach(grid = undefined) {
+					this.detach();
+					this.grid = grid;
+					this.grid.attachItem(this);
+				}
+
+				detach() {
+					if(this.isAttached)
+						this.grid.detachItem(this);
+					this.grid = undefined;
+				}
+
 				enableAnimation() {
 					this.isDragged = false;
 				}
 
 				saveLocation() {
-					this._updateLastPosition();
 					this._updateLastPosition();
 					this.grid.saveItemLocation(this);
 				}
