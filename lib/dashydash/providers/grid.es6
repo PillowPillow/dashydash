@@ -140,7 +140,7 @@ angular.module('Dashydash')
 					return this.items.indexOf(item);
 				}
 
-				packUpItem(item, excludedItems = [], saveInGrid = true) {
+				pushUpItem(item, excludedItems = [], saveInGrid = true) {
 
 					if(this.floating)
 						return false;
@@ -174,7 +174,7 @@ angular.module('Dashydash')
 					return moved;
 				}
 
-				packUpItems() {
+				pushUpItems() {
 					if(this.floating) return;
 
 					for(var y = 0, colLength = this.grid.length; y < colLength; y++) {
@@ -183,7 +183,7 @@ angular.module('Dashydash')
 						if(!row) continue;
 
 						for(var x = 0, rowLength = row.length; x < rowLength; x++)
-							if(row[x]) this.packUpItem(row[x]);
+							if(row[x]) this.pushUpItem(row[x]);
 					}
 				}
 
@@ -193,7 +193,7 @@ angular.module('Dashydash')
 					this._saveGridState();
 
 					if(!this.floating)
-						this.packUpItems();
+						this.pushUpItems();
 
 					this.placeholder.moveTo(item.position.current);
 				}
