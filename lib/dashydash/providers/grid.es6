@@ -20,7 +20,7 @@ angular.module('Dashydash')
 					this.lastPosition = {x:0,y:0};
 
 					this.placeholder = null;
-					this.floating = false;
+					this.floating = true;
 
 				}
 
@@ -159,7 +159,7 @@ angular.module('Dashydash')
 
 					for(var row = y -1; row>=0; row--) {
 
-						let items = this.getItemsFromRegion({x,y:row}, item.size.current, excludedItems);
+						let items = this.getItemsFromArea({x,y:row}, item.size.current, excludedItems);
 						if(items.length > 0)
 							break;
 
@@ -198,8 +198,14 @@ angular.module('Dashydash')
 
 					if(!this.floating)
 						this.pushUpItems();
-
-					this.moveDownRegion(item, undefined, final);
+					console.log(' ')
+					console.log(' ')
+					console.log(' ')
+					console.log('MOVE DOWN')
+					console.log(' ')
+					console.log(' ')
+					console.log(' ')
+					this.moveDownArea(item, undefined, final);
 
 					this._saveGridState();
 
@@ -246,53 +252,52 @@ angular.module('Dashydash')
 					this._forceViewUpdate();
 				}
 
-				moveDownRegion(item, excludedItems = [], final = false) {
+				moveDownArea(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
 					excludedItems.push(item);
-					// var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, excludedItems), i;
-					var regionItems = this.getImpactedItemsByRegionMoving(item.position.current, item.size.current, excludedItems);
+					var areaItems = this.getItemsFromArea(item.position.current, item.size.current, excludedItems);
+					// var areaItems = this.getImpactedItemsByAreaMoving(item.position.current, item.size.current, excludedItems);
 
-					if(regionItems.length > 0) {
-						let nbToMoveMax = 0;
+					// if(areaItems.length > 0) {w
+					// 	let nbToMoveMax = 0;
 
-						let moved = [];
-						for(var i = 0; i<regionItems.length; i++) {
-							let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
-							nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
-						}
-						for(var i = 0; i<regionItems.length; i++) {
-							if(!regionItems[i].belongTo(moved)) {
+					// 	let moved = [];
+					// 	for(var i = 0; i<areaItems.length; i++) {
+					// 		let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+					// 		nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
+					// 	}
+					// 	for(var i = 0; i<areaItems.length; i++) {
+					// 		if(!areaItems[i].belongTo(moved)) {
 
-							regionItems[i].moveDown(nbToMoveMax, final);
-							moved.push(regionItems[i]);
-							}
-						}
-					}
-
-					// for(var i = 0; i<regionItems.length; i++) {
-
-					// 	let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
-					// 	regionItems[i].moveDown(nbToMove, final);
+					// 		areaItems[i].moveDown(nbToMoveMax, final);
+					// 		moved.push(areaItems[i]);
+					// 		}
+					// 	}
 					// }
-					// for(i = 0; i<regionItems.length; i++)
-						// this.moveDownRegion(regionItems[i], excludedItems, final);
-				}
 
-				getImpactedItemsByRegionMoving(position,{w,h}, excludedItems = []) {
-
-					var impactedItems = [],
-						regionItems = this.getItemsFromRegion(position,{w,h:++h}, excludedItems);
-
-					for(var i = 0; i<regionItems.length; i++) {
-						impactedItems.push(regionItems[i]);
-						excludedItems.push(regionItems[i]);
-						impactedItems = impactedItems.concat(this.getImpactedItemsByRegionMoving(regionItems[i].position.current, regionItems[i].size.current, excludedItems));
+					for(var i = 0; i<areaItems.length; i++) {
+						let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+						areaItems[i].moveDown(nbToMove, final);
 					}
-
-					return impactedItems;
+					for(i = 0; i<areaItems.length; i++)
+						this.moveDownArea(areaItems[i], excludedItems, final);
 				}
 
-				getItemsFromRegion({x:col,y:row},{w:width,h:height}, excludedItems = []) {
+				// getImpactedItemsByAreaMoving({x,y},{w,h}, excludedItems = []) {
+
+				// 	var impactedItems = [],
+				// 		areaItems = this.getItemsFromArea({x,y:++y},{w,h}, excludedItems);
+
+				// 	for(var i = 0; i<areaItems.length; i++) {
+				// 		impactedItems.push(areaItems[i]);
+				// 		excludedItems.push(areaItems[i]);
+				// 		impactedItems = impactedItems.concat(this.getImpactedItemsByAreaMoving(areaItems[i].position.current, areaItems[i].size.current, excludedItems));
+				// 	}
+
+				// 	return impactedItems;
+				// }
+
+				getItemsFromArea({x:col,y:row},{w:width,h:height}, excludedItems = []) {
 					
 					if(!width || !height)
 						width = height = 1;
@@ -306,7 +311,7 @@ angular.module('Dashydash')
 
 					for(var x = col; x<colMax; x++) {
 						for(var y = row; y<rowMax; y++) {
-							let item = this.getItem({x,y});
+							let item = this.getItem({x,y}, excludedItems);
 							if(!!item && !item.belongTo(excludedItems) && !item.belongTo(items))
 								items.push(item);
 						}
