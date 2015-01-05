@@ -229,6 +229,56 @@ dd-placeholder[dd-row="16"] {
 	top: 800px;
 }
 
+dd-item[dd-col="17"],
+dd-placeholder[dd-col="17"] {
+	left: 1700px;
+}
+
+dd-item[dd-row="17"],
+dd-placeholder[dd-row="17"] {
+	top: 850px;
+}
+
+dd-item[dd-col="18"],
+dd-placeholder[dd-col="18"] {
+	left: 1800px;
+}
+
+dd-item[dd-row="18"],
+dd-placeholder[dd-row="18"] {
+	top: 900px;
+}
+
+dd-item[dd-col="19"],
+dd-placeholder[dd-col="19"] {
+	left: 1900px;
+}
+
+dd-item[dd-row="19"],
+dd-placeholder[dd-row="19"] {
+	top: 950px;
+}
+
+dd-item[dd-col="20"],
+dd-placeholder[dd-col="20"] {
+	left: 2000px;
+}
+
+dd-item[dd-row="20"],
+dd-placeholder[dd-row="20"] {
+	top: 1000px;
+}
+
+dd-item[dd-col="21"],
+dd-placeholder[dd-col="21"] {
+	left: 2100px;
+}
+
+dd-item[dd-row="21"],
+dd-placeholder[dd-row="21"] {
+	top: 1050px;
+}
+
 dd-item[dd-width="1"],
 dd-placeholder[dd-width="1"] {
 	width: 100px;
