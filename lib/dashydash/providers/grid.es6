@@ -142,7 +142,8 @@ angular.module('Dashydash')
 
 				packUpItem(item, excludedItems = [], saveInGrid = true) {
 
-					if(this.floating) return;
+					if(this.floating)
+						return false;
 
 					excludedItems = this._toArray(excludedItems);
 					excludedItems.push(item);

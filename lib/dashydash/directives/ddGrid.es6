@@ -2,9 +2,7 @@ angular.module('Dashydash')
 	.directive('ddGrid', function(){
 		return {
 			scope: {
-				container: '=?ddGridContainer',
-				row: '=?ddGridRows',
-				col: '=?ddGridColumns'
+				'configuration': '=@configuration'
 			},
 			restrict: 'AE',
 			transclude: true,
@@ -15,9 +13,7 @@ angular.module('Dashydash')
 			compile: () => {
 				return {
 					pre: ($scope, $node, attributes, controller) => {
-
-						var config = {element: $node, container: $scope.container, rows: $scope.row, columns: $scope.col};
-						controller.initialize(config);
+						controller.initialize($scope.configuration);
 					}
 				};
 			}
