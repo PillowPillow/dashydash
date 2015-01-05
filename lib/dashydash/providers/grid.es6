@@ -343,10 +343,6 @@ angular.module('Dashydash')
 					if(!this.grid[item.position.current.y])
 						this.grid[item.position.current.y] = [];
 
-					// if(this.grid[item.position.current.y][item.position.current.x]) {
-					// 	console.log('item already exist at this place', item.position.current.y, item.position.current.x)
-					// 	console.log('=> ', item.element, this.grid[item.position.current.y][item.position.current.x].element)
-					// }
 					this.grid[item.position.current.y][item.position.current.x] = item;
 				}
 
