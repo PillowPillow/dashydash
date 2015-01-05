@@ -1,4 +1,3 @@
-var grid;
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
@@ -18,8 +17,11 @@ angular.module('Dashydash')
 					this.itemWidth = itemWidth || 100;
 					this.itemHeight = itemHeight || 50;
 
+					this.lastPosition = {x:0,y:0};
+
 					this.placeholder = null;
 					this.floating = false;
+
 				}
 
 				get itemHalfWidth() {
@@ -32,7 +34,6 @@ angular.module('Dashydash')
 
 				_resetGrid() {
 					this.grid.splice(0);
-					grid = this.grid;
 				}
 
 				_forceViewUpdate() {
@@ -56,7 +57,7 @@ angular.module('Dashydash')
 				}
 
 				_isItemRegistered(item) {
-					return !!item && !item.belongTo(this.items);
+					return !!item && item.belongTo(this.items);
 				}
 
 				_rollbackPositions(excludedItems = []) {
@@ -110,21 +111,25 @@ angular.module('Dashydash')
 				}
 
 				_softRemoveItemFromGrid(item = undefined) {
-					var removed = this._removeItemFromGridWithCurrentPosition(item) || this._removeItemFromGridWithLastPosition(item);
+					var removed = false;
+					if(this._removeItemFromGridWithCurrentPosition(item))
+						removed = true;
+					else if(this._removeItemFromGridWithLastPosition(item))
+						removed = true;
 					return removed;
 				}
 
 				_hardRemoveItemFromGrid(item = undefined) {
 					var removed = false;
-
 					if(item !== undefined)
 						for(var y = 0; y<this.grid.length; y++)
-							for(var x = 0; x<this.grid[y].length; x++)
-								if(!!this.grid[y][x] && this.grid[y][x] === item) {
-									delete this.grid[y][x];
-									removed = true;
-									break;
-								}
+							if(this.grid[y])
+								for(var x = 0; x<this.grid[y].length; x++)
+									if(!!this.grid[y][x] && this.grid[y][x] === item) {
+										delete this.grid[y][x];
+										removed = true;
+										break;
+									}
 
 					return removed;
 				}
@@ -189,8 +194,16 @@ angular.module('Dashydash')
 
 				updateGridFromDraggedItemPosition(item, final = false) {
 
+					this.detachItem(item);
+
+					if(!this.floating)
+						this.pushUpItems();
+
 					this.moveDownRegion(item, undefined, final);
+
 					this._saveGridState();
+
+					this.attachItem(item);
 
 					if(!this.floating)
 						this.pushUpItems();
@@ -210,22 +223,25 @@ angular.module('Dashydash')
 
 				itemDragged(item, ...args) {
 
-					if(this.floating) 
+					if(this.floating)
 						this._rollbackPositions();
 
 					this._saveGridState();
 					var position = this._getPosition(args[1].position);
-					var isMoved = item.moveTo(position);
 
-					if(isMoved) {
+					if(this.lastPosition.x !== position.x || this.lastPosition.y !== position.y) {
+						this.lastPosition = position;
+						item.moveTo(position);
 						this.updateGridFromDraggedItemPosition(item);
 						this._forceViewUpdate();
-					} 
+					}
 				}
 
-				itemDragStop(item) {
+				itemDragStop(item, ...args) {
 					this.placeholder.disableAnimation();
-					this.placeholder.moveTo(item.position.current);
+					var position = this._getPosition(args[1].position);
+					item.moveTo(position);
+					this.updateGridFromDraggedItemPosition(item, true);
 					this._saveLocations();
 					this._forceViewUpdate();
 				}
@@ -233,15 +249,47 @@ angular.module('Dashydash')
 				moveDownRegion(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
 					excludedItems.push(item);
+					// var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, excludedItems), i;
+					var regionItems = this.getImpactedItemsByRegionMoving(item.position.current, item.size.current, excludedItems);
 
-					var regionItems = this.getItemsFromRegion(item.position.current, item.size.current, excludedItems), i;
+					if(regionItems.length > 0) {
+						let nbToMoveMax = 0;
 
-					for(i = 0; i<regionItems.length; i++) {
-						let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
-						regionItems[i].moveDown(nbToMove, final);
+						let moved = [];
+						for(var i = 0; i<regionItems.length; i++) {
+							let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
+							nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
+						}
+						for(var i = 0; i<regionItems.length; i++) {
+							if(!regionItems[i].belongTo(moved)) {
+
+							regionItems[i].moveDown(nbToMoveMax, final);
+							moved.push(regionItems[i]);
+							}
+						}
 					}
-					for(i = 0; i<regionItems.length; i++)
-						this.moveDownRegion(regionItems[i], excludedItems, final);
+
+					// for(var i = 0; i<regionItems.length; i++) {
+
+					// 	let nbToMove = item.position.current.y + item.size.current.h - regionItems[i].position.current.y;
+					// 	regionItems[i].moveDown(nbToMove, final);
+					// }
+					// for(i = 0; i<regionItems.length; i++)
+						// this.moveDownRegion(regionItems[i], excludedItems, final);
+				}
+
+				getImpactedItemsByRegionMoving(position,{w,h}, excludedItems = []) {
+
+					var impactedItems = [],
+						regionItems = this.getItemsFromRegion(position,{w,h:++h}, excludedItems);
+
+					for(var i = 0; i<regionItems.length; i++) {
+						impactedItems.push(regionItems[i]);
+						excludedItems.push(regionItems[i]);
+						impactedItems = impactedItems.concat(this.getImpactedItemsByRegionMoving(regionItems[i].position.current, regionItems[i].size.current, excludedItems));
+					}
+
+					return impactedItems;
 				}
 
 				getItemsFromRegion({x:col,y:row},{w:width,h:height}, excludedItems = []) {
@@ -295,6 +343,10 @@ angular.module('Dashydash')
 					if(!this.grid[item.position.current.y])
 						this.grid[item.position.current.y] = [];
 
+					// if(this.grid[item.position.current.y][item.position.current.x]) {
+					// 	console.log('item already exist at this place', item.position.current.y, item.position.current.x)
+					// 	console.log('=> ', item.element, this.grid[item.position.current.y][item.position.current.x].element)
+					// }
 					this.grid[item.position.current.y][item.position.current.x] = item;
 				}
 
@@ -306,7 +358,7 @@ angular.module('Dashydash')
 				}
 
 				attachItem(item) {
-					if(this._isItemRegistered(item))
+					if(!this._isItemRegistered(item))
 						this.items.push(item);
 
 					this.saveItemLocation(item);
@@ -316,10 +368,10 @@ angular.module('Dashydash')
 					var detached = false;
 					if(this._isItemRegistered(item)) {
 						detached = this._removeItemFromGrid(item);
+
 						if(detached)
-							this.items.splice(this._getItemIndex(), 1);
+							this.items.splice(this._getItemIndex(item), 1);
 					}
-					console.log(detached?'detaché':'erreur lors du detachement');
 					return detached;
 				}
 
