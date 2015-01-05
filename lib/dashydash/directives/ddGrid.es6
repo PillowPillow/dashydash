@@ -2,7 +2,7 @@ angular.module('Dashydash')
 	.directive('ddGrid', function(){
 		return {
 			scope: {
-				'configuration': '=@configuration'
+				'configuration': '=?configuration'
 			},
 			restrict: 'AE',
 			transclude: true,

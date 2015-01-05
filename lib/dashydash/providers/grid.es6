@@ -198,7 +198,7 @@ angular.module('Dashydash')
 
 					if(!this.floating)
 						this.pushUpItems();
-	
+
 					this.moveDownArea(item, undefined, final);
 
 					this._saveGridState();
@@ -249,51 +249,49 @@ angular.module('Dashydash')
 				moveDownArea(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
 					excludedItems.push(item);
-					var areaItems = this.getItemsFromArea(item.position.current, item.size.current, excludedItems);
+					// var areaItems = this.getItemsFromArea(item.position.current, item.size.current, excludedItems);
 
-					for(var i = 0; i<areaItems.length; i++) {
-						let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
-						areaItems[i].moveDown(nbToMove, final);
+					// for(var i = 0; i<areaItems.length; i++) {
+					// 	let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+					// 	areaItems[i].moveDown(nbToMove, final);
+					// }
+					// for(i = 0; i<areaItems.length; i++)
+					// 	this.moveDownArea(areaItems[i], excludedItems, final);
+					
+					var areaItems = this.getImpactedItemsByAreaMoving(item.position.current, item.size.current, excludedItems);
+
+					if(areaItems.length > 0) {
+						let nbToMoveMax = 0;
+
+						let moved = [];
+						for(var i = 0; i<areaItems.length; i++) {
+							let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+							nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
+						}
+						for(var i = 0; i<areaItems.length; i++) {
+							if(!areaItems[i].belongTo(moved)) {
+
+							areaItems[i].moveDown(nbToMoveMax, final);
+							moved.push(areaItems[i]);
+							}
+						}
 					}
-					for(i = 0; i<areaItems.length; i++)
-						this.moveDownArea(areaItems[i], excludedItems, final);
 				}
 
-				// getImpactedItemsByAreaMoving({x,y},{w,h}, excludedItems = []) {
+				getImpactedItemsByAreaMoving({x,y},{w,h}, excludedItems = []) {
 
-					// #moveDownAre
-					// 
-					// var areaItems = this.getImpactedItemsByAreaMoving(item.position.current, item.size.current, excludedItems);
 
-					// if(areaItems.length > 0) {w
-					// 	let nbToMoveMax = 0;
+						var impactedItems = [],
+							areaItems = this.getItemsFromArea({x,y:++y},{w,h}, excludedItems);
 
-					// 	let moved = [];
-					// 	for(var i = 0; i<areaItems.length; i++) {
-					// 		let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
-					// 		nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
-					// 	}
-					// 	for(var i = 0; i<areaItems.length; i++) {
-					// 		if(!areaItems[i].belongTo(moved)) {
+						for(var i = 0; i<areaItems.length; i++) {
+							impactedItems.push(areaItems[i]);
+							excludedItems.push(areaItems[i]);
+							impactedItems = impactedItems.concat(this.getImpactedItemsByAreaMoving(areaItems[i].position.current, areaItems[i].size.current, excludedItems));
+						}
 
-					// 		areaItems[i].moveDown(nbToMoveMax, final);
-					// 		moved.push(areaItems[i]);
-					// 		}
-					// 	}
-					// }
-					// #moveDownAre
-
-					// 	var impactedItems = [],
-					// 		areaItems = this.getItemsFromArea({x,y:++y},{w,h}, excludedItems);
-
-					// 	for(var i = 0; i<areaItems.length; i++) {
-					// 		impactedItems.push(areaItems[i]);
-					// 		excludedItems.push(areaItems[i]);
-					// 		impactedItems = impactedItems.concat(this.getImpactedItemsByAreaMoving(areaItems[i].position.current, areaItems[i].size.current, excludedItems));
-					// 	}
-
-					// 	return impactedItems;
-				// }
+						return impactedItems;
+				}
 
 				getItemsFromArea({x:col,y:row},{w:width,h:height}, excludedItems = []) {
 					
