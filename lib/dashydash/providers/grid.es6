@@ -20,7 +20,7 @@ angular.module('Dashydash')
 					this.lastPosition = {x:0,y:0};
 
 					this.placeholder = null;
-					this.floating = true;
+					this.floating = false;
 
 				}
 
@@ -198,7 +198,6 @@ angular.module('Dashydash')
 
 					if(!this.floating)
 						this.pushUpItems();
-
 					this.moveDownArea(item, undefined, final);
 
 					this._saveGridState();
@@ -246,52 +245,126 @@ angular.module('Dashydash')
 					this._forceViewUpdate();
 				}
 
+				// moveDownArea(item, excludedItems = [], final = false) {
+
+				// 	var areaItems = this.getItemsFromArea(item.position.current, item.size.current, item);
+				// 	areaItems.sort(function(a, b) {
+				// 		return a.position.current.y - b.position.current.y;
+				// 	});
+
+				// 	var topRows = {}, temp, i, l;
+
+				// 	for (i = 0, l = areaItems.length; i < l; ++i) {
+				// 		temp = areaItems[i];
+				// 		var topRow = topRows[temp.col];
+				// 		if (typeof topRow === 'undefined' || temp.row < topRow) {
+				// 			topRows[temp.col] = temp.row;
+				// 		}
+				// 	}
+				// 	// move each item down from the top row in its column to the row
+				// 	for (i = 0, l = areaItems.length; i < l; ++i) {
+				// 		temp = areaItems[i];
+				// 		var nbToMove =  item.position.current.y + item.size.current.h - topRows[temp.col];
+				// 		areaItems[i].moveDown(nbToMove , final);
+				// 		excludedItems.push(temp);
+				// 	}
+				// }
+
 				moveDownArea(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
-					excludedItems.push(item);
-					// var areaItems = this.getItemsFromArea(item.position.current, item.size.current, excludedItems);
+					// excludedItems.push(item);
+					var areaItems = this.getItemsFromArea(item.position.current, item.size.current, item);
 
-					// for(var i = 0; i<areaItems.length; i++) {
+					// var highestLastY = Infinity , i, maxNbToMove = 0, h = 0;
+
+					// for(i = 0; i<areaItems.length; i++) {
 					// 	let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
-					// 	areaItems[i].moveDown(nbToMove, final);
+					// 	// if(maxNbToMove < nbToMove)
+					// 		// maxNbToMove =  nbToMove;
+
+					// 	highestLastY = highestLastY < areaItems[i].position.last.y ? highestLastY : areaItems[i].position.last.y;
+						
 					// }
-					// for(i = 0; i<areaItems.length; i++)
-					// 	this.moveDownArea(areaItems[i], excludedItems, final);
-					
-					var areaItems = this.getImpactedItemsByAreaMoving(item.position.current, item.size.current, excludedItems);
 
-					if(areaItems.length > 0) {
-						let nbToMoveMax = 0;
+					// console.log('collider ', item.element[0])
+					// console.log(areaItems.length)
+					// var amount = maxNbToMove, range = {xf: 0, xt: Infinity};
 
-						let moved = [];
-						for(var i = 0; i<areaItems.length; i++) {
-							let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
-							nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
+
+					areaItems.sort(function(a,b) {
+						var evaluation = 0;
+						if(a.position.last.y>b.position.last.y)
+							evaluation = 1;
+						if(a.position.last.y<b.position.last.y)
+							evaluation = -1;
+
+						return evaluation;
+					});
+
+
+					for(var i = 0; i<areaItems.length; i++) {
+						// if(areaItems[i].position.last.y !== highestLastY) {
+
+							// areaItems[i].moveDown(maxNbToMove, final);
+							// continue;
+						// }
+						let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+						// console.log('move to', nbToMove, 'from ', areaItems[i].position.current.y, areaItems[i].element[0])
+						for(var j = 0; j<nbToMove; j++) {
+							areaItems[i].moveDown(1 , final);
+							this.moveDownArea(areaItems[i], excludedItems, final);
+							this._saveGridState();
 						}
-						for(var i = 0; i<areaItems.length; i++) {
-							if(!areaItems[i].belongTo(moved)) {
-
-							areaItems[i].moveDown(nbToMoveMax, final);
-							moved.push(areaItems[i]);
-							}
-						}
+						// areaItems[i].moveTo({y: maxNbToMove}, final);
+						// if(areaItems[i].position.current.x <= range.xf && areaItems[i].position.current.x + areaItems[i].size.current.w >= range.xt) {
+							// console.log('++')
+							// amount += areaItems[i].size.current.h;
+						// 	if(areaItems[i].position.current.x < range.xf)
+						// 		range.xf = areaItems[i].position.current.x;
+						// 	if(areaItems[i].position.current.x + areaItems[i].size.current.w  > range.xt)
+						// 		range.xt = areaItems[i].position.current.x + areaItems[i].size.current.w;
+						// }
+						// console.log('after ', areaItems[i].position.current.y)
 					}
+
+					// for(i = 0; i<areaItems.length; i++)
+							// this.moveDownArea(areaItems[i], excludedItems, final);
+
+					
+					// var areaItems = this.getImpactedItemsByAreaMoving(item.position.current, item.size.current, excludedItems);
+
+					// if(areaItems.length > 0) {
+					// 	let nbToMoveMax = 0;
+
+					// 	let moved = [];
+					// 	for(var i = 0; i<areaItems.length; i++) {
+					// 		let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
+					// 		nbToMoveMax = nbToMove > nbToMoveMax ? nbToMove : nbToMoveMax;
+					// 	}
+					// 	for(var i = 0; i<areaItems.length; i++) {
+					// 		if(!areaItems[i].belongTo(moved)) {
+
+					// 		areaItems[i].moveDown(nbToMoveMax, final);
+					// 		moved.push(areaItems[i]);
+					// 		}
+					// 	}
+					// }
 				}
 
-				getImpactedItemsByAreaMoving({x,y},{w,h}, excludedItems = []) {
+				// getImpactedItemsByAreaMoving({x,y},{w,h}, excludedItems = []) {
 
 
-						var impactedItems = [],
-							areaItems = this.getItemsFromArea({x,y:++y},{w,h}, excludedItems);
+				// 		var impactedItems = [],
+				// 			areaItems = this.getItemsFromArea({x,y:++y},{w,h}, excludedItems);
 
-						for(var i = 0; i<areaItems.length; i++) {
-							impactedItems.push(areaItems[i]);
-							excludedItems.push(areaItems[i]);
-							impactedItems = impactedItems.concat(this.getImpactedItemsByAreaMoving(areaItems[i].position.current, areaItems[i].size.current, excludedItems));
-						}
+				// 		for(var i = 0; i<areaItems.length; i++) {
+				// 			impactedItems.push(areaItems[i]);
+				// 			excludedItems.push(areaItems[i]);
+				// 			impactedItems = impactedItems.concat(this.getImpactedItemsByAreaMoving(areaItems[i].position.current, areaItems[i].size.current, excludedItems));
+				// 		}
 
-						return impactedItems;
-				}
+				// 		return impactedItems;
+				// }
 
 				getItemsFromArea({x:col,y:row},{w:width,h:height}, excludedItems = []) {
 					
