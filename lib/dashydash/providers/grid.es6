@@ -20,7 +20,7 @@ angular.module('Dashydash')
 					this.lastPosition = {x:0,y:0};
 
 					this.placeholder = null;
-					this.floating = true;
+					this.floating = false;
 
 				}
 

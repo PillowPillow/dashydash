@@ -1,1 +1,1 @@
-angular.module('app', ['Dashydash', 'Dashydash-utils']);
+angular.module('app', ['ngMaterial', 'Dashydash', 'Dashydash-utils']);
