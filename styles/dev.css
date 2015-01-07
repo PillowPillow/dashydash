@@ -24,11 +24,11 @@ dd-item input {
 
 dd-placeholder.item-dragged, 
 dd-item:not(.item-dragged) {
-	-webkit-transition: all .18s linear;
-	   -moz-transition: all .18s linear;
-	    -ms-transition: all .18s linear;
-	     -o-transition: all .18s linear;
-	        transition: all .18s linear;
+	-webkit-transition: all .13s linear;
+	   -moz-transition: all .13s linear;
+	    -ms-transition: all .13s linear;
+	     -o-transition: all .13s linear;
+	        transition: all .13s linear;
 }
 
 dd-item.item-dragged {
