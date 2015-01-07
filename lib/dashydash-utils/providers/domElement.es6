@@ -9,6 +9,8 @@ angular.module('Dashydash-utils')
 
 					this.element = $node;
 					this.container = container;
+
+					this.document = $document[0];
 				}
 
 				get elementRect() {
@@ -23,10 +25,10 @@ angular.module('Dashydash-utils')
 				}
 
 				get posX() {
-					return ~~this.elementRect.left;
+					return ~~this.elementRect.left + this.document.body.scrollLeft;
 				}
 				get posY() {
-					return ~~this.elementRect.top;
+					return ~~this.elementRect.top + this.document.body.scrollTop;
 				}
 
 				get containerRect() {
@@ -48,10 +50,14 @@ angular.module('Dashydash-utils')
 				}
 
 				get containerPosX() {
-					return ~~this.containerRect.left;
+					return ~~this.containerRect.left + this.document.body.scrollLeft;
 				}
 				get containerPosY() {
-					return ~~this.containerRect.top;
+					return ~~this.containerRect.top + this.document.body.scrollTop;
+				}
+
+				_getDocumentRect() {
+					return { width: ~~this.document.body.clientWidth, height: 99999, x: 0, y: 0 };
 				}
 			}
 
