@@ -17,8 +17,6 @@ angular.module('Dashydash-utils')
 					this.min = { left:0,top:0 };
 					this.max = { left:9999,top:9999 };
 
-					this.document = $document[0];
-
 					this.ondragStart = ondragStart;
 					this.ondragStop = ondragStop;
 					this.ondrag = ondrag;
@@ -240,7 +238,10 @@ angular.module('Dashydash-utils')
 				}
 
 				_updateElementStyle() {
-					this.element.css({ 'top': this._getPosYByContainer() + 'px','left': this._getPosXByContainer() + 'px' });
+					this.element.css({ 
+						'top': this._getPosYByContainer() + /*fix position on scroll*/this.document.body.scrollTop + 'px',
+						'left': this._getPosXByContainer() + /*fix position on scroll*/this.document.body.scrollLeft + 'px' 
+					});
 				}
 
 				_isMoved(event) {
@@ -322,10 +323,6 @@ angular.module('Dashydash-utils')
 					else
 						if ($window.innerWidth - (event.pageX - this.document.body.scrollLeft) < this.scrollSensitivity)
 							this.document.body.scrollLeft = this.document.body.scrollLeft + this.scrollSpeed;
-				}
-
-				_getDocumentRect() {
-					return { width: ~~this.document.body.clientWidth, height: 99999, x: 0, y: 0 };
 				}
 
 				$$ondrag(...parameters) {
