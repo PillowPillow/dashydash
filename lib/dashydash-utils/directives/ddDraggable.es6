@@ -3,18 +3,19 @@ angular.module('Dashydash-utils')
 	function() {
 		return {
 			scope: {
-				container: '=ddDraggableContainer',
-				ondrag: '=?ddOnDrag',
-				ondragStart: '=?ddOnDragStart',
-				ondragStop: '=?ddOnDragStop'
+				_container: '=ddContainer',
+				_ondrag: '=?ddDrag',
+				_ondragStart: '=?ddDragstart',
+				_ondragStop: '=?ddDragstop'
 			},
 			restrict: 'EA',
 			require: 'ddDraggable',
 			controller: 'Dashydash-utils.controllers.draggable',
 			controllerAs: '_ddDraggable',
 			link: function($scope, $node, attributes, controller) {
-
-				var config = {element: $node, container: $scope.container, ondrag: $scope.ondrag, ondragStart: $scope.ondragStart, ondragStop: $scope.ondragStop};
+				var config = {element: $node, container: $scope._container, ondrag: $scope._ondrag, 
+					ondragStart: () =>  {$scope._ondragStart(); $scope.$apply();}, 
+				ondragStop: $scope._ondragStop};
 
 				controller.initialize(config).enable();
 
