@@ -28,72 +28,19 @@
 
 	</head>
 	<body ng-app="app">
-
-		<!-- content -->
-<!-- 		<dd-grid ng-init="colors = ['dark-primary-color','default-primary-color','light-primary-color','accent-color','dark-primary-color','default-primary-color','light-primary-color','accent-color','dark-primary-color']">
-			<dd-item ng-repeat="i in colors track by $index" class={{i}} init-row={{$index}} init-col={{$index}} init-width=1 init-height=1>
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-		</dd-grid>  -->
-		<dd-grid>
-			<dd-item class="dark-primary-color" init-row="12" init-col="4" init-width="2" init-height="3" id="1">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="default-primary-color" init-row="9" init-col="4" init-width="3" init-height="3" id="2">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="light-primary-color" init-row="0" init-col="2" init-width="2" init-height="5" id="3">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="accent-color" init-row="0" init-col="5" init-width="1" init-height="4" id="4">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="dark-primary-color"init-row="0" init-col="4" init-width="1" init-height="3" id="5">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="default-primary-color" init-row="3" init-col="6" init-width="2" init-height="3" id="6">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="light-primary-color" init-row="5" init-col="2" init-width="3" init-height="4" id="7">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="accent-color" init-row="0" init-col="6" init-width="2" init-height="3" id="8">
-				<input type="number" ng-model="row">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-			<dd-item class="dark-primary-color" init-row="6" init-col="5" init-width="3" init-height="3" id="9">
-				<input type="number" ng-model="row" class="ng-valid ng-dirty ng-touched">
-				<input type="number" ng-model="col">
-				<input type="number" ng-model="width">
-				<input type="number" ng-model="height">
-			</dd-item>
-		</dd-grid> 
+		<section ng-controller="app.controllers.app as AppCtrl">
+			<header>
+				<button ng-click="AppCtrl.addItem()">add item</button>
+			</header>
+			<dd-grid>
+				<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
+					<input type="number" ng-model="row" class="ng-valid ng-dirty ng-touched">
+					<input type="number" ng-model="col">
+					<input type="number" ng-model="width">
+					<input type="number" ng-model="height">
+				</dd-item>
+			</dd-grid> 
+		</section>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
 		<!-- <section dd-resizable class="test-block" style="top: 120px;left: 120px;">
