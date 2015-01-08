@@ -66,6 +66,7 @@ angular.module('Dashydash')
 					this.detach();
 					this.grid = grid;
 					this.grid.attachItem(this);
+					this.grid.update(this, true);
 				}
 
 				detach() {
@@ -92,4 +93,3 @@ angular.module('Dashydash')
 			return GridItem;
 		}];
 	});
-			
