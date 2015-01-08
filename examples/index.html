@@ -36,7 +36,6 @@
 					</md-toolbar>
 					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
 						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
-						<md-button dd-draggable dd-dragstart="PanelCtrl.closePanel" class="test-block" style="top: 120px;left: 120px;z-index:120">lolipop</md-button>
 						<md-list>
 							<md-item ng-repeat="item in PanelCtrl.items track by $index" >
 								<md-item-content>
@@ -45,7 +44,13 @@
 									</div>
 									<div class="md-tile-content">
 										<h3>{{item.name}}</h3>
-										<p>drag it to the grid</p>
+										<p>
+											hello
+											<span dd-draggable dd-dragstart="PanelCtrl.closePanel" style="z-index=100">
+												drag it to the grid
+												<ghost></ghost>	
+											</span>
+										</p>
 									</div>
 								</md-item-content>
 							</md-item>
@@ -100,6 +105,7 @@
 			<script src="../lib/dashydash-utils/directives/ddDraggable.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddResizeHandler.js"></script>
 			<script src="../lib/dashydash-utils/directives/ddResizable.js"></script>
+			<script src="../lib/dashydash-utils/directives/ghost.js"></script>
 
 			<script src="../lib/dashydash/core.js"></script>
 			<script src="../lib/dashydash/constants/positionableElement.js"></script>
