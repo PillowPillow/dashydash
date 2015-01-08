@@ -34,7 +34,7 @@ angular.module('Dashydash-utils')
 
 					this.$$mouseUp = (event) => {
 
-						this._attachElement();
+						this._attachElementToNativeParent();
 						$document.off('mouseup', this.$$mouseUp);
 						$document.off('mousemove', this.$$mouseMove);
 
@@ -53,7 +53,7 @@ angular.module('Dashydash-utils')
 						this._updateLastMousePosition();
 						this._updatePosition();
 						this._updateSize();
-						this._detachElement();
+						this._attachElementToContainer();
 						this._updateElementStyle();
 
 						this.$$ondragStart(event, this);
@@ -112,12 +112,12 @@ angular.module('Dashydash-utils')
 					this._handle = this.enabled ? this._handle : value;
 				}
 
-				_detachElement() {
+				_attachElementToContainer() {
 					this.parentNode = this.element[0].parentNode;
 					this.container[0].appendChild(this.element[0]);
 				}
 
-				_attachElement() {
+				_attachElementToNativeParent() {
 					this.parentNode.appendChild(this.element[0]);
 					this.parentNode = undefined;
 				}
