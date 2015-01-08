@@ -6,8 +6,10 @@ angular.module('Dashydash-utils')
 
 			class Draggable extends DOMElement{
 
-				constructor({element:$node, container:container, fixed:fixed, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
+				constructor({element:$node, container:container, ghost:ghost, fixed:fixed, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
 					super({element:$node, container:container});
+
+					this.ghost = ghost;
 
 					this.size = { width:0,height:0 };
 					this.position = { current : { x:0,y:0 }, last : { x:0,y:0 } };
@@ -122,6 +124,10 @@ angular.module('Dashydash-utils')
 					this._handle = this.enabled ? this._handle : value;
 				}
 
+				get target() {
+					return this.ghost || this.element;
+				}
+
 				_serialize() {
 					return {
 						position: this.position.current,
@@ -130,12 +136,12 @@ angular.module('Dashydash-utils')
 				}
 
 				_attachElementToContainer() {
-					this.parentNode = this.element[0].parentNode;
-					this.container[0].appendChild(this.element[0]);
+					this.parentNode = this.target[0].parentNode;
+					this.container[0].appendChild(this.target[0]);
 				}
 
 				_attachElementToNativeParent() {
-					this.parentNode.appendChild(this.element[0]);
+					this.parentNode.appendChild(this.target[0]);
 					this.parentNode = undefined;
 				}
 
@@ -281,7 +287,7 @@ angular.module('Dashydash-utils')
 				}
 
 				_updateElementStyle() {
-					this.element.css({ 
+					this.target.css({
 						'top': this._getPosYByContainer() + /*fix position on scroll*/this.container[0].scrollTop + 'px',
 						'left': this._getPosXByContainer() + /*fix position on scroll*/this.container[0].scrollLeft + 'px' 
 					});

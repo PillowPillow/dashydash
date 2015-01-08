@@ -16,7 +16,6 @@ angular.module('Dashydash-utils')
 				var config = {element: $node, container: $scope._container, ondrag: $scope._ondrag, 
 					ondragStart: () =>  {$scope._ondragStart(); $scope.$apply();}, 
 				ondragStop: $scope._ondragStop};
-
 				controller.initialize(config).enable();
 
 			}

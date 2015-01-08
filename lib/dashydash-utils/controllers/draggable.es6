@@ -5,10 +5,17 @@ angular.module('Dashydash-utils')
 	'Dashydash-utils.constants.draggableConfiguration', 
 	function(utils, Draggable, DRAGGABLE_CONFIGURATION) {
 
+		var ghost;
+
 		this.initialize = function(configuration = {}) {
 
 			utils.extend(configuration, DRAGGABLE_CONFIGURATION, configuration);
-			return new Draggable(configuration);
+			configuration.ghost = ghost || configuration.element;
+			this.draggable = new Draggable(configuration);
+
+			return this.draggable;
 		};
+
+		this.registerGhost = ($node) => ghost = $node;
 
 	}]);
