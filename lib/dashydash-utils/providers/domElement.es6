@@ -7,10 +7,11 @@ angular.module('Dashydash-utils')
 
 				constructor({element:$node, container:container}) {
 
+					this.document = $document[0];
+
 					this.element = $node;
 					this.container = container;
 
-					this.document = $document[0];
 				}
 
 				get elementRect() {
@@ -25,10 +26,10 @@ angular.module('Dashydash-utils')
 				}
 
 				get posX() {
-					return ~~this.elementRect.left + this.document.body.scrollLeft;
+					return ~~this.elementRect.left + this.container[0].scrollLeft;
 				}
 				get posY() {
-					return ~~this.elementRect.top + this.document.body.scrollTop;
+					return ~~this.elementRect.top + this.container[0].scrollTop;
 				}
 
 				get containerRect() {
