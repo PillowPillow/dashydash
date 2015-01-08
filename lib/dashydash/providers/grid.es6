@@ -20,7 +20,9 @@ angular.module('Dashydash')
 					this.lastPosition = {x:0,y:0};
 
 					this.placeholder = null;
-					this.floating = true;
+					this.element = $node;
+					
+					this.floating = false;
 
 				}
 
@@ -32,6 +34,17 @@ angular.module('Dashydash')
 					return this.itemHeight / 2;
 				}
 
+				get elementRect() {
+					return this.element[0].getBoundingClientRect();
+				}
+
+				get gridPosX() {
+					return ~~this.elementRect.left;
+				}
+				get gridPosY() {
+					return ~~this.elementRect.top;
+				}
+
 				_resetGrid() {
 					this.grid.splice(0);
 				}
@@ -40,15 +53,25 @@ angular.module('Dashydash')
 					$rootScope.$apply();
 				}
 
+				_getPosXFromGridElement(x) {
+					return x - this.gridPosX;
+				}
+
+				_getPosYFromGridElement(y) {
+					return y - this.gridPosY;
+				}
+
 				_getPosition({x,y}) {
 					return { x:this._pixelToColumn(x), y:this._pixelToRow(y) };
 				}
 
 				_pixelToColumn(posX = 0) {
+					posX = this._getPosXFromGridElement(posX);
 					return ~~( (posX + this.itemHalfWidth) / this.itemWidth );
 				}
 
 				_pixelToRow(posY = 0) {
+					posY = this._getPosYFromGridElement(posY);
 					return ~~( (posY + this.itemHalfHeight) / this.itemHeight );
 				}
 

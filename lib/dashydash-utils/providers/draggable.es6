@@ -265,7 +265,7 @@ angular.module('Dashydash-utils')
 				}
 
 				_getPosXByContainer() {
-					return this.position.x - this.containerPosX;
+					return this.position.x- this.containerPosX;
 				}
 
 				_getPosYByContainer() {

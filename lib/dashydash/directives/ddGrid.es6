@@ -13,7 +13,10 @@ angular.module('Dashydash')
 			compile: () => {
 				return {
 					pre: ($scope, $node, attributes, controller) => {
-						controller.initialize($scope.configuration);
+
+						var configuration = $scope.configuration || {};
+						configuration.element = $node;
+						controller.initialize(configuration);
 					}
 				};
 			}
