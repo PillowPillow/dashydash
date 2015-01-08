@@ -338,7 +338,6 @@ angular.module('Dashydash')
 						this.items.push(item);
 
 					this.saveItemLocation(item);
-					console.log(item)
 				}
 
 				detachItem(item) {

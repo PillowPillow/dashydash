@@ -48,12 +48,13 @@ angular.module('Dashydash-utils')
 					this.$$mouseDown = (event) => {
 						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
 							return false;
-						
-						this._detachElement();
+
 						this._updateMousePosition(event);
 						this._updateLastMousePosition();
 						this._updatePosition();
 						this._updateSize();
+						this._detachElement();
+						this._updateElementStyle();
 
 						this.$$ondragStart(event, this);
 
