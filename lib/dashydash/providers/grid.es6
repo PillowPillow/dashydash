@@ -20,7 +20,7 @@ angular.module('Dashydash')
 					this.lastPosition = {x:0,y:0};
 
 					this.placeholder = null;
-					this.floating = false;
+					this.floating = true;
 
 				}
 
@@ -199,7 +199,7 @@ angular.module('Dashydash')
 					}
 				}
 
-				updateGridFromDraggedItemPosition(item, final = false) {
+				update(item, final = false) {
 
 					this.detachItem(item);
 
@@ -215,6 +215,9 @@ angular.module('Dashydash')
 						this.pushUpItems();
 
 					this.placeholder.moveTo(item.position.current);
+
+					if(final)
+						this._saveLocations();
 				}
 
 				itemDragStart(item, ...args) {
@@ -238,7 +241,7 @@ angular.module('Dashydash')
 					if(this.lastPosition.x !== position.x || this.lastPosition.y !== position.y) {
 						this.lastPosition = position;
 						item.moveTo(position);
-						this.updateGridFromDraggedItemPosition(item);
+						this.update(item);
 						this._forceViewUpdate();
 					}
 				}
@@ -247,8 +250,7 @@ angular.module('Dashydash')
 					this.placeholder.disableAnimation();
 					var position = this._getPosition(args[1].position);
 					item.moveTo(position);
-					this.updateGridFromDraggedItemPosition(item, true);
-					this._saveLocations();
+					this.update(item, true);
 					this._forceViewUpdate();
 				}
 
@@ -320,7 +322,8 @@ angular.module('Dashydash')
 					if(!this.grid[item.position.current.y])
 						this.grid[item.position.current.y] = [];
 
-					this.grid[item.position.current.y][item.position.current.x] = item;
+					if(!this.grid[item.position.current.y][item.position.current.x])
+						this.grid[item.position.current.y][item.position.current.x] = item;
 				}
 
 				saveItemsLocation(items = []) {
@@ -335,6 +338,7 @@ angular.module('Dashydash')
 						this.items.push(item);
 
 					this.saveItemLocation(item);
+					console.log(item)
 				}
 
 				detachItem(item) {
