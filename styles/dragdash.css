@@ -1,7 +1,21 @@
 [dd-draggable], dd-draggable {
-	position: absolute;
+	position: relative;
 	top: 0px;
 	left: 0px;
+}
+
+ghost, [ghost] {
+	color: red;
+	position: absolute;
+}
+
+[dd-draggable] > [ghost], 
+[dd-draggable] > ghost, 
+dd-draggable > ghost, 
+dd-draggable > [ghost] {
+	top: 0px;
+	left: 0px;
+	display: none;
 }
 
 [dd-resizable], dd-resizable {
