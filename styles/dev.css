@@ -8,10 +8,10 @@ body {
 	box-sizing: border-box;
 }
 
-.dark-primary-color    { border: 3px solid #C2185B; }
-.default-primary-color { border: 3px solid #E91E63; }
-.light-primary-color   { border: 3px solid #F8BBD0; }
-.accent-color          { border: 3px solid #00BCD4; }
+.dark-primary-color    { background-color: #C2185B; }
+.default-primary-color { background-color: #E91E63; }
+.light-primary-color   { background-color: #F8BBD0; }
+.accent-color          { background-color: #00BCD4; }
 
 .dd-container {
 	position: relative;
@@ -37,6 +37,8 @@ dd-item.item-dragged {
 
 dd-item,
 dd-placeholder {
+	
+	border: 1px solid white;
 	position: absolute;
 }
 
