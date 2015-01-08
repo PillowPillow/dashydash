@@ -36,7 +36,7 @@ angular.module('Dashydash-utils')
 				}
 
 				get container() {
-					return !!this._container ? angular.element(this._container) : $document;
+					return angular.element( !!this._container ? this._container  : this.document.querySelector('body'));
 				}
 				set container(value) {
 					this._container = typeof value !== 'string' ? value : this.document.querySelector(value);
