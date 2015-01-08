@@ -18,7 +18,6 @@ angular.module('Dashydash')
 							$node.removeAttr('ng-repeat');
 							return nodeBuilder.compile($node)($scope);
 						}
-
 						var row = parseInt(attributes.initRow, 10) || 0,
 							col = parseInt(attributes.initCol, 10) || 0,
 							width = parseInt(attributes.initWidth, 10) || 1,
@@ -29,7 +28,6 @@ angular.module('Dashydash')
 						var gridController = controllers[0],
 							itemController = controllers[1];
 						var config = {element: $node, grid: gridController.grid, row: row, column: col, width: width, height: height};
-
 						itemController.initialize(config);
 						
 						bind(['y','x'])

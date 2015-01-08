@@ -30,7 +30,11 @@ angular.module('Dashydash-utils')
 
 					this.enabled = false;
 
+					this.parentNode = undefined;
+
 					this.$$mouseUp = (event) => {
+
+						this._attachElement();
 						$document.off('mouseup', this.$$mouseUp);
 						$document.off('mousemove', this.$$mouseMove);
 
@@ -44,7 +48,8 @@ angular.module('Dashydash-utils')
 					this.$$mouseDown = (event) => {
 						if(this._shouldBeHandled(event) || !this._isLeftClicked(event))
 							return false;
-
+						
+						this._detachElement();
 						this._updateMousePosition(event);
 						this._updateLastMousePosition();
 						this._updatePosition();
@@ -104,6 +109,16 @@ angular.module('Dashydash-utils')
 				set handle(value) {
 					//disables the handler modification if the draggable is currently enabled
 					this._handle = this.enabled ? this._handle : value;
+				}
+
+				_detachElement() {
+					this.parentNode = this.element[0].parentNode;
+					this.container[0].appendChild(this.element[0]);
+				}
+
+				_attachElement() {
+					this.parentNode.appendChild(this.element[0]);
+					this.parentNode = undefined;
 				}
 
 				_updateSize() {
