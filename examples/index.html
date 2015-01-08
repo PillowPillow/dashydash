@@ -37,7 +37,8 @@
 					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
 						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
 						<md-list>
-							<md-item ng-repeat="item in PanelCtrl.items track by $index" >
+							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-draggable dd-dragstart="PanelCtrl.closePanel" style="z-index=100">
+								<ghost></ghost>	
 								<md-item-content>
 									<div class="md-tile-left">
 										{{$index}}
@@ -45,11 +46,7 @@
 									<div class="md-tile-content">
 										<h3>{{item.name}}</h3>
 										<p>
-											hello
-											<span dd-draggable dd-dragstart="PanelCtrl.closePanel" style="z-index=100">
-												drag it to the grid
-												<ghost></ghost>	
-											</span>
+											drag it to the grid
 										</p>
 									</div>
 								</md-item-content>
