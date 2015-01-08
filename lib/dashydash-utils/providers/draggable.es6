@@ -6,7 +6,7 @@ angular.module('Dashydash-utils')
 
 			class Draggable extends DOMElement{
 
-				constructor({element:$node, container:container, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
+				constructor({element:$node, container:container, fixed:fixed, handle:handle, ondragStart:ondragStart, ondragStop:ondragStop, ondrag:ondrag, directions: directions,diagonalRestrictions: diagonalRestrictions,scrollSensitivity:scrollSensitivity,scrollSpeed:scrollSpeed}) {
 					super({element:$node, container:container});
 
 					this.size = { width:0,height:0 };
@@ -16,6 +16,8 @@ angular.module('Dashydash-utils')
 
 					this.min = { left:0,top:0 };
 					this.max = { left:9999,top:9999 };
+
+					this.fixed = fixed;
 
 					this.ondragStart = ondragStart;
 					this.ondragStop = ondragStop;
@@ -40,6 +42,11 @@ angular.module('Dashydash-utils')
 
 						this.offset.x = this.offset.y = 0;
 
+						if(this.fixed) {
+							this._rollbackPosition();
+							this._updateElementStyle();
+						}
+
 						this.$$ondragStop(event, this._serialize());
 
 						event.preventDefault();
@@ -55,6 +62,9 @@ angular.module('Dashydash-utils')
 						this._updateSize();
 						this._attachElementToContainer();
 						this._updateElementStyle();
+
+						if(this.fixed)
+							this._saveRootPosition();
 
 						this.$$ondragStart(event, this._serialize());
 
@@ -116,7 +126,7 @@ angular.module('Dashydash-utils')
 					return {
 						position: this.position.current,
 						size: this.size
-					}
+					};
 				}
 
 				_attachElementToContainer() {
@@ -132,6 +142,16 @@ angular.module('Dashydash-utils')
 				_updateSize() {
 					this.size.width = this.sizeW;
 					this.size.height = this.sizeH;
+				}
+
+				_rollbackPosition() {
+					this.position.current.x = this.position.last.x;
+					this.position.current.y = this.position.last.y;
+				}
+
+				_saveRootPosition() {
+					this.position.last.x = this.position.current.x;
+					this.position.last.y = this.position.current.y;
 				}
 
 				_updatePosition() {

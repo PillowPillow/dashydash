@@ -7,6 +7,7 @@ angular.module('Dashydash-utils')
 		ondragStop: () => {}, 
 		ondrag: () => {}, 
 		directions: ['n','s','e','w'], 
+		fixed: false,
 		diagonalRestrictions: [], 
 		scrollSensitivity: 20, 
 		scrollSpeed: 20
