@@ -32,7 +32,7 @@ dd-item:not(.item-dragged) {
 }
 
 dd-item.item-dragged {
-	z-index: 10;
+	z-index: 70;
 }
 
 dd-item,

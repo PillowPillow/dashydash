@@ -20,7 +20,6 @@
 		<link rel="stylesheet" href="../styles/dashydash.css">
 		<link rel="stylesheet" href="../styles/dragdash.css">
 		<!-- only for example --><link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"></script>
-		<!-- only for example --><link rel="stylesheet" href="../bower_components/angular-material/themes/amber-theme.css"></script>
 		<!-- styles -->
 		<!-- fonts -->
 		<!-- fonts -->
@@ -28,18 +27,51 @@
 
 	</head>
 	<body ng-app="app">
-		<section ng-controller="app.controllers.app as AppCtrl">
-			<header>
-				<button ng-click="AppCtrl.addItem()">add item</button>
-			</header>
-			<dd-grid>
-				<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
-					<input type="number" ng-model="row" class="ng-valid ng-dirty ng-touched">
-					<input type="number" ng-model="col">
-					<input type="number" ng-model="width">
-					<input type="number" ng-model="height">
-				</dd-item>
-			</dd-grid> 
+
+		<section ng-controller="app.controllers.app as AppCtrl" layout="column" layout-fill>
+			<section layout="row" flex>
+				<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+					<md-toolbar>
+						<h1 class="md-toolbar-tools">ITEM PANEL</h1>
+					</md-toolbar>
+					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
+						<md-button ng-click="PanelCtrl.close()" class="md-primary" hide-gt-md> Close </md-button>
+						<md-list>
+							<md-item ng-repeat="item in PanelCtrl.items track by $index">
+								<md-item-content>
+									<div class="md-tile-left">
+										{{$index}}
+									</div>
+									<div class="md-tile-content">
+										<h3>{{item.name}}</h3>
+										<p>drag it to the grid</p>
+									</div>
+								</md-item-content>
+							</md-item>
+						</md-list>
+					</md-content>
+				</md-sidenav>
+				<md-content flex id="main-frame">
+					<div layout="column" layout-fill layout-align="center center">
+					<md-toolbar class="md-accent">
+						<section class="md-toolbar-tools">
+							<span>DASHYDASH</span>
+							<span class="flex"></span>
+							<md-button ng-click="AppCtrl.togglePanel()" class="md-raised md-primary">TOGGLE ITEM PANEL</md-button>
+							<md-button ng-click="AppCtrl.addItem()" class="md-raised md-primary">ADD RANDOM ITEM</md-button>
+						</section>
+					</md-toolbar>
+						<dd-grid>
+							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
+								<input type="number" ng-model="row">
+								<input type="number" ng-model="col">
+								<input type="number" ng-model="width">
+								<input type="number" ng-model="height">
+							</dd-item>
+						</dd-grid> 
+					</div>
+				</md-content>
+			</section>
 		</section>
 
 		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
@@ -49,7 +81,7 @@
 		<!-- <section ng-controller="app.controllers.app as AppCtrl"> -->
 			<!-- <dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable> -->
 		<!-- </section> -->
-
+	
 
 
 		<!-- content -->
