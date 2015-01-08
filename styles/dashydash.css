@@ -1,3 +1,4 @@
-[dd-grid] {
+[dd-grid], dd-grid {
 	display: block;
+	position: relative;
 }
