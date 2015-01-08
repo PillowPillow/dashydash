@@ -16,10 +16,10 @@
 
 	<!-- design -->
 		<!-- styles -->
-		<link rel="stylesheet" href="../styles/dev.css">
-		<link rel="stylesheet" href="../styles/dashydash.css">
-		<link rel="stylesheet" href="../styles/dragdash.css">
 		<!-- only for example --><link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css"></script>
+		<link rel="stylesheet" href="../styles/dev.css">
+		<link rel="stylesheet" href="../styles/dragdash.css">
+		<link rel="stylesheet" href="../styles/dashydash.css">
 		<!-- styles -->
 		<!-- fonts -->
 		<!-- fonts -->
@@ -35,9 +35,10 @@
 						<h1 class="md-toolbar-tools">ITEM PANEL</h1>
 					</md-toolbar>
 					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
-						<md-button ng-click="PanelCtrl.close()" class="md-primary" hide-gt-md> Close </md-button>
+						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
+						<md-button dd-draggable dd-dragstart="PanelCtrl.closePanel" class="test-block" style="top: 120px;left: 120px;z-index:120">lolipop</md-button>
 						<md-list>
-							<md-item ng-repeat="item in PanelCtrl.items track by $index">
+							<md-item ng-repeat="item in PanelCtrl.items track by $index" >
 								<md-item-content>
 									<div class="md-tile-left">
 										{{$index}}
@@ -73,17 +74,6 @@
 				</md-content>
 			</section>
 		</section>
-
-		<!-- <section dd-draggable class="test-block" style="top: 120px;left: 120px;"> -->
-		<!-- <section dd-resizable class="test-block" style="top: 120px;left: 120px;">
-			<dd-resize-handler dd-resize-handler-target="_ddResizable.node" dd-resize-handler-type="n" class="resize-handler" style="position: absolute; right: 0px; bottom: 0px;">X</dd-resize-handler>
-		</section> -->
-		<!-- <section ng-controller="app.controllers.app as AppCtrl"> -->
-			<!-- <dd-draggable class="text-block" dd-on-drag="AppCtrl.ondrag">Hello everyone</dd-draggable> -->
-		<!-- </section> -->
-	
-
-
 		<!-- content -->
 
 		<!-- scripts -->
@@ -131,6 +121,7 @@
 			<!-- features -->
 			<script src="modules/app/core.js"></script>
 			<script src="modules/app/controllers/app.js"></script>
+			<script src="modules/app/controllers/panel.js"></script>
 			<!-- features -->
 		<!-- scripts -->
 	

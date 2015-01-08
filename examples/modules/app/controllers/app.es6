@@ -27,17 +27,6 @@ angular.module('app')
 		this.addItem = () => this.items.push({y:~~(Math.random()*10 ), x:~~(Math.random()*10), w:~~(Math.random()*4 + 1), h:~~(Math.random()*4 + 1), border: pickColor()});
 
 		this.togglePanel = () => $mdSidenav('left').toggle();
-	}])
-	.controller('app.controllers.panel',  [
-	'$mdSidenav', 
-	function($mdSidenav) {
-		this.closePanel = () => $mdSidenav('left').close();
-
-		this.items = [
-			{name:'SMALL'},
-			{name:'MEDIUM'},
-			{name:'BIG'}
-		];
 	}]);
 
 
