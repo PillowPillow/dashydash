@@ -65,7 +65,7 @@
 						</section>
 					</md-toolbar>
 						<dd-grid>
-							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
+							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index" grid-id="yolo">
 								<input min=0 type="number" ng-model="row">
 								<input min=0 type="number" ng-model="col">
 								<input min=1 type="number" ng-model="width">
@@ -107,6 +107,7 @@
 			<script src="../lib/dashydash/core.js"></script>
 			<script src="../lib/dashydash/constants/domGridItem.js"></script>
 			<script src="../lib/dashydash/services/nodeBuilder.js"></script>
+			<script src="../lib/dashydash/services/grid.js"></script>
 			<script src="../lib/dashydash/providers/item.js"></script>
 			<script src="../lib/dashydash/providers/grid.js"></script>
 			<script src="../lib/dashydash/providers/placeholder.js"></script>

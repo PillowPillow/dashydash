@@ -1,8 +1,12 @@
 angular.module('app')
 	.controller('app.controllers.panel',  [
+	'Dashydash.services.grid',
 	'$mdSidenav', 
-	function($mdSidenav) {
-		this.closePanel = () => $mdSidenav('left').close();
+	function(gridService, $mdSidenav) {
+		this.closePanel = () => {
+			// gridService('yolo');
+			$mdSidenav('left').close();
+		};
 		this.items = [
 			{name:'SMALL'},
 			{name:'MEDIUM'},

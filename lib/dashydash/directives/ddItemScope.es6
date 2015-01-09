@@ -15,11 +15,6 @@ angular.module('Dashydash')
 					width = parseInt(attributes.initWidth, 10) || 1,
 					height = parseInt(attributes.initHeight, 10) || 1;
 
-				$node.removeAttr('init-row');
-				$node.removeAttr('init-col');
-				$node.removeAttr('init-width');
-				$node.removeAttr('init-height');
-
 				$scope.class = {};
 
 				var gridController = controllers[0],

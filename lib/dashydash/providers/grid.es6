@@ -1,12 +1,16 @@
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
-		this.$get = ['$document', '$rootScope',
-			($document, $rootScope) => {
+		this.$get = [
+		'Dashydash.services.grid',
+		'$document', '$rootScope',
+			(gridService, $document, $rootScope) => {
 
 			class Grid {
 
-				constructor({element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
+				constructor({id:id, element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
+
+					this.id = id;
 
 					this.grid = [];
 					this.items = [];
@@ -23,6 +27,8 @@ angular.module('Dashydash')
 					this.element = $node;
 					
 					this.floating = false;
+
+					gridService.register(this);
 
 				}
 
@@ -226,8 +232,6 @@ angular.module('Dashydash')
 
 					this.detachItem(item);
 
-					if(!this.floating)
-						this.pushUpItems();
 					this.moveDownArea(item, undefined, final);
 
 					this._saveGridState();
@@ -368,8 +372,12 @@ angular.module('Dashydash')
 					if(this._isItemRegistered(item)) {
 						detached = this._removeItemFromGrid(item);
 
-						if(detached)
+						if(detached) {
 							this.items.splice(this._getItemIndex(item), 1);
+
+							if(!this.floating)
+								this.pushUpItems();
+						}
 					}
 					return detached;
 				}
