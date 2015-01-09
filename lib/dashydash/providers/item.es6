@@ -95,7 +95,7 @@ angular.module('Dashydash')
 					return updated;
 				}
 
-				belongTo(list = []) {
+				belongsTo(list = []) {
 					return !!~list.indexOf(this);
 				}
 			}

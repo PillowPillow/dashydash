@@ -80,12 +80,12 @@ angular.module('Dashydash')
 				}
 
 				_isItemRegistered(item) {
-					return !!item && item.belongTo(this.items);
+					return !!item && item.belongsTo(this.items);
 				}
 
 				_rollbackPositions(excludedItems = []) {
 					for(var i = 0; i<this.items.length; i++)
-						if(!this.items[i].belongTo(excludedItems))
+						if(!this.items[i].belongsTo(excludedItems))
 							this.items[i].moveBack();
 				}
 
@@ -93,7 +93,7 @@ angular.module('Dashydash')
 
 					this._resetGrid();
 					for(var i = 0; i<this.items.length; i++)
-						if(!this.items[i].belongTo(excludedItems))
+						if(!this.items[i].belongsTo(excludedItems))
 							this.items[i].saveLocation();
 				}
 
@@ -108,7 +108,7 @@ angular.module('Dashydash')
 
 					this._resetGrid();
 					for(var i = 0; i<this.items.length; i++)
-						if(!this.items[i].belongTo(excludedItems))
+						if(!this.items[i].belongsTo(excludedItems))
 							this.saveItemLocation(this.items[i]);
 				}
 
@@ -309,7 +309,7 @@ angular.module('Dashydash')
 					for(var x = col; x<colMax; x++) {
 						for(var y = row; y<rowMax; y++) {
 							let item = this.getItem({x,y}, excludedItems);
-							if(!!item && !item.belongTo(excludedItems) && !item.belongTo(items))
+							if(!!item && !item.belongsTo(excludedItems) && !item.belongsTo(items))
 								items.push(item);
 						}
 					}
@@ -328,7 +328,7 @@ angular.module('Dashydash')
 						for(let x = col; x>=0; x--) {
 							if(!!this.grid[y]) {
 								let item = this.grid[y][x];
-								if(!!item && !item.belongTo(excludedItems) && item.size.current.h >= size.y && item.size.current.w >= size.x) {
+								if(!!item && !item.belongsTo(excludedItems) && item.size.current.h >= size.y && item.size.current.w >= size.x) {
 									itemFound = item;
 									break loopOnRows;
 								}
