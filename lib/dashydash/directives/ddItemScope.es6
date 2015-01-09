@@ -41,6 +41,6 @@ angular.module('Dashydash')
 					.as('item-dragged')
 					.from(itemController.item)
 					.to($scope.class).apply();
-			} 
+			}
 		};
 	}]);

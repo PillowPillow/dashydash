@@ -1,7 +1,8 @@
 angular.module('Dashydash')
-	.constant('Dashydash.constants.positionableElementDOMAttributes', {
+	.constant('Dashydash.constants.DOM_GRID_ITEM', {
 		'dd-row': '{{row}}', 
 		'dd-col': '{{col}}', 
 		'dd-width': '{{width}}', 
-		'dd-height': '{{height}}'
+		'dd-height': '{{height}}',
+		'ng-class':'class'
 	});

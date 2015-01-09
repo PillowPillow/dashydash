@@ -1,9 +1,9 @@
 angular.module('Dashydash')
 	.directive('ddPlaceholder', [
 	'Dashydash.services.nodeBuilder',
-	'Dashydash.constants.positionableElementDOMAttributes',
+	'Dashydash.constants.DOM_GRID_ITEM',
 	'PropertyBinder.services.binder',
-	function(nodeBuilder, DOM_ATTRIBUTES, bind) {
+	function(nodeBuilder, DOM_GRID_ITEM, bind) {
 		return {
 			scope: true,
 			restrict: 'EA',
@@ -12,7 +12,7 @@ angular.module('Dashydash')
 			controllerAs: '_ddPlaceholder',
 			compile: (node) => {
 				
-				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES) || nodeBuilder.addAttributes(node, {'ng-class': 'class'});
+				var attributeDefined = nodeBuilder.addAttributes(node, DOM_GRID_ITEM);
 				return {
 					post: ($scope, $node, attributes, controllers) => {
 						if(attributeDefined)

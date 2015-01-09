@@ -1,18 +1,16 @@
 angular.module('Dashydash')
 	.directive('ddItem', [
 	'Dashydash.services.nodeBuilder', 
-	'Dashydash.constants.positionableElementDOMAttributes',
-	function(nodeBuilder, DOM_ATTRIBUTES) {
+	'Dashydash.constants.DOM_GRID_ITEM',
+	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
 			scope: true,
 			restrict: 'EA',
 			priority: 1,
 			compile: (node) => {
-				var attributeDefined = nodeBuilder.addAttributes(node, DOM_ATTRIBUTES);
-				attributeDefined = nodeBuilder.addAttributes(node, {'ng-class':'class'}) || attributeDefined;
+				var attributeDefined = nodeBuilder.addAttributes(node, DOM_GRID_ITEM);
 				if(attributeDefined)
 					node[0].className += ' dd-item-scope';
-				// console.log(node)
 				return {
 					post: ($scope, $node) => {
 						if(attributeDefined) {
