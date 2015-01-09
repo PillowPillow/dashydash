@@ -20,12 +20,13 @@ angular.module('Dashydash')
 					this.isDragged = false;
 					this.movedByOverlapping = false;
 
-					this._initDraggableBehaviour({
-						element: $node,  
-						ondragStart: (...args) => this._ondragStart(...args),
-						ondrag: (...args) => this._ondrag(...args),
-						ondragStop: (...args) => this._ondragStop(...args)
-					});
+					if(this.element)
+						this.initDraggableBehaviour({
+							element: $node,  
+							ondragStart: (...args) => this._ondragStart(...args),
+							ondrag: (...args) => this._ondrag(...args),
+							ondragStop: (...args) => this._ondragStop(...args)
+						});
 				}
 
 				get isAttached() {
@@ -50,16 +51,17 @@ angular.module('Dashydash')
 						this.grid.itemDragStop(this, ...args);
 				}
 
-				_initDraggableBehaviour(configuration = {}) {
+				_clearDragStyle() {
+					if(this.element)
+						this.element.removeAttr('style');
+				}
+
+				initDraggableBehaviour(configuration = {}) {
 					if(this.draggable !== undefined)
 						throw 'draggable behaviour already initialized';
 					utils.extend(configuration, DRAGGABLE_CONFIGURATION, configuration);
 					this.draggable = new Draggable(configuration);
 					this.draggable.enable();
-				}
-
-				_clearDragStyle() {
-					this.element.removeAttr('style');
 				}
 				
 				attach(grid = undefined) {
