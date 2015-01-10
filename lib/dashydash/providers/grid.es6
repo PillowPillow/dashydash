@@ -292,13 +292,12 @@ angular.module('Dashydash')
 				}
 
 				itemDragStart(item, ...args) {
-					this._saveGridState();
-					this.enablePlaceholderAnimation();
+					
 
-					if(args.length > 2) {
-						let position = this._getPosition(args[1].position);
-						this.placeholder.moveTo(position, false);
-					}
+					let position = args.length > 2 ? this._getPosition(args[1].position) : item.position.current;
+					this.placeholder.moveTo(position, false);
+					this.enablePlaceholderAnimation();
+					this._saveGridState();
 
 					this.placeholder.updateSize(item.size.current);
 					this._forceViewUpdate();
