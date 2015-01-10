@@ -35,6 +35,10 @@ dd-item.item-dragged {
 	z-index: 70;
 }
 
+dd-item {
+	background-color: #00BCD4;
+}
+
 dd-item,
 dd-placeholder {
 	

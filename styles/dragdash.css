@@ -7,6 +7,10 @@
 ghost, [ghost] {
 	color: red;
 	position: absolute;
+	z-index: 102;
+	width: 200px;
+	height: 100px;
+	border: 1px solid black;
 }
 
 [dd-draggable] > [ghost], 
