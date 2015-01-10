@@ -13,9 +13,12 @@ angular.module('Dashydash-utils')
 			controller: 'Dashydash-utils.controllers.draggable',
 			controllerAs: '_ddDraggable',
 			link: function($scope, $node, attributes, controller) {
-				var config = {element: $node, container: $scope._container, ondrag: $scope._ondrag, 
-					ondragStart: () =>  {$scope._ondragStart(); $scope.$apply();}, 
-				ondragStop: $scope._ondragStop};
+				var config = {element: $node, 
+					container: $scope._container, 
+					ondrag: (...args) => $scope._ondrag(...args), 
+					ondragStart: (...args) => $scope._ondragStart(...args), 
+					ondragStop: (...args) => $scope._ondragStop(...args)
+				};
 				controller.initialize(config).enable();
 
 			}
