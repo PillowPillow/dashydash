@@ -23,9 +23,9 @@ angular.module('Dashydash')
 					if(this.element)
 						this.initDraggableBehaviour({
 							element: $node,  
-							ondragStart: (...args) => this._ondragStart(...args),
-							ondrag: (...args) => this._ondrag(...args),
-							ondragStop: (...args) => this._ondragStop(...args)
+							ondragStart: (...args) => this.$$ondragStart(...args),
+							ondrag: (...args) => this.$$ondrag(...args),
+							ondragStop: (...args) => this.$$ondragStop(...args)
 						});
 				}
 
@@ -33,18 +33,18 @@ angular.module('Dashydash')
 					return this.grid !== undefined && this.grid !== null;
 				}
 
-				_ondragStart(...args) {
+				$$ondragStart(...args) {
 					this.disableAnimation();
 					if(this.isAttached)
 						this.grid.itemDragStart(this, ...args);
 				}
 
-				_ondrag(...args) {
+				$$ondrag(...args) {
 					if(this.isAttached)
 						this.grid.itemDragged(this, ...args);
 				}
 
-				_ondragStop(...args) {
+				$$ondragStop(...args) {
 					this.enableAnimation();
 					this._clearDragStyle();
 					if(this.isAttached)
@@ -72,8 +72,10 @@ angular.module('Dashydash')
 				}
 
 				detach() {
-					if(this.isAttached)
+					if(this.isAttached) {
 						this.grid.detachItem(this);
+						this.grid.update(this, true);
+					}
 					this.grid = undefined;
 				}
 
@@ -88,6 +90,20 @@ angular.module('Dashydash')
 				
 				disableAnimation() {
 					this.isDragged = true;
+				}
+
+				destroy() {
+					this.grid.disablePlaceholderAnimation();
+					this.detach();
+					if(this.draggable)
+						this.draggable.destroy();
+				}
+
+				serialize() {
+					var {w,h} = this.size.current,
+						{x,y} = this.position.current;
+
+					return {w, h, x, y};
 				}
 
 			}
