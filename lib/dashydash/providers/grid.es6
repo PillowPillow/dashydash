@@ -1,10 +1,11 @@
+var grid;
 angular.module('Dashydash')
 	.provider('Dashydash.providers.grid', function() {
 		
 		this.$get = [
 		'Dashydash.services.grid',
-		'$document', '$rootScope',
-			(gridService, $document, $rootScope) => {
+		'$document', '$rootScope', '$compile',
+			(gridService, $document, $rootScope, $compile) => {
 
 			class Grid {
 
@@ -30,6 +31,19 @@ angular.module('Dashydash')
 
 					gridService.register(this);
 
+					// this._applyEvent();
+
+				}
+
+				get element() {
+					return this._element;
+				}
+				set element(value) {
+					this._element = value;
+				}
+
+				get itemContainer() {
+					return angular.element(this.element[0].querySelector('.dd-container'));
 				}
 
 				get itemHalfWidth() {
@@ -49,6 +63,20 @@ angular.module('Dashydash')
 				}
 				get gridPosY() {
 					return ~~this.elementRect.top;
+				}
+
+				// _emit(event) {
+				// 	$rootScope.$emit('dashydash_grid.'+event, this.id);
+				// }
+
+				// _applyEvent() {
+				// 	this.element.on('mouseenter', () => this._emit('mouseenter'));
+				// 	this.element.on('mouseleave', () => this._emit('mouseleave'));
+				// }
+
+				_removeEvent() {
+					this.element.off('mouseenter');
+					this.element.off('mouseleave');
 				}
 
 				_resetGrid() {
@@ -181,6 +209,21 @@ angular.module('Dashydash')
 					return this.items.indexOf(item);
 				}
 
+				addItem(config = {}) {
+					var node = $document[0].createElement('dd-item');
+					if(config.w !== undefined)
+						node.setAttribute('init-width', config.w);
+					if(config.h !== undefined)
+						node.setAttribute('init-height', config.h);
+					if(config.x !== undefined)
+						node.setAttribute('init-col', config.x);
+					if(config.y !== undefined)
+						node.setAttribute('init-row', config.y);
+
+					this.itemContainer[0].appendChild(node);
+					$compile(node)($rootScope);
+				}
+
 				pushUpItem(item, excludedItems = [], saveInGrid = true) {
 
 					if(this.floating)
@@ -230,13 +273,14 @@ angular.module('Dashydash')
 
 				update(item, final = false) {
 
-					this.detachItem(item);
+					var detached = this.detachItem(item);
 
 					this.moveDownArea(item, undefined, final);
 
 					this._saveGridState();
 
-					this.attachItem(item);
+					if(detached)
+						this.attachItem(item);
 
 					if(!this.floating)
 						this.pushUpItems();
@@ -248,13 +292,17 @@ angular.module('Dashydash')
 				}
 
 				itemDragStart(item, ...args) {
-					var position = this._getPosition(args[1].position);
-
 					this._saveGridState();
-					this.placeholder.enableAnimation();
-					this.placeholder.moveTo(position, false);
+					this.enablePlaceholderAnimation();
+
+					if(args.length > 2) {
+						let position = this._getPosition(args[1].position);
+						this.placeholder.moveTo(position, false);
+					}
+
 					this.placeholder.updateSize(item.size.current);
 					this._forceViewUpdate();
+					grid = this.grid;
 				}
 
 				itemDragged(item, ...args) {
@@ -271,14 +319,24 @@ angular.module('Dashydash')
 						this.update(item);
 						this._forceViewUpdate();
 					}
+					grid = this.grid;
 				}
 
 				itemDragStop(item, ...args) {
-					this.placeholder.disableAnimation();
+					this.disablePlaceholderAnimation();
 					var position = this._getPosition(args[1].position);
 					item.moveTo(position);
 					this.update(item, true);
 					this._forceViewUpdate();
+					grid = this.grid;
+				}
+
+				enablePlaceholderAnimation() {
+					this.placeholder.enableAnimation();
+				}
+
+				disablePlaceholderAnimation() {
+					this.placeholder.disableAnimation();
 				}
 
 				moveDownArea(item, excludedItems = [], final = false) {
