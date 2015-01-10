@@ -66,8 +66,8 @@
 							<md-button ng-click="AppCtrl.addItem()" class="md-raised md-primary">ADD RANDOM ITEM</md-button>
 						</section>
 					</md-toolbar>
-						<dd-grid>
-							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index" grid-id="yolo">
+						<dd-grid grid-id="gridname">
+							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
 								<input min=0 type="number" ng-model="row">
 								<input min=0 type="number" ng-model="col">
 								<input min=1 type="number" ng-model="width">
