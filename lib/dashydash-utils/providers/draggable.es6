@@ -61,8 +61,8 @@ angular.module('Dashydash-utils')
 						this._updateMousePosition(event);
 						this._updateLastMousePosition();
 						this._updatePosition();
-						this._updateSize();
 						this._attachElementToContainer();
+						this._updateSize();
 						this._updateElementStyle();
 
 						if(this.fixed)
@@ -116,6 +116,17 @@ angular.module('Dashydash-utils')
 					};
 				}
 
+				get ghostRect() {
+					return this.ghost[0].getBoundingClientRect();
+				}
+
+				get ghostSizeW() {
+					return ~~this.ghostRect.width;
+				}
+				get ghostSizeH() {
+					return ~~this.ghostRect.height;
+				}
+
 				get handle() {
 					return this._handle !== '' ? angular.element(this.element[0].querySelector(this._handle)) : this.element;
 				}
@@ -126,6 +137,13 @@ angular.module('Dashydash-utils')
 
 				get target() {
 					return this.ghost || this.element;
+				}
+
+				get targetSizeW() {
+					return this.ghost? this.ghostSizeW : this.sizeW;
+				}
+				get targetSizeH() {
+					return this.ghost? this.ghostSizeH : this.sizeH;
 				}
 
 				_serialize() {
@@ -146,8 +164,8 @@ angular.module('Dashydash-utils')
 				}
 
 				_updateSize() {
-					this.size.width = this.sizeW;
-					this.size.height = this.sizeH;
+					this.size.width = this.targetSizeW;
+					this.size.height = this.targetSizeH;
 				}
 
 				_rollbackPosition() {
@@ -324,7 +342,6 @@ angular.module('Dashydash-utils')
 				_fixLeftRightBoundaries(pxMoved) {
 
 					var dX = pxMoved.x;
-
 					if (this.position.current.x + dX < this.min.left) {
 						pxMoved.x = this.min.left - this.position.current.x;
 						this.offset.x = dX - pxMoved.x;
