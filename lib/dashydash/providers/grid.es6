@@ -31,8 +31,6 @@ angular.module('Dashydash')
 
 					gridService.register(this);
 
-					// this._applyEvent();
-
 				}
 
 				get element() {
@@ -65,18 +63,23 @@ angular.module('Dashydash')
 					return ~~this.elementRect.top;
 				}
 
-				// _emit(event) {
-				// 	$rootScope.$emit('dashydash_grid.'+event, this.id);
-				// }
+				get gridWidth() {
+					return ~~this.elementRect.width;
+				}
+				get gridHeight() {
+					return ~~this.elementRect.height;
+				}
 
-				// _applyEvent() {
-				// 	this.element.on('mouseenter', () => this._emit('mouseenter'));
-				// 	this.element.on('mouseleave', () => this._emit('mouseleave'));
-				// }
+				_isOverlapped(event) {
+					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
+				}
 
-				_removeEvent() {
-					this.element.off('mouseenter');
-					this.element.off('mouseleave');
+				_collidesXaxis(x) {
+					return x >= this.gridPosX && x < this.gridPosX + this.gridWidth;
+				}
+
+				_collidesYaxis(y) {
+					return y >= this.gridPosY && y < this.gridPosX + this.gridHeight;
 				}
 
 				_resetGrid() {
