@@ -70,10 +70,6 @@ angular.module('Dashydash')
 					return ~~this.elementRect.height;
 				}
 
-				_isOverlapped(event) {
-					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
-				}
-
 				_collidesXaxis(x) {
 					return x >= this.gridPosX && x < this.gridPosX + this.gridWidth;
 				}
@@ -210,6 +206,10 @@ angular.module('Dashydash')
 
 				_getItemIndex(item) {
 					return this.items.indexOf(item);
+				}
+
+				isOverlapped(event) {
+					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
 				}
 
 				addItem(config = {}) {
