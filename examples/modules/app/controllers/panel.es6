@@ -7,44 +7,51 @@ angular.module('app')
 	function($rootScope, gridService, GridItem, $mdSidenav) {
 		this.closePanel = () => $mdSidenav('left').close();
 
-		var item, gridId = 'gridname';
-		// $rootScope.$on('dashydash_grid.mouseenter', (scope, id) => {
-		// 	// console.log(id, gridId)
-		// 	// if(gridId === id)
-		// 	// 	return;
-
-		// 	gridId = id;
-		// 	// if(item) {
-		// 	// 	item.attach(gridService(gridId));
-		// 	// 	item.$$ondragStart();
-		// 	// 	$rootScope.$apply();
-		// 	// }
-		// });
-
-
+		var item, grid;// = 'gridname';
 
 		this.dragstart = (...args) => {
-			if(item)
-				return;
+			grid = undefined;
 			item = new GridItem({row:2, column:2, width:2, height:2});
-			if(gridId !== undefined && gridId !== null) {
-				item.attach(gridService(gridId));
-				item.$$ondragStart(...args);
-			}
-
 			this.closePanel();
 			$rootScope.$apply();
 		};
 		this.drag = (...args) => {
+
+			//todo get the good grids not the first
+			var overlapped = gridService.getOverlapped(args[0]);
+
+
+			if(overlapped.length > 0) {
+
+				grid = overlapped[0];
+
+				if(!item.isAttachedTo(grid)) {
+					item.attach(grid);
+					item.$$ondragStart(...args);
+				} 
+				else {
+					item.$$ondrag(...args);
+						grid._forceViewUpdate();
+				}
+			}
+			else {
+				if(item) {
+					item.destroy();
+					if(grid)
+						grid._forceViewUpdate();
+				}
+				grid = undefined;
+			}
+
 			if(item && item.isAttached)
 				item.$$ondrag(...args);
 		};
 		this.dragstop = (...args) => {
-			if(!item && item.isAttached)
-				return;
 			item.destroy();
-			gridService(gridId).addItem(item.serialize());
-			gridService(gridId)._forceViewUpdate();
+			if(grid) {
+				grid.addItem(item.serialize());
+				grid._forceViewUpdate();
+			}
 			item = undefined;
 		};
 

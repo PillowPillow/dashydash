@@ -93,7 +93,8 @@ angular.module('Dashydash')
 				}
 
 				destroy() {
-					this.grid.disablePlaceholderAnimation();
+					if(this.isAttached)
+						this.grid.disablePlaceholderAnimation();
 					this.detach();
 					if(this.draggable)
 						this.draggable.destroy();
@@ -104,6 +105,10 @@ angular.module('Dashydash')
 						{x,y} = this.position.current;
 
 					return {w, h, x, y};
+				}
+
+				isAttachedTo(grid) {
+					return this.isAttached ? grid.id === this.grid.id : false;
 				}
 
 			}
