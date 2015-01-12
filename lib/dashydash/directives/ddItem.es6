@@ -4,7 +4,6 @@ angular.module('Dashydash')
 	'Dashydash.constants.DOM_GRID_ITEM',
 	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
-			scope: true,
 			restrict: 'EA',
 			priority: 1,
 			compile: (node) => {

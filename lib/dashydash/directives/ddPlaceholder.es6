@@ -10,6 +10,7 @@ angular.module('Dashydash')
 			require: ['^ddGrid', 'ddPlaceholder'],
 			controller: 'Dashydash.controllers.placeholder',
 			controllerAs: '_ddPlaceholder',
+			bindToController: true,
 			compile: (node) => {
 				
 				var attributeDefined = nodeBuilder.addAttributes(node, DOM_GRID_ITEM);
