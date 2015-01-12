@@ -12,6 +12,7 @@ angular.module('Dashydash-utils')
 			require: 'ddDraggable',
 			controller: 'Dashydash-utils.controllers.draggable',
 			controllerAs: '_ddDraggable',
+			bindToController: true,
 			link: function($scope, $node, attributes, controller) {
 				var config = {element: $node, 
 					container: $scope._container, 

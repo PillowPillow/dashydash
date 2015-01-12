@@ -5,5 +5,4 @@ angular.module('Dashydash')
 			this.grid = new Grid(configuration);
 			return this.grid;
 		};
-
 	}]);

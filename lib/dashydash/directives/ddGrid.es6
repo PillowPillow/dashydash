@@ -10,7 +10,8 @@ angular.module('Dashydash')
 			templateUrl: 'ddGrid.jade',
 			require: 'ddGrid',
 			controller: 'Dashydash.controllers.grid',
-			controllerAs: '_ddGrid',
+			controllerAs: 'ddGrid',
+			bindToController: true,
 			compile: () => {
 				return {
 					pre: ($scope, $node, attributes, controller) => {
