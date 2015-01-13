@@ -8,9 +8,22 @@ angular.module('Dashydash')
 		prototype.removeAttributes = removeAttributesfn;
 		prototype.compile = compilefn;
 		prototype.addClass = addClassfn;
-		prototype.removeClass = removeClassfn;
 
 		return prototype;
+
+		function removeAttributesfn(node, attributes = []) {
+			if(!(attributes instanceof Array))
+				attributes = Object.keys(attributes);
+
+			var attributeRemoved = false;
+
+			for(let i = 0; i<attributes.length; i++)
+				if(node.attr(attributes[i]) !== undefined) {
+					node.removeAttr(attributes[i]);
+					attributeRemoved = true;
+				}
+			return attributeRemoved;
+		}
 
 		function addAttributesfn(node, attributes = {}) {
 
@@ -26,45 +39,18 @@ angular.module('Dashydash')
 			return attributeDefined;
 		}
 
-		function removeAttributesfn(node, attributes = {}) {
-			var keys = Object.keys(attributes),
-				attributeRemoved = false;
-
-			for(let i = 0; i<keys.length; i++)
-				if(node.attr(keys[i]) !== undefined) {
-					node.removeAttr(keys[i]);
-					attributeRemoved = true;
-				}
-
-			return attributeRemoved;
-		}
-
 		function compilefn($node) {
 			return $compile($node);
 		}
 
 		function addClassfn(node, className='') {
+			var domNode = node[0];
 			var classAdded = false;
-
-			if(~node[0].className.indexOf(className)) {
+			if(!~domNode.className.indexOf(className)) {
 				classAdded = true;
-				node[0].className += ' ' + className;
+				domNode.className += ' ' + className;
 			}
-
 			return classAdded;
-		}
-
-		function removeClassfn(node, className='') {
-			var classRemoved = false;
-
-			var index = node[0].className.indexOf(className),
-				classes = node[0].className;
-			if(!~index) {
-				classRemoved = true;
-				node[0].className = classes.slice(0, index) + classes(index + className.length);
-			}
-
-			return classRemoved;
 		}
 
 	}]);
