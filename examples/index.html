@@ -67,11 +67,13 @@
 						</section>
 					</md-toolbar>
 						<dd-grid grid-id="gridname">
-							<dd-item class="{{::item.border}}" init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index">
-								<input min=0 type="number" ng-model="row">
-								<input min=0 type="number" ng-model="col">
-								<input min=1 type="number" ng-model="width">
-								<input min=1 type="number" ng-model="height">
+							<dd-item class="{{::item.border}}" ng-repeat="item in AppCtrl.items track by $index">
+							<!-- <dd-item class="{{::item.border}}"  init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index"> -->
+							<!-- <dd-item> -->
+								<input min=0 type="number" ng-model="ddItem.item.position.current.y">
+								<input min=0 type="number" ng-model="ddItem.item.position.current.x">
+								<input min=1 type="number" ng-model="ddItem.item.size.current.w">
+								<input min=1 type="number" ng-model="ddItem.item.size.current.h">
 							</dd-item>
 						</dd-grid> 
 					</div>
