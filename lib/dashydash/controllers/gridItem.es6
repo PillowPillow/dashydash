@@ -17,7 +17,7 @@ angular.module('Dashydash')
 
 		this.initialize = (configuration) => {
 			this.item = this._initializeItem(configuration);
-			this._bindItemProperties();
+			this.bindItemProperties();
 		};
 
 		$scope.$on('destroy', () => {
@@ -25,26 +25,25 @@ angular.module('Dashydash')
 			this._destroyBindings();
 		});
 
-		this._bindItemProperties = bindItemPropertiesfn;
+		this.bindItemProperties = bindItemPropertiesfn;
 		this._destroyBindings = destroyBindingsfn;
 		this._initializeItem = initializeItemfn;
 
-		function bindItemPropertiesfn() {
-			bindings = {};
-			bindings.position = bind(['y','x'])
+		function bindItemPropertiesfn(scope = this) {
+			bind(['y','x'])
 				.as({'y':'row','x':'col'})
 				.from(this.item.position.current)
-				.to(this).apply()
+				.to(scope).apply()
 				.onchange(() => this.item.grid.update(this.item));
-			bindings.size = bind(['w','h'])
+			bind(['w','h'])
 				.as({'w':'width','h':'height'})
 				.from(this.item.size.current)
-				.to(this).apply()
+				.to(scope).apply()
 				.onchange(() => this.item.grid.update(this.item));
-			bindings.status = bind('isDragged')
+			bind('isDragged')
 				.as('item-dragged')
 				.from(this.item)
-				.to(this.class).apply();
+				.to(scope.class).apply();
 
 			return bindings;
 		}
@@ -62,6 +61,7 @@ angular.module('Dashydash')
 		function initializeItemfn(configuration) {
 			var item = new GridItem(configuration);
 			item.attach(configuration.grid);
+			console.log(item)
 			return item;
 		}
 
