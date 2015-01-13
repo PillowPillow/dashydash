@@ -1,25 +1,29 @@
 angular.module('Dashydash')
-	.directive('ddItemScope', function($timeout) {
+	.directive('ddItemScope', function() {
 		return {
-			scope: true,
+			scope: {
+				config: '=ddConfig'
+			},
 			restrict: 'C',
 			priority: 2,
 			require: ['^ddGrid', 'ddItemScope'],
 			controller: 'Dashydash.controllers.gridItem',
 			controllerAs: 'ddItem',
-			compile: () => ($scope, $node, attributes, controllers) => {
-				var gridController = controllers[0],
+			transclude: true,
+			bindToController: true,
+			compile: () => ($scope, $node, attributes, controllers, transclude) => {
+
+				var scope = $scope.$parent,
+					gridController = controllers[0],
 					itemController = controllers[1];
 
 
-				(function method() {
-									console.log(attributes.ddConfig);
-									$timeout(method, 2000)
-								})()
-
-				var config = {element: $node, grid: gridController.grid, row: 0, column: 0, width: 1, height: 1};
+				var config = {element: $node, grid: gridController.grid, row: 2, column: 2, width: 2, height: 2};
 
 				itemController.initialize(config);
+				itemController.bindItemProperties(scope);
+
+				transclude($scope, (clone) => $node.append(clone));
 			}
 		};
 	});

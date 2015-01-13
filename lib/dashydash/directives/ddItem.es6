@@ -4,16 +4,21 @@ angular.module('Dashydash')
 	'Dashydash.constants.DOM_GRID_ITEM',
 	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
+			scope: false,
 			restrict: 'EA',
 			priority: 1,
 			compile: (node) => {
-				var attributeDefined = nodeBuilder.addAttributes(node, DOM_GRID_ITEM);
-				if(attributeDefined)
-					node[0].className += ' dd-item-scope';
+				var directiveAdded = nodeBuilder.addClass(node, 'dd-item-scope');
+				if(directiveAdded) {
+					nodeBuilder.removeAttributes(node, DOM_GRID_ITEM);
+					nodeBuilder.removeAttributes(node, ['ng-repeat']);
+					nodeBuilder.addAttributes(node, DOM_GRID_ITEM);
+				}
+
 				return {
 					post: ($scope, $node) => {
-						if(attributeDefined) {
-							$node.removeAttr('ng-repeat');
+						if(directiveAdded) {
+							$scope.class = {};
 							return nodeBuilder.compile($node)($scope);
 						}
 					}
