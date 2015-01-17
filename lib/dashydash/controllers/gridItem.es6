@@ -5,19 +5,20 @@ angular.module('Dashydash')
 	'$scope',
 	function(bind, GridItem, $scope) {
 
-		var bindings;
+		var bindings = [];
 
 		this.item;
-		this.row;
-		this.width;
-		this.height;
-		this.col;
+		this.$row;
+		this.$width;
+		this.$height;
+		this.$col;
 
 		this.class = {};
 
 		this.initialize = (configuration) => {
 			this.item = this._initializeItem(configuration);
-			this.bindItemProperties();
+			this.bindItemPositionProperties();
+			this.bindItemSizeProperties();
 		};
 
 		$scope.$on('destroy', () => {
@@ -25,43 +26,56 @@ angular.module('Dashydash')
 			this._destroyBindings();
 		});
 
-		this.bindItemProperties = bindItemPropertiesfn;
+		this.bindItemPositionProperties = bindItemPositionPropertiesfn;
+		this.bindItemSizeProperties = bindItemSizePropertiesfn;
+		this.bindItemClassProperty = bindItemClassPropertyfn;
 		this._destroyBindings = destroyBindingsfn;
 		this._initializeItem = initializeItemfn;
 
-		function bindItemPropertiesfn(scope = this) {
-			bind(['y','x'])
-				.as({'y':'row','x':'col'})
+		function bindItemPositionPropertiesfn(scope = this) {
+			var binding = bind(['y','x'])
+				.as({'y':'$row','x':'$col'})
 				.from(this.item.position.current)
 				.to(scope).apply()
 				.onchange(() => this.item.grid.update(this.item));
-			bind(['w','h'])
-				.as({'w':'width','h':'height'})
+
+			bindings.push(binding);
+			return binding;
+		}
+
+		function bindItemSizePropertiesfn(scope = this) {
+			var binding = bind(['w','h'])
+				.as({'w':'$width','h':'$height'})
 				.from(this.item.size.current)
 				.to(scope).apply()
 				.onchange(() => this.item.grid.update(this.item));
-			bind('isDragged')
+
+			bindings.push(binding);
+			return binding;
+		}
+
+		function bindItemClassPropertyfn(scope = this) {
+			var binding = bind('isDragged')
 				.as('item-dragged')
 				.from(this.item)
 				.to(scope.class).apply();
 
-			return bindings;
+			bindings.push(binding);
+			return binding;
 		}
 
 		function destroyBindingsfn() {
-			if(!bindings) return;
+			if(bindings.length === 0) return;
 
-			var keys = Object.keys(bindings);
-			for(var i = 0; i<keys.length; i++)
-				bindings[keys[i]].destroy();
+			for(var i = 0; i<bindings.length; i++)
+				bindings[i].destroy();
 
-			bindings = undefined;
+			bindings.splice(0);
 		}
 
 		function initializeItemfn(configuration) {
 			var item = new GridItem(configuration);
 			item.attach(configuration.grid);
-			console.log(item)
 			return item;
 		}
 

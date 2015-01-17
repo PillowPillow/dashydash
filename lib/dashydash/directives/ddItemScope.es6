@@ -17,11 +17,12 @@ angular.module('Dashydash')
 					gridController = controllers[0],
 					itemController = controllers[1];
 
-
 				var config = {element: $node, grid: gridController.grid, row: 2, column: 2, width: 2, height: 2};
 
 				itemController.initialize(config);
-				itemController.bindItemProperties(scope);
+				itemController.bindItemPositionProperties(scope);
+				itemController.bindItemSizeProperties(scope);
+				itemController.bindItemClassProperty(scope);
 
 				transclude($scope, (clone) => $node.append(clone));
 			}
