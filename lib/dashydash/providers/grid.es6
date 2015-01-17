@@ -117,6 +117,8 @@ angular.module('Dashydash')
 				}
 
 				_rollbackPositions(excludedItems = []) {
+					excludedItems = this._toArray(excludedItems);
+
 					for(var i = 0; i<this.items.length; i++)
 						if(!this.items[i].belongsTo(excludedItems))
 							this.items[i].moveBack();
@@ -268,8 +270,6 @@ angular.module('Dashydash')
 				}
 
 				update(item, final = false) {
-
-					console.log(item.position.current);
 					var detached = this.detachItem(item);
 
 					this.moveDownArea(item, undefined, final);
@@ -301,14 +301,14 @@ angular.module('Dashydash')
 				}
 
 				itemDragged(item, ...args) {
-
-					if(this.floating)
-						this._rollbackPositions();
-
-					this._saveGridState();
 					var position = this._getPosition(args[1].position);
 
 					if(this.lastPosition.x !== position.x || this.lastPosition.y !== position.y) {
+
+						if(this.floating) this._rollbackPositions(item);
+
+						this._saveGridState();
+
 						this.lastPosition = position;
 						item.moveTo(position);
 						this.update(item);
@@ -337,9 +337,7 @@ angular.module('Dashydash')
 				moveDownArea(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
 					var areaItems = this.getItemsFromArea(item.position.current, item.size.current, item);
-
 					// areaItems.sort((a,b) => a.position.last.y - b.position.last.y);
-
 					for(var i = 0; i<areaItems.length; i++) {
 						let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
 						for(var j = 0; j<nbToMove; j++) {
@@ -348,7 +346,6 @@ angular.module('Dashydash')
 							this._updateGridItemPosition(areaItems[i]);
 						}
 					}
-
 				}
 
 				getItemsFromArea({x:col,y:row},{w:width,h:height}, excludedItems = []) {

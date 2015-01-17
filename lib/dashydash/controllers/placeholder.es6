@@ -2,15 +2,16 @@ angular.module('Dashydash')
 	.controller('Dashydash.controllers.placeholder', [
 	'PropertyBinder.services.binder', 
 	'Dashydash.providers.placeholder',
-	'$scope',
-	function(bind, Placeholder, $scope) {
+	function(bind, Placeholder) {
 		
 		var bindings = [];
+
+		this.class = {};
 
 		this.initialize = (configuration) => {
 			this.placeholder = new Placeholder(configuration);
 			configuration.grid.placeholder = this.placeholder;
-			this.bindPlaceholderProperties($scope);
+			this.bindPlaceholderProperties();
 			return this.placeholder;
 		};
 

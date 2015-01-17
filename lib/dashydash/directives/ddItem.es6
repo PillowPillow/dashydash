@@ -4,7 +4,9 @@ angular.module('Dashydash')
 	'Dashydash.constants.DOM_GRID_ITEM',
 	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
-			scope: false,
+			scope: {
+				config:'=ddConfig'
+			},
 			restrict: 'EA',
 			priority: 1,
 			compile: (node) => {
@@ -20,6 +22,9 @@ angular.module('Dashydash')
 						if(directiveAdded) {
 							$scope.class = {};
 							return nodeBuilder.compile($node)($scope);
+						}
+						else {
+							$scope.$destroy();
 						}
 					}
 				};

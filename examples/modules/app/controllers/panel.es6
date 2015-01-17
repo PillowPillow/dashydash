@@ -11,6 +11,7 @@ angular.module('app')
 
 		this.dragstart = (...args) => {
 			grid = undefined;
+			console.log('passage', item)
 			item = new GridItem({row:0, column:0, width:2, height:2});
 			this.closePanel();
 			$rootScope.$apply();
@@ -22,37 +23,38 @@ angular.module('app')
 
 
 			if(overlapped.length > 0) {
-
 				grid = overlapped[0];
 
 				if(!item.isAttachedTo(grid)) {
 					item.attach(grid);
 					item.$$ondragStart(...args);
+						grid._forceViewUpdate();
 				} 
 				else {
 					item.$$ondrag(...args);
+					// item.position.last.x = item.position.current.x;
+					// item.position.last.y = item.position.current.y;
 						grid._forceViewUpdate();
 				}
+
+
 			}
 			else {
-				if(item) {
+				if(item && item.isAttached) {
+					console.log('destroy')
 					item.destroy();
 					if(grid)
 						grid._forceViewUpdate();
 				}
 				grid = undefined;
 			}
-
-			if(item && item.isAttached)
-				item.$$ondrag(...args);
 		};
 		this.dragstop = (...args) => {
+			item.destroy();
 			if(grid) {
-				console.log(item.serialize())
 				grid.addItem(item.serialize());
 				grid._forceViewUpdate();
 			}
-			item.destroy();
 			item = undefined;
 		};
 

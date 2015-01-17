@@ -13,7 +13,12 @@ angular.module('Dashydash')
 		this.$height;
 		this.$col;
 
-		this.config = {x:0,y:0,w:1,h:1};
+
+		this.config = {x:2,y:0,w:1,h:1};
+		if($scope.config)
+			this.config = $scope.config;
+
+
 
 		this.class = {};
 
@@ -21,6 +26,7 @@ angular.module('Dashydash')
 			this.item = this._initializeItem(configuration);
 			this.bindItemPositionProperties();
 			this.bindItemSizeProperties();
+			this.bindItemClassProperty();
 		};
 
 		$scope.$on('destroy', () => {
