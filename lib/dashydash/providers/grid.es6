@@ -290,8 +290,7 @@ angular.module('Dashydash')
 
 					this.placeholder.moveTo(item.position.current);
 
-					if(final)
-						this._saveLocations();
+					if(final) this._saveLocations();
 				}
 
 				itemDragStart(item, ...args) {
