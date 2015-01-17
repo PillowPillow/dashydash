@@ -32,6 +32,7 @@ angular.module('Dashydash')
 		$scope.$on('destroy', () => {
 			this.item.destroy();
 			this._destroyBindings();
+			$scope.$broadcast('$destroy');
 		});
 
 		this.bindItemPositionProperties = bindItemPositionPropertiesfn;
