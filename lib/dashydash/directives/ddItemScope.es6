@@ -12,12 +12,20 @@ angular.module('Dashydash')
 			transclude: true,
 			bindToController: true,
 			compile: () => ($scope, $node, attributes, controllers, transclude) => {
-
 				var scope = $scope.$parent,
 					gridController = controllers[0],
 					itemController = controllers[1];
 
-				var config = {element: $node, grid: gridController.grid, row: 2, column: 2, width: 2, height: 2};
+				console.log(itemController.config)
+
+				var config = {
+					element: $node, 
+					grid: gridController.grid, 
+					row: itemController.config.y, 
+					column: itemController.config.x,
+					width: itemController.config.w, 
+					height: itemController.config.h
+				};
 
 				itemController.initialize(config);
 				itemController.bindItemPositionProperties(scope);

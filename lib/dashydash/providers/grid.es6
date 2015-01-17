@@ -214,15 +214,8 @@ angular.module('Dashydash')
 
 				addItem(config = {}) {
 					var node = $document[0].createElement('dd-item');
-					if(config.w !== undefined)
-						node.setAttribute('init-width', config.w);
-					if(config.h !== undefined)
-						node.setAttribute('init-height', config.h);
-					if(config.x !== undefined)
-						node.setAttribute('init-col', config.x);
-					if(config.y !== undefined)
-						node.setAttribute('init-row', config.y);
-
+					node.setAttribute('dd-config', JSON.stringify(config));
+					
 					this.itemContainer[0].appendChild(node);
 					$compile(node)($rootScope);
 				}
@@ -276,6 +269,7 @@ angular.module('Dashydash')
 
 				update(item, final = false) {
 
+					console.log(item.position.current);
 					var detached = this.detachItem(item);
 
 					this.moveDownArea(item, undefined, final);

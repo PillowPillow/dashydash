@@ -11,7 +11,7 @@ angular.module('app')
 
 		this.dragstart = (...args) => {
 			grid = undefined;
-			item = new GridItem({row:2, column:2, width:2, height:2});
+			item = new GridItem({row:0, column:0, width:2, height:2});
 			this.closePanel();
 			$rootScope.$apply();
 		};
@@ -47,11 +47,12 @@ angular.module('app')
 				item.$$ondrag(...args);
 		};
 		this.dragstop = (...args) => {
-			item.destroy();
 			if(grid) {
+				console.log(item.serialize())
 				grid.addItem(item.serialize());
 				grid._forceViewUpdate();
 			}
+			item.destroy();
 			item = undefined;
 		};
 
