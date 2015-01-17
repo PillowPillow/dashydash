@@ -15,10 +15,10 @@ angular.module('Dashydash-utils')
 			bindToController: true,
 			link: function($scope, $node, attributes, controller) {
 				var config = {element: $node, 
-					container: $scope._container, 
-					ondrag: (...args) => $scope._ondrag(...args), 
-					ondragStart: (...args) => $scope._ondragStart(...args), 
-					ondragStop: (...args) => $scope._ondragStop(...args)
+					container: controller._container, 
+					ondrag: (...args) => controller._ondrag(...args), 
+					ondragStart: (...args) => controller._ondragStart(...args), 
+					ondragStop: (...args) => controller._ondragStop(...args)
 				};
 				controller.initialize(config).enable();
 

@@ -67,7 +67,7 @@
 						</section>
 					</md-toolbar>
 						<dd-grid grid-id="gridname">
-							<dd-item class="{{::item.border}}" ng-repeat="item in AppCtrl.items track by $index">
+							<dd-item class="{{::item.border}}" dd-config="item" ng-repeat="item in AppCtrl.items track by $index">
 							<!-- <dd-item class="{{::item.border}}"  init-row="{{::item.y}}" init-col="{{::item.x}}" init-width="{{::item.w}}" init-height="{{::item.h}}" ng-repeat="item in AppCtrl.items track by $index"> -->
 							<!-- <dd-item> -->
 								{{ddItem.test}}

@@ -4,6 +4,5 @@ angular.module('Dashydash')
 		'dd-col': '{{$col}}', 
 		'dd-width': '{{$width}}', 
 		'dd-height': '{{$height}}',
-		'ng-class':'class',
-		'ok-class':'{{class}}'
+		'ng-class':'class'
 	});
