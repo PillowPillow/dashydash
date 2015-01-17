@@ -64,11 +64,11 @@ angular.module('Dashydash')
 					this.draggable.enable();
 				}
 				
-				attach(grid = undefined) {
+				attach(grid = undefined, updateGrid=true) {
 					this.detach();
 					this.grid = grid;
 					this.grid.attachItem(this);
-					this.grid.update(this, true);
+					if(updateGrid) this.grid.update(this, true);
 				}
 
 				detach() {

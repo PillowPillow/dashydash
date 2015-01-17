@@ -26,7 +26,7 @@ angular.module('app')
 				grid = overlapped[0];
 
 				if(!item.isAttachedTo(grid)) {
-					item.attach(grid);
+					item.attach(grid, false);
 					item.$$ondragStart(...args);
 						grid._forceViewUpdate();
 				} 
