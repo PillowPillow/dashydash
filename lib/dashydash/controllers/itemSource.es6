@@ -41,7 +41,7 @@ angular.module('Dashydash')
 		}
 
 		function onDrag(...args) {
-			var overlapped = gridService.getOverlapped(args[0]);
+			var overlapped = gridService.getOverlapped(args[0], self.grid);
 
 			if(overlapped.length > 0) {
 				grid = overlapped[0];

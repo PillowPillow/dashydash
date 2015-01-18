@@ -15,11 +15,11 @@ angular.module('Dashydash')
 			bindToController: true,
 			compile: () => {
 				return {
-					pre: ($scope, $node, attributes, controller) => {
-						var configuration = $scope.configuration || {};
+					pre: ($scope, $node, attributes, ddGrid) => {
+						var configuration = ddGrid.configuration || {};
 						configuration.element = $node;
-						configuration.id = $scope.gridId;
-						controller.initialize(configuration);
+						configuration.id = ddGrid.gridId;
+						ddGrid.initialize(configuration);
 					}
 				};
 			}
