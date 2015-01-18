@@ -4,3 +4,10 @@
 	height: 300px;
 	position: relative;
 }
+
+[dd-item-source] > [ghost], 
+[dd-item-source] > ghost {
+	top: 0px;
+	left: 0px;
+	display: none;
+}

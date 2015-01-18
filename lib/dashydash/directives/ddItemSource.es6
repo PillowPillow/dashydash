@@ -4,7 +4,6 @@ angular.module('Dashydash')
 			scope: {
 				'grid': '@ddItemSource',
 				'itemConfig': '=itemConfig',
-				'itemTemplate': '=itemTemplate',
 				'onDragStart': '=?onDragStart',
 				'onDrag': '=?onDrag',
 				'onDragStop': '=?onDragStop'
@@ -13,8 +12,9 @@ angular.module('Dashydash')
 			controller: 'Dashydash.controllers.itemSource',
 			controllerAs: 'ddItemSource',
 			bindToController: true,
-			link: function($scope, $node, attributes, controller) {
-				console.log(controller.grid, controller.itemConfig, controller.itemTemplate);
+			link: function($scope, $node, attributes, ddItemSource) {
+
+				ddItemSource.initialize($node);
 			}
 		};
 	});

@@ -10,9 +10,9 @@ angular.module('Dashydash')
 
 			class GridItem extends Item {
 
-				constructor({element:$node, row:row, column:col, width:width, height:height}) {
+				constructor({element:$node, row:row, column:col, width:width, height:height, y:y, x:x, w:w, h:h}) {
 
-					super({row:row, column: col, width:width, height:height});
+					super({row:row||y, column: col||x, width:width||w, height:height||h});
 
 					this.element = $node;
 					this.grid = undefined;
