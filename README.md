@@ -1,4 +1,4 @@
-# dashydash
+# Dashydash
 Angular dashboard library
 
 ### Modify and build

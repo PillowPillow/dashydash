@@ -1,1 +1,1 @@
-angular.module('app', ['ngMaterial', 'Dashydash', 'Dashydash-utils']);
+angular.module('app', ['ngRoute','ngMaterial', 'Dashydash', 'Dashydash-utils']);

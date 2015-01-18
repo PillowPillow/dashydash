@@ -2,7 +2,7 @@ angular.module('app')
 	.controller('app.controllers.app', [
 	'$mdSidenav', 
 	function($mdSidenav) {
-
+		console.log('hello')
 		this.color = [
 			'dark-primary-color',
 			'default-primary-color',
