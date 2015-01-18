@@ -25,6 +25,12 @@ angular.module('app')
 			{y:6, x:5, w:3, h:3, border: pickColor()}*/
 		];
 
+		// var self  = this;
+		// (function tester() {
+		// 	console.log(self.items[0])
+		// 	$timeout(tester, 2000);
+		// })()
+
 		this.addItem = () => this.items.push({y:~~(Math.random()*10 ), x:~~(Math.random()*10), w:~~(Math.random()*4 + 1), h:~~(Math.random()*4 + 1), border: pickColor()});
 
 		this.togglePanel = () => $mdSidenav('left').toggle();

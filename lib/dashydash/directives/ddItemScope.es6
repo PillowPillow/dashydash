@@ -8,8 +8,7 @@ angular.module('Dashydash')
 			controllerAs: 'ddItem',
 			transclude: true,
 			compile: () => ($scope, $node, attributes, controllers, transclude) => {
-				var scope = $scope.$parent,
-					gridController = controllers[0],
+				var	gridController = controllers[0],
 					itemController = controllers[1];
 
 				var config = {
@@ -22,9 +21,9 @@ angular.module('Dashydash')
 				};
 
 				itemController.initialize(config);
-				itemController.bindItemPositionProperties(scope);
-				itemController.bindItemSizeProperties(scope);
-				itemController.bindItemClassProperty(scope);
+				itemController.bindItemPositionProperties($scope);
+				itemController.bindItemSizeProperties($scope);
+				itemController.bindItemClassProperty($scope);
 
 				transclude($scope, (clone) => $node.append(clone));
 			}

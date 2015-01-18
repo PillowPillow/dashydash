@@ -27,7 +27,7 @@ angular.module('Dashydash')
 					this.placeholder = null;
 					this.element = $node;
 					
-					this.floating = true;
+					this.floating = false;
 
 					gridService.register(this);
 

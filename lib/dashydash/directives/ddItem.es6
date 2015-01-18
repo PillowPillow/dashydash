@@ -5,7 +5,7 @@ angular.module('Dashydash')
 	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
 			scope: {
-				config:'=ddConfig'
+				$config:'=ddConfig'
 			},
 			restrict: 'EA',
 			priority: 1,
