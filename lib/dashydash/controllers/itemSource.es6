@@ -30,6 +30,7 @@ angular.module('Dashydash')
 
 			var configuration = {
 				element: $node, 
+				fixed: true,
 				ondrag: (...args) => onDrag(...args), 
 				ondragStart: (...args) => onDragStart(...args), 
 				ondragStop: (...args) => onDragStop(...args)
