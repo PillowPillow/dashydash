@@ -2,9 +2,12 @@ angular.module('Dashydash')
 	.directive('ddItemSource', function(){
 		return {
 			scope: {
-				grid: '@',
-				itemConfig: '=itemConfig',
-				itemTemplate: '=itemTemplate'
+				'grid': '@ddItemSource',
+				'itemConfig': '=itemConfig',
+				'itemTemplate': '=itemTemplate',
+				'onDragStart': '=?onDragStart',
+				'onDrag': '=?onDrag',
+				'onDragStop': '=?onDragStop'
 			},
 			restrict: 'A',
 			controller: 'Dashydash.controllers.itemSource',

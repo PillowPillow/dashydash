@@ -37,7 +37,17 @@
 					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
 						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
 						<md-list>
-							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-draggable dd-dragstart="PanelCtrl.dragstart" dd-dragstop="PanelCtrl.dragstop" dd-drag="PanelCtrl.drag" style="z-index=100">
+							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-item-source='gridname' on-drag-start="PanelCtrl.dragstart" on-drag-stop="PanelCtrl.dragstop" on-drag="PanelCtrl.drag" style="z-index=100">
+								<!-- <ghost></ghost>	 -->
+								<md-item-content>
+									<div class="md-tile-left">{{$index}}</div>
+									<div class="md-tile-content">
+										<h3>{{item.name}}</h3>
+										<p>drag it to the grid</p>
+									</div>
+								</md-item-content>
+							</md-item>
+<!-- 							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-draggable dd-dragstart="PanelCtrl.dragstart" dd-dragstop="PanelCtrl.dragstop" dd-drag="PanelCtrl.drag" style="z-index=100">
 								<ghost>
 									la vie n'est pas un kiwi
 								</ghost>	
@@ -52,7 +62,7 @@
 										</p>
 									</div>
 								</md-item-content>
-							</md-item>
+							</md-item> -->
 						</md-list>
 					</md-content>
 				</md-sidenav>
@@ -117,10 +127,12 @@
 			<script src="../lib/dashydash/controllers/grid.js"></script>
 			<script src="../lib/dashydash/controllers/gridItem.js"></script>
 			<script src="../lib/dashydash/controllers/placeholder.js"></script>
+			<script src="../lib/dashydash/controllers/itemSource.js"></script>
 			<script src="../lib/dashydash/directives/ddGrid.js"></script>
 			<script src="../lib/dashydash/directives/ddItem.js"></script>
 			<script src="../lib/dashydash/directives/ddPlaceholder.js"></script>
 			<script src="../lib/dashydash/directives/ddItemScope.js"></script>
+			<script src="../lib/dashydash/directives/ddItemSource.js"></script>
 			<!-- src -->
 			<!-- dist -->
 			<!-- <script src="../dist/dashydash.min.js"></script> -->
