@@ -79,7 +79,9 @@ angular.module('Dashydash')
 		function onDragStop(...args) {
 			item.destroy();
 			if(grid) {
-				grid.addItem(item.serialize());
+				let config = {};
+				utils.extend(config, self.itemConfig || ITEM_CONFIGURATION, item.serialize());
+				grid.addItem(config);
 				updateView();
 			}
 			item = undefined;
