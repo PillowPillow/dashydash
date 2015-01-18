@@ -21,9 +21,6 @@ angular.module('Dashydash')
 				};
 
 				itemController.initialize(config);
-				itemController.bindItemPositionProperties($scope);
-				itemController.bindItemSizeProperties($scope);
-				itemController.bindItemClassProperty($scope);
 
 				transclude($scope, (clone) => $node.append(clone));
 			}

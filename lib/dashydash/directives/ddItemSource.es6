@@ -3,14 +3,15 @@ angular.module('Dashydash')
 		return {
 			scope: {
 				grid: '@',
-				width: 'itemWidth',
-				height: 'itemHeight',
-				col: 'itemCol',
-				row: 'itemRow'
+				itemConfig: '=itemConfig',
+				itemTemplate: '=itemTemplate'
 			},
 			restrict: 'A',
-			link: function($scope, $node, attributes) {
-				
+			controller: 'Dashydash.controllers.itemSource',
+			controllerAs: 'ddItemSource',
+			bindToController: true,
+			link: function($scope, $node, attributes, controller) {
+				console.log(controller.grid, controller.itemConfig, controller.itemTemplate);
 			}
 		};
 	});
