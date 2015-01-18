@@ -13,12 +13,9 @@ angular.module('Dashydash')
 		this.$height;
 		this.$col;
 
-
 		this.config = {x:0,y:0,w:1,h:1};
-		if($scope.$config)
-			this.config = $scope.$config;
-
-
+		if($scope.ddConfig)
+			this.config = $scope.ddConfig;
 
 		this.class = {};
 

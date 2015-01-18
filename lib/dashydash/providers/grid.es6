@@ -24,8 +24,10 @@ angular.module('Dashydash')
 
 					this.lastPosition = {x:0,y:0};
 
-					this.placeholder = null;
+					this.placeholder = undefined;
 					this.element = $node;
+
+					this._customAddItemMethod = undefined;
 					
 					this.floating = false;
 
@@ -210,16 +212,24 @@ angular.module('Dashydash')
 					return this.items.indexOf(item);
 				}
 
-				isOverlapped(event) {
-					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
-				}
-
-				addItem(config = {}) {
+				_addItem(config = {}) {
 					var node = $document[0].createElement('dd-item');
 					node.setAttribute('dd-config', JSON.stringify(config));
 					
 					this.itemContainer[0].appendChild(node);
 					$compile(node)($rootScope);
+				}
+
+				isOverlapped(event) {
+					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
+				}
+
+				setAddItemMethod(method = undefined) {
+					this._customAddItemMethod = method;
+				}
+
+				addItem(...args) {
+					return this._customAddItemMethod ? this._customAddItemMethod(...args) : this._addItem(...args);
 				}
 
 				pushUpItem(item, excludedItems = [], saveInGrid = true) {

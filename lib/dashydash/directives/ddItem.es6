@@ -5,7 +5,7 @@ angular.module('Dashydash')
 	function(nodeBuilder, DOM_GRID_ITEM) {
 		return {
 			scope: {
-				$config:'=ddConfig'
+				'ddConfig':'=?ddConfig'
 			},
 			restrict: 'EA',
 			priority: 1,
@@ -23,9 +23,7 @@ angular.module('Dashydash')
 							$scope.class = {};
 							return nodeBuilder.compile($node)($scope);
 						}
-						else {
-							$scope.$destroy();
-						}
+						else $scope.ddConfig = $scope.$parent.ddConfig;
 					}
 				};
 			}

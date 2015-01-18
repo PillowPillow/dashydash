@@ -3,7 +3,8 @@ angular.module('Dashydash')
 		return {
 			scope: {
 				'gridId': '@gridId',
-				'configuration': '=?configuration'
+				'configuration': '=?configuration',
+				'addItemMethod': '=?onAddItem'
 			},
 			restrict: 'AE',
 			transclude: true,
