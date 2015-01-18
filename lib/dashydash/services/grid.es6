@@ -20,12 +20,13 @@ angular.module('Dashydash')
 			grids[grid.id] = grid;
 		}
 
-		function getOverlappedGrids(event) {
+		function getOverlappedGrids(event, gridId = undefined) {
 			var overlapped = [];
 			var keys = Object.keys(grids);
-			for(var i = 0; i<keys.length; i++)
-				if(grids[keys[i]].isOverlapped(event))
+			for(var i = 0; i<keys.length; i++) {
+				if(grids[keys[i]].isOverlapped(event) && (!gridId || keys[i] === gridId))
 					overlapped.push(grids[keys[i]]);
+			}
 			return overlapped;
 		}
 	});
