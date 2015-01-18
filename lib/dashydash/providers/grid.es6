@@ -9,7 +9,7 @@ angular.module('Dashydash')
 
 			class Grid {
 
-				constructor({id:id, element:$node, container:container, columns:columns, rows:rows, itemWidth:itemWidth, itemHeight:itemHeight}) {
+				constructor({id:id, element:$node, container:container, columns:columns, rows:rows, itemHeight:itemHeight}) {
 
 					this.id = id;
 
@@ -19,7 +19,6 @@ angular.module('Dashydash')
 					this.rows = rows;
 					this.columns = columns;
 
-					this.itemWidth = itemWidth || 100;
 					this.itemHeight = itemHeight || 50;
 
 					this.lastPosition = {x:0,y:0};
@@ -40,6 +39,10 @@ angular.module('Dashydash')
 				}
 				set element(value) {
 					this._element = value;
+				}
+
+				get itemWidth() {
+					return this.gridWidth * 8.33333333 / 100;
 				}
 
 				get itemContainer() {
@@ -440,6 +443,10 @@ angular.module('Dashydash')
 						}
 					}
 					return detached;
+				}
+
+				destroy() {
+					gridService.destroy(this);
 				}
 
 			}
