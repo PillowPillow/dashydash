@@ -11,3 +11,56 @@
 	left: 0px;
 	display: none;
 }
+
+
+dd-item[dd-width="12"], [dd-item][dd-width="12"], dd-item[data-dd-width="12"], [data-dd-item][data-dd-width="12"]	{ width: 100% }
+dd-item[dd-width="11"], [dd-item][dd-width="11"], dd-item[data-dd-width="11"], [data-dd-item][data-dd-width="11"]	{ width: 91.66666667% }
+dd-item[dd-width="10"], [dd-item][dd-width="10"], dd-item[data-dd-width="10"], [data-dd-item][data-dd-width="10"]	{ width: 83.33333333% }
+dd-item[dd-width="9"], [dd-item][dd-width="9"], dd-item[data-dd-width="9"], [data-dd-item][data-dd-width="9"]		{ width: 75% }
+dd-item[dd-width="8"], [dd-item][dd-width="8"], dd-item[data-dd-width="8"], [data-dd-item][data-dd-width="8"]		{ width: 66.66666667% }
+dd-item[dd-width="7"], [dd-item][dd-width="7"], dd-item[data-dd-width="7"], [data-dd-item][data-dd-width="7"]		{ width: 58.33333333% }
+dd-item[dd-width="6"], [dd-item][dd-width="6"], dd-item[data-dd-width="6"], [data-dd-item][data-dd-width="6"]		{ width: 50% }
+dd-item[dd-width="5"], [dd-item][dd-width="5"], dd-item[data-dd-width="5"], [data-dd-item][data-dd-width="5"]		{ width: 41.66666667% }
+dd-item[dd-width="4"], [dd-item][dd-width="4"], dd-item[data-dd-width="4"], [data-dd-item][data-dd-width="4"]		{ width: 33.33333333% }
+dd-item[dd-width="3"], [dd-item][dd-width="3"], dd-item[data-dd-width="3"], [data-dd-item][data-dd-width="3"]		{ width: 25% }
+dd-item[dd-width="2"], [dd-item][dd-width="2"], dd-item[data-dd-width="2"], [data-dd-item][data-dd-width="2"]		{ width: 16.66666667% }
+dd-item[dd-width="1"], [dd-item][dd-width="1"], dd-item[data-dd-width="1"], [data-dd-item][data-dd-width="1"]		{ width: 8.33333333% }
+
+dd-item[dd-col="12"], [dd-item][dd-col="12"], dd-item[data-dd-col="12"], [data-dd-item][data-dd-col="12"]	{ left: 100% }
+dd-item[dd-col="11"], [dd-item][dd-col="11"], dd-item[data-dd-col="11"], [data-dd-item][data-dd-col="11"]	{ left: 91.66666667% }
+dd-item[dd-col="10"], [dd-item][dd-col="10"], dd-item[data-dd-col="10"], [data-dd-item][data-dd-col="10"]	{ left: 83.33333333% }
+dd-item[dd-col="9"], [dd-item][dd-col="9"], dd-item[data-dd-col="9"], [data-dd-item][data-dd-col="9"]		{ left: 75% }
+dd-item[dd-col="8"], [dd-item][dd-col="8"], dd-item[data-dd-col="8"], [data-dd-item][data-dd-col="8"]		{ left: 66.66666667% }
+dd-item[dd-col="7"], [dd-item][dd-col="7"], dd-item[data-dd-col="7"], [data-dd-item][data-dd-col="7"]		{ left: 58.33333333% }
+dd-item[dd-col="6"], [dd-item][dd-col="6"], dd-item[data-dd-col="6"], [data-dd-item][data-dd-col="6"]		{ left: 50% }
+dd-item[dd-col="5"], [dd-item][dd-col="5"], dd-item[data-dd-col="5"], [data-dd-item][data-dd-col="5"]		{ left: 41.66666667% }
+dd-item[dd-col="4"], [dd-item][dd-col="4"], dd-item[data-dd-col="4"], [data-dd-item][data-dd-col="4"]		{ left: 33.33333333% }
+dd-item[dd-col="3"], [dd-item][dd-col="3"], dd-item[data-dd-col="3"], [data-dd-item][data-dd-col="3"]		{ left: 25% }
+dd-item[dd-col="2"], [dd-item][dd-col="2"], dd-item[data-dd-col="2"], [data-dd-item][data-dd-col="2"]		{ left: 16.66666667% }
+dd-item[dd-col="1"], [dd-item][dd-col="1"], dd-item[data-dd-col="1"], [data-dd-item][data-dd-col="1"]		{ left: 8.33333333% } 
+
+dd-placeholder[dd-width="12"]	{ width: 100% }
+dd-placeholder[dd-width="11"]	{ width: 91.66666667% }
+dd-placeholder[dd-width="10"]	{ width: 83.33333333% }
+dd-placeholder[dd-width="9"]	{ width: 75% }
+dd-placeholder[dd-width="8"]	{ width: 66.66666667% }
+dd-placeholder[dd-width="7"]	{ width: 58.33333333% }
+dd-placeholder[dd-width="6"]	{ width: 50% }
+dd-placeholder[dd-width="5"]	{ width: 41.66666667% }
+dd-placeholder[dd-width="4"]	{ width: 33.33333333% }
+dd-placeholder[dd-width="3"]	{ width: 25% }
+dd-placeholder[dd-width="2"]	{ width: 16.66666667% }
+dd-placeholder[dd-width="1"]	{ width: 8.33333333% }
+
+dd-placeholder[dd-col="12"]	{ left: 100% }
+dd-placeholder[dd-col="11"]	{ left: 91.66666667% }
+dd-placeholder[dd-col="10"]	{ left: 83.33333333% }
+dd-placeholder[dd-col="9"]	{ left: 75% }
+dd-placeholder[dd-col="8"]	{ left: 66.66666667% }
+dd-placeholder[dd-col="7"]	{ left: 58.33333333% }
+dd-placeholder[dd-col="6"]	{ left: 50% }
+dd-placeholder[dd-col="5"]	{ left: 41.66666667% }
+dd-placeholder[dd-col="4"]	{ left: 33.33333333% }
+dd-placeholder[dd-col="3"]	{ left: 25% }
+dd-placeholder[dd-col="2"]	{ left: 16.66666667% }
+dd-placeholder[dd-col="1"]	{ left: 8.33333333% } 

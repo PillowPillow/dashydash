@@ -74,176 +74,88 @@ dd-item {
 	z-index: 1;
 }
 
-[dd-col="0"],[dd-col="0"] {
-	left: 0px;
-}
-
 [dd-row="0"],[dd-row="0"] {
 	top: 0px;
-}
-
-[dd-col="1"],[dd-col="1"] {
-	left: 100px;
 }
 
 [dd-row="1"],[dd-row="1"] {
 	top: 50px;
 }
 
-[dd-col="2"],[dd-col="2"] {
-	left: 200px;
-}
-
 [dd-row="2"],[dd-row="2"] {
 	top: 100px;
-}
-
-[dd-col="3"],[dd-col="3"] {
-	left: 300px;
 }
 
 [dd-row="3"],[dd-row="3"] {
 	top: 150px;
 }
 
-[dd-col="4"],[dd-col="4"] {
-	left: 400px;
-}
-
 [dd-row="4"],[dd-row="4"] {
 	top: 200px;
-}
-
-[dd-col="5"],[dd-col="5"] {
-	left: 500px;
 }
 
 [dd-row="5"],[dd-row="5"] {
 	top: 250px;
 }
 
-[dd-col="6"],[dd-col="6"] {
-	left: 600px;
-}
-
 [dd-row="6"],[dd-row="6"] {
 	top: 300px;
-}
-
-[dd-col="7"],[dd-col="7"] {
-	left: 700px;
 }
 
 [dd-row="7"],[dd-row="7"] {
 	top: 350px;
 }
 
-[dd-col="8"],[dd-col="8"] {
-	left: 800px;
-}
-
 [dd-row="8"],[dd-row="8"] {
 	top: 400px;
-}
-
-[dd-col="9"],[dd-col="9"] {
-	left: 900px;
 }
 
 [dd-row="9"],[dd-row="9"] {
 	top: 450px;
 }
 
-[dd-col="10"],[dd-col="10"] {
-	left: 1000px;
-}
-
 [dd-row="10"],[dd-row="10"] {
 	top: 500px;
-}
-
-[dd-col="11"],[dd-col="11"] {
-	left: 1100px;
 }
 
 [dd-row="11"],[dd-row="11"] {
 	top: 550px;
 }
 
-[dd-col="12"],[dd-col="12"] {
-	left: 1200px;
-}
-
 [dd-row="12"],[dd-row="12"] {
 	top: 600px;
-}
-
-[dd-col="13"],[dd-col="13"] {
-	left: 1300px;
 }
 
 [dd-row="13"],[dd-row="13"] {
 	top: 650px;
 }
 
-[dd-col="14"],[dd-col="14"] {
-	left: 1400px;
-}
-
 [dd-row="14"],[dd-row="14"] {
 	top: 700px;
-}
-
-[dd-col="15"],[dd-col="15"] {
-	left: 1500px;
 }
 
 [dd-row="15"],[dd-row="15"] {
 	top: 750px;
 }
 
-[dd-col="16"],[dd-col="16"] {
-	left: 1600px;
-}
-
 [dd-row="16"],[dd-row="16"] {
 	top: 800px;
-}
-
-[dd-col="17"],[dd-col="17"] {
-	left: 1700px;
 }
 
 [dd-row="17"],[dd-row="17"] {
 	top: 850px;
 }
 
-[dd-col="18"],[dd-col="18"] {
-	left: 1800px;
-}
-
 [dd-row="18"],[dd-row="18"] {
 	top: 900px;
-}
-
-[dd-col="19"],[dd-col="19"] {
-	left: 1900px;
 }
 
 [dd-row="19"],[dd-row="19"] {
 	top: 950px;
 }
 
-[dd-col="20"],[dd-col="20"] {
-	left: 2000px;
-}
-
 [dd-row="20"],[dd-row="20"] {
 	top: 1000px;
-}
-
-[dd-col="21"],[dd-col="21"] {
-	left: 2100px;
 }
 
 [dd-row="21"],[dd-row="21"] {
