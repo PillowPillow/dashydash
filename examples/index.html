@@ -37,8 +37,8 @@
 					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
 						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
 						<md-list>
-							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-item-source='gridname' on-drag-start="PanelCtrl.dragstart" on-drag-stop="PanelCtrl.dragstop" on-drag="PanelCtrl.drag" style="z-index=100">
-								<!-- <ghost></ghost>	 -->
+							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-item-source='gridname' item-config="item" on-drag-start="PanelCtrl.closePanel" style="z-index=100">
+								<ghost dd-width={{item.w}} dd-height={{item.h}}></ghost>	
 								<md-item-content>
 									<div class="md-tile-left">{{$index}}</div>
 									<div class="md-tile-content">
@@ -47,22 +47,6 @@
 									</div>
 								</md-item-content>
 							</md-item>
-<!-- 							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-draggable dd-dragstart="PanelCtrl.dragstart" dd-dragstop="PanelCtrl.dragstop" dd-drag="PanelCtrl.drag" style="z-index=100">
-								<ghost>
-									la vie n'est pas un kiwi
-								</ghost>	
-								<md-item-content>
-									<div class="md-tile-left">
-										{{$index}}
-									</div>
-									<div class="md-tile-content">
-										<h3>{{item.name}}</h3>
-										<p>
-											drag it to the grid
-										</p>
-									</div>
-								</md-item-content>
-							</md-item> -->
 						</md-list>
 					</md-content>
 				</md-sidenav>
@@ -117,6 +101,7 @@
 			<script src="../lib/dashydash-utils/directives/ghost.js"></script>
 
 			<script src="../lib/dashydash/core.js"></script>
+			<script src="../lib/dashydash/constants/itemConfig.js"></script>
 			<script src="../lib/dashydash/constants/domGridItem.js"></script>
 			<script src="../lib/dashydash/services/nodeBuilder.js"></script>
 			<script src="../lib/dashydash/services/grid.js"></script>
