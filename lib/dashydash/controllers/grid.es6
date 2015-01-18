@@ -7,4 +7,6 @@ angular.module('Dashydash')
 			$scope.$watch(() => this.addItemMethod, (method) => this.grid.setAddItemMethod(method));
 			return this.grid;
 		};
+
+		$scope.$on('$destroy', () => this.grid.destroy());
 	}]);
