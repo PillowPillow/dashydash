@@ -8,13 +8,13 @@ angular.module('app')
 		$routeProvider
 			.when('/material-sample', {
 				templateUrl: '/examples/views/material.html',
-				controller: 'app.controllers.app',
-				controllerAs: 'AppCtrl'
+				controller: 'app.controllers.viewTab',
+				controllerAs: 'ViewTabCtrl'
 			})
 			.when('/basic-sample', {
 				templateUrl: '/examples/views/basic.html',
-				controller: 'app.controllers.app',
-				controllerAs: 'AppCtrl'
+				controller: 'app.controllers.viewTab',
+				controllerAs: 'ViewTabCtrl'
 			})
 			.otherwise({redirectTo: '/material-sample'});
 	});

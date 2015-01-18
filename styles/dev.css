@@ -8,6 +8,15 @@ body {
 	box-sizing: border-box;
 }
 
+[ng-view]{
+	height: 100%;
+	overflow: auto;
+}
+article[dd-item-source] {
+	position: absolute;
+	z-index: 100;
+}
+
 .dark-primary-color    { background-color: #C2185B; }
 .default-primary-color { background-color: #E91E63; }
 .light-primary-color   { background-color: #F8BBD0; }

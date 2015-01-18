@@ -9,7 +9,7 @@ angular.module('Dashydash-utils')
 
 		function extend(target, ...sources) {
 
-			for(var i = 0; i<sources.length; i++)  {
+			for(var i = sources.length-1; i>=0; i--)  {
 				let source = sources[i];
 				for(let key in source)
 					if(target[key] === null || target[key] === undefined)
