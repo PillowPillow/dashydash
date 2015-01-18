@@ -6,6 +6,7 @@ angular.module('Dashydash')
 		var gridService = getGridById;
 
 		gridService.register = registerGrid;
+		gridService.destroy = destroyGrid;
 		gridService.getOverlapped = getOverlappedGrids;
 
 		return gridService;
@@ -18,6 +19,11 @@ angular.module('Dashydash')
 			if(grids[grid.id])
 				throw Error('DUPLICATE GRID ID');
 			grids[grid.id] = grid;
+		}
+
+		function destroyGrid(grid) {
+			if(grids[grid.id])
+				delete grids[grid.id];
 		}
 
 		function getOverlappedGrids(event, gridId = undefined) {
