@@ -29,7 +29,51 @@
 	<body ng-app="app" ng-controller="app.controllers.app as AppCtrl">
 
 		<!-- content -->
-		<ng-view></ng-view>
+		<!-- <ng-view></ng-view> -->
+		<section layout="column" layout-fill ng-controller="app.controllers.app as AppCtrl">
+			<section layout="row" flex>
+				<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+					<md-toolbar>
+						<h1 class="md-toolbar-tools">ITEM PANEL</h1>
+					</md-toolbar>
+					<md-content class="md-padding" ng-controller="app.controllers.panel as PanelCtrl">
+						<md-button ng-click="PanelCtrl.closePanel()" class="md-primary"> Close </md-button>
+						<md-list>
+							<md-item ng-repeat="item in PanelCtrl.items track by $index" dd-item-source='gridname' item-config="item" on-drag-start="PanelCtrl.closePanel" style="z-index=100">
+								<ghost dd-width={{item.w}} dd-height={{item.h}}></ghost>	
+								<md-item-content>
+									<div class="md-tile-left">{{$index}}</div>
+									<div class="md-tile-content">
+										<h3>{{item.name}}</h3>
+										<p>drag it to the grid</p>
+									</div>
+								</md-item-content>
+							</md-item>
+						</md-list>
+					</md-content>
+				</md-sidenav>
+				<md-content flex id="main-frame">
+					<div layout="column" layout-fill layout-align="center center">
+					<md-toolbar class="md-accent">
+						<section class="md-toolbar-tools">
+							<span>DASHYDASH</span>
+							<span class="flex"></span>
+							<md-button ng-click="ViewTabCtrl.togglePanel()" class="md-raised md-primary">TOGGLE ITEM PANEL</md-button>
+							<md-button ng-click="ViewTabCtrl.addItem()" class="md-raised md-primary">ADD RANDOM ITEM</md-button>
+						</section>
+					</md-toolbar>
+						<dd-grid grid-id="gridname" on-add-item="ViewTabCtrl.addItem" >
+							<dd-item dd-config="item" class="{{item.class}}" ng-repeat="item in ViewTabCtrl.items track by $index">
+								<input min=0 type="number" ng-model="ddItem.$row">
+								<input min=0 type="number" ng-model="ddItem.$col">
+								<input min=1 type="number" ng-model="ddItem.$width">
+								<input min=1 type="number" ng-model="ddItem.$height">
+							</dd-item>
+						</dd-grid> 
+					</div>
+				</md-content>
+			</section>
+		</section>
 		<!-- content -->
 
 		<!-- scripts -->
