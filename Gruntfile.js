@@ -6,13 +6,14 @@ function Grunt(grunt) {
 		tasks = [
 			'grunt-6to5',
 			'grunt-add-comment',
-			'grunt-html2js'
+			'grunt-html2js',
+			'grunt-contrib-connect'
 		];
 
 	for(var i = 0; i < tasks.length; i++)
 		grunt.loadNpmTasks(tasks[i]);
 
-	require('time-grunt')(grunt);
+	// require('time-grunt')(grunt);
 
 	var pathOption = getPathOption();
 
@@ -79,10 +80,22 @@ function Grunt(grunt) {
 		}
 	};
 
+
+    Configuration.connect = {
+		options: {
+			port: 9000,
+			hostname: 'localhost'
+		},
+		dev: {
+			options: { open: true }
+		}
+	};
+
+
 	grunt.initConfig(Configuration);
 
 	grunt.registerTask('es6', ['6to5:dist', 'add_comment']);
-	grunt.registerTask('dev', ['6to5:dist', 'html2js']);
+	grunt.registerTask('dev', ['6to5:dist', 'html2js', 'connect']);
 }
 
 module.exports = Grunt;
