@@ -26,10 +26,8 @@
 	<!-- design -->
 
 	</head>
-	<body ng-app="app" ng-controller="app.controllers.app as AppCtrl">
+	<body ng-app="app">
 
-		<!-- content -->
-		<!-- <ng-view></ng-view> -->
 		<section layout="column" layout-fill ng-controller="app.controllers.app as AppCtrl">
 			<section layout="row" flex>
 				<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
@@ -58,12 +56,12 @@
 						<section class="md-toolbar-tools">
 							<span>DASHYDASH</span>
 							<span class="flex"></span>
-							<md-button ng-click="ViewTabCtrl.togglePanel()" class="md-raised md-primary">TOGGLE ITEM PANEL</md-button>
-							<md-button ng-click="ViewTabCtrl.addItem()" class="md-raised md-primary">ADD RANDOM ITEM</md-button>
+							<md-button ng-click="AppCtrl.togglePanel()" class="md-raised md-primary">TOGGLE ITEM PANEL</md-button>
+							<md-button ng-click="AppCtrl.addItem()" class="md-raised md-primary">ADD RANDOM ITEM</md-button>
 						</section>
 					</md-toolbar>
-						<dd-grid grid-id="gridname" on-add-item="ViewTabCtrl.addItem" >
-							<dd-item dd-config="item" class="{{item.class}}" ng-repeat="item in ViewTabCtrl.items track by $index">
+						<dd-grid grid-id="gridname" on-add-item="AppCtrl.addItem" >
+							<dd-item dd-config="item" class="{{item.class}}" ng-repeat="item in AppCtrl.items track by $index">
 								<input min=0 type="number" ng-model="ddItem.$row">
 								<input min=0 type="number" ng-model="ddItem.$col">
 								<input min=1 type="number" ng-model="ddItem.$width">
@@ -107,11 +105,14 @@
 			<script src="../lib/dashydash/constants/itemConfig.js"></script>
 			<script src="../lib/dashydash/constants/domGridItem.js"></script>
 			<script src="../lib/dashydash/services/nodeBuilder.js"></script>
+			<script src="../lib/dashydash/services/rule.js"></script>
 			<script src="../lib/dashydash/services/grid.js"></script>
+			<script src="../lib/dashydash/factories/stylesheet.js"></script>
 			<script src="../lib/dashydash/providers/item.js"></script>
 			<script src="../lib/dashydash/providers/grid.js"></script>
 			<script src="../lib/dashydash/providers/placeholder.js"></script>
 			<script src="../lib/dashydash/providers/gridItem.js"></script>
+			<script src="../lib/dashydash/providers/stylesheet.js"></script>
 			<script src="../lib/dashydash/controllers/grid.js"></script>
 			<script src="../lib/dashydash/controllers/gridItem.js"></script>
 			<script src="../lib/dashydash/controllers/placeholder.js"></script>
@@ -128,9 +129,7 @@
 			<!-- features -->
 			<script src="modules/app/core.js"></script>
 			<script src="modules/app/controllers/app.js"></script>
-			<script src="modules/app/controllers/viewTab.js"></script>
 			<script src="modules/app/controllers/panel.js"></script>
-			<script src="modules/app/configs/app.js"></script>
 			<!-- features -->
 		<!-- scripts -->
 	
