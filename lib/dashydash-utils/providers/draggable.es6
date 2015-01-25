@@ -61,8 +61,8 @@ angular.module('Dashydash-utils')
 						this._updateMousePosition(event);
 						this._updateLastMousePosition();
 						this._updatePosition();
-						this._attachElementToContainer();
 						this._updateSize();
+						this._attachElementToContainer();
 						this._updateElementStyle();
 
 						if(this.fixed)
@@ -162,8 +162,8 @@ angular.module('Dashydash-utils')
 					this.parentNode.appendChild(this.target[0]);
 					this.parentNode = undefined;
 				}
-
 				_updateSize() {
+
 					this.size.width = this.targetSizeW;
 					this.size.height = this.targetSizeH;
 				}
@@ -305,10 +305,15 @@ angular.module('Dashydash-utils')
 				}
 
 				_updateElementStyle() {
-					this.target.css({
-						'top': this._getPosYByContainer() + /*fix position on scroll*/this.container[0].scrollTop + 'px',
-						'left': this._getPosXByContainer() + /*fix position on scroll*/this.container[0].scrollLeft + 'px' 
-					});
+					var css = {
+						'top': `${this._getPosYByContainer()+this.container[0].scrollTop}px`/*fix position on scroll*/,
+						'left': `${this._getPosXByContainer()+this.container[0].scrollLeft}px`/*fix position on scroll*/ 
+					}
+					if(this.size.width)
+						css.width = `${this.size.width}px`;
+					if(this.size.height)
+						css.height = `${this.size.height}px`;
+					this.target.css(css);
 				}
 
 				_isMoved(event) {
