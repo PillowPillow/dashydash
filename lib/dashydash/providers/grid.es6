@@ -5,7 +5,8 @@ angular.module('Dashydash')
 		this.$get = [
 		'Dashydash.services.grid',
 		'$document', '$rootScope', '$compile',
-			(gridService, $document, $rootScope, $compile) => {
+		'Dashydash.providers.stylesheet',
+			(gridService, $document, $rootScope, $compile, Stylesheet) => {
 
 			class Grid {
 
@@ -28,9 +29,10 @@ angular.module('Dashydash')
 
 					this._customAddItemMethod = undefined;
 					
-					this.floating = false;
+					this.floating = true;
 
 					gridService.register(this);
+					this._initStyleSheets();
 
 				}
 
@@ -73,6 +75,33 @@ angular.module('Dashydash')
 				}
 				get gridHeight() {
 					return ~~this.elementRect.height;
+				}
+
+				_destroyStyleSheets() {
+					if(this.itemPositionCSSSheet)
+						this.itemPositionCSSSheet.clearRules();
+					if(this.placeholderPositionCSSSheet)
+						this.placeholderPositionCSSSheet.clearRules();
+					if(this.itemSizeCSSSheet)
+						this.itemSizeCSSSheet.clearRules();
+					if(this.placeholderSizeCSSSheet)
+						this.placeholderSizeCSSSheet.clearRules();
+					this.itemPositionCSSSheet = null;
+					this.placeholderPositionCSSSheet = null;
+					this.itemSizeCSSSheet = null;
+					this.placeholderSizeCSSSheet = null;
+				}
+
+				_initStyleSheets() {
+					this._destroyStyleSheets();
+
+					var parent = {element: 'dd-grid', attributes: {}};
+					if(this.id !== undefined && this.id !== null)
+						parent.attributes = {'grid-id':this.id};
+					this.itemPositionCSSSheet = new Stylesheet([parent]);
+					this.placeholderPositionCSSSheet = new Stylesheet([parent]);
+					this.itemSizeCSSSheet = new Stylesheet([parent]);
+					this.placeholderSizeCSSSheet = new Stylesheet([parent]);
 				}
 
 				_collidesXaxis(x) {
@@ -282,6 +311,44 @@ angular.module('Dashydash')
 					}
 				}
 
+				getMaxRowStyle() {
+					return this.grid.length -1;
+				}
+
+				getMaxHeightSyle() {
+					var max = 0;
+					for(var y = 0; y<this.grid.length; y++)
+						if(this.grid[y])
+							for(var x = 0; x<this.grid[y].length; x++)
+								if(this.grid[y][x] && max<this.grid[y][x].size.current.h)
+									max = this.grid[y][x].size.current.h;
+
+					return max;
+				}
+
+				updateStyleHeight() {
+					var height = this.getMaxHeightSyle();
+					if(this.itemSizeCSSSheet.length <= height)
+						for(var h = this.itemSizeCSSSheet.length; h<= height+5; h++) {
+							this.placeholderSizeCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
+							this.itemSizeCSSSheet.addRule({element: 'dd-item', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
+						}
+				}
+
+				updateStyleTop() {
+					var top = this.getMaxRowStyle();
+					if(this.itemPositionCSSSheet.length <= top)
+						for(var h = this.itemPositionCSSSheet.length; h<= top+5; h++) {
+							this.placeholderPositionCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
+							this.itemPositionCSSSheet.addRule({element: 'dd-item', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
+						}
+				}
+
+				updateSylesheet() {
+					this.updateStyleHeight();
+					this.updateStyleTop();
+				}
+
 				update(item, final = false) {
 					var detached = this.detachItem(item);
 
@@ -298,6 +365,8 @@ angular.module('Dashydash')
 					this.placeholder.moveTo(item.position.current);
 
 					if(final) this._saveLocations();
+					this.updateSylesheet();
+
 				}
 
 				itemDragStart(item, ...args) {
@@ -350,7 +419,7 @@ angular.module('Dashydash')
 				moveDownArea(item, excludedItems = [], final = false) {
 					excludedItems = this._toArray(excludedItems);
 					var areaItems = this.getItemsFromArea(item.position.current, item.size.current, item);
-					// areaItems.sort((a,b) => a.position.last.y - b.position.last.y);
+
 					for(var i = 0; i<areaItems.length; i++) {
 						let nbToMove = item.position.current.y + item.size.current.h - areaItems[i].position.current.y;
 						for(var j = 0; j<nbToMove; j++) {

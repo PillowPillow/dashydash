@@ -7,12 +7,11 @@ angular.module('Dashydash')
 
 			class Stylesheet {
 
-				constructor(element, parents = []) {
+				constructor(parents = []) {
 					this.sheet = stylesheet();
 					this.parents = [];
 					this.selector = '';
 					this._initParents(parents);
-					this._initCSSSelector(element);
 				}
 
 				get length() {
@@ -27,14 +26,13 @@ angular.module('Dashydash')
 					this.parents = parents;
 				}
 
-				_initCSSSelector(element = {}) {
-					var strSelector = '';
-					for(var i = 0; i<this.parents.length; i++) {
-						let parent = this.parents[i];
-						strSelector += rule.generateCSSSelector(parent.element, parent.attributes);
-					}
+				getCSSSelector(element = {}) {
+					var elements = this.parents.concat([element]);
+					return rule.generateCSSSelector(elements);
+				}
 
-					this.selector = strSelector + rule.generateCSSSelector(element.element, element.attributes);
+				_generateRule(element, property, value) {
+					return this.getCSSSelector(element) + rule.generateCSSBody({[property]:value});
 				}
 
 				clearRules() {
@@ -46,8 +44,8 @@ angular.module('Dashydash')
 					this.removeRule(index, 1);
 				}
 
-				addRule(property, value) {
-					console.log(this.selector + rule.generateCSSBody(property, value));
+				addRule(element, property, value) {
+					this.sheet.insertRule(this._generateRule(element, property, value), this.length);
 				}
 
 			}
