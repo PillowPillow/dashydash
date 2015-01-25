@@ -74,7 +74,7 @@ dd-item {
 	z-index: 1;
 }
 
-[dd-row="0"] { top:0px; }
+/*[dd-row="0"] { top:0px; }
 [dd-row="1"] { top:50px; }
 [dd-row="2"] { top:100px; }
 [dd-row="3"] { top:150px; }
@@ -95,9 +95,9 @@ dd-item {
 [dd-row="18"] { top:900px; }
 [dd-row="19"] { top:950px; }
 [dd-row="20"] { top:1000px; }
-[dd-row="21"] { top:1050px; }
-[dd-height="1"] { height:50px; }
+[dd-row="21"] { top:1050px; }*/
+/*[dd-height="1"] { height:50px; }
 [dd-height="2"] { height:100px; }
 [dd-height="3"] { height:150px; }
 [dd-height="4"] { height:200px; }
-[dd-height="5"] { height:250px; }
+[dd-height="5"] { height:250px; }*/
