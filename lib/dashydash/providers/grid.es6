@@ -252,6 +252,44 @@ angular.module('Dashydash')
 					$compile(node)($rootScope);
 				}
 
+				_getMaxRowStyle() {
+					return this.grid.length -1;
+				}
+
+				_getMaxHeightSyle() {
+					var max = 0;
+					for(var y = 0; y<this.grid.length; y++)
+						if(this.grid[y])
+							for(var x = 0; x<this.grid[y].length; x++)
+								if(this.grid[y][x] && max<this.grid[y][x].size.current.h)
+									max = this.grid[y][x].size.current.h;
+
+					return max;
+				}
+
+				_updateStyleHeight() {
+					var height = this._getMaxHeightSyle();
+					if(this.itemSizeCSSSheet.length <= height)
+						for(var h = this.itemSizeCSSSheet.length; h<= height+5; h++) {
+							this.placeholderSizeCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
+							this.itemSizeCSSSheet.addRule({element: 'dd-item', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
+						}
+				}
+
+				_updateStyleTop() {
+					var top = this._getMaxRowStyle();
+					if(this.itemPositionCSSSheet.length <= top)
+						for(var h = this.itemPositionCSSSheet.length; h<= top+5; h++) {
+							this.placeholderPositionCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
+							this.itemPositionCSSSheet.addRule({element: 'dd-item', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
+						}
+				}
+
+				_updateSylesheet() {
+					this._updateStyleHeight();
+					this._updateStyleTop();
+				}
+
 				isOverlapped(event) {
 					return this._collidesXaxis(event.pageX) && this._collidesYaxis(event.pageY);
 				}
@@ -311,44 +349,6 @@ angular.module('Dashydash')
 					}
 				}
 
-				getMaxRowStyle() {
-					return this.grid.length -1;
-				}
-
-				getMaxHeightSyle() {
-					var max = 0;
-					for(var y = 0; y<this.grid.length; y++)
-						if(this.grid[y])
-							for(var x = 0; x<this.grid[y].length; x++)
-								if(this.grid[y][x] && max<this.grid[y][x].size.current.h)
-									max = this.grid[y][x].size.current.h;
-
-					return max;
-				}
-
-				updateStyleHeight() {
-					var height = this.getMaxHeightSyle();
-					if(this.itemSizeCSSSheet.length <= height)
-						for(var h = this.itemSizeCSSSheet.length; h<= height+5; h++) {
-							this.placeholderSizeCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
-							this.itemSizeCSSSheet.addRule({element: 'dd-item', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
-						}
-				}
-
-				updateStyleTop() {
-					var top = this.getMaxRowStyle();
-					if(this.itemPositionCSSSheet.length <= top)
-						for(var h = this.itemPositionCSSSheet.length; h<= top+5; h++) {
-							this.placeholderPositionCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
-							this.itemPositionCSSSheet.addRule({element: 'dd-item', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
-						}
-				}
-
-				updateSylesheet() {
-					this.updateStyleHeight();
-					this.updateStyleTop();
-				}
-
 				update(item, final = false) {
 					var detached = this.detachItem(item);
 
@@ -365,7 +365,7 @@ angular.module('Dashydash')
 					this.placeholder.moveTo(item.position.current);
 
 					if(final) this._saveLocations();
-					this.updateSylesheet();
+					this._updateSylesheet();
 
 				}
 
