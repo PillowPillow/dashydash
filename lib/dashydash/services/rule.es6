@@ -19,20 +19,11 @@ angular.module('Dashydash')
 
 		function generateCSSSelectorfn(items, attrprefix = true) {
 			var selectors = [];
-
-			if(items instanceof Array) {
-				for(let i = 0; i<items.length; i++)
-					if(!(items[i] instanceof Object))
-						items[i] = {element: items[i]};
-			}
-			else
-				if(typeof items === 'string')
-					items = [{element: items}];
+			formatElements(items);
 			for(var i = 0; i<items.length; i++) {
 				let selector = items[i].element,
 					attributes = generateCSSSelectorAttributes(items[i].attributes, attrprefix),
 					versions = [];
-
 
 				if(attributes.length > 0) {
 					for(let j = 0; j<attributes.length; j++) {
@@ -47,6 +38,16 @@ angular.module('Dashydash')
 				selectors.push(versions);
 			}
 			return `${buildSelectorAsString(selectors).join(',')}`;
+		}
+
+		function formatElements(elements) {
+			if(elements instanceof Array) {
+				for(let i = 0; i<elements.length; i++)
+					if(!(elements[i] instanceof Object))
+						elements[i] = {element: elements[i]};
+			}
+			else if(typeof elements === 'string')
+				elements = [{element: elements}];
 		}
 
 		function buildSelectorAsString(selectors = []) {
