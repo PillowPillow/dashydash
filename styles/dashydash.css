@@ -1,7 +1,7 @@
 [dd-grid], dd-grid {
 	display: block;
 	width: 100%;
-	height: 300px;
+	min-height: 300px;
 	position: relative;
 }
 

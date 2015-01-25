@@ -267,8 +267,7 @@ angular.module('Dashydash')
 					return max;
 				}
 
-				_updateStyleHeight() {
-					var height = this._getMaxHeightSyle();
+				_updateStyleHeight(height) {
 					if(this.itemSizeCSSSheet.length <= height)
 						for(var h = this.itemSizeCSSSheet.length; h<= height+5; h++) {
 							this.placeholderSizeCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-height': h}}, 'height',`${(h) * this.itemHeight}px`);
@@ -276,8 +275,7 @@ angular.module('Dashydash')
 						}
 				}
 
-				_updateStyleTop() {
-					var top = this._getMaxRowStyle();
+				_updateStyleTop(top) {
 					if(this.itemPositionCSSSheet.length <= top)
 						for(var h = this.itemPositionCSSSheet.length; h<= top+5; h++) {
 							this.placeholderPositionCSSSheet.addRule({element: 'dd-placeholder', attributes: {'dd-row': h}}, 'top',`${(h) * this.itemHeight}px`);
@@ -285,9 +283,18 @@ angular.module('Dashydash')
 						}
 				}
 
+				_updateGridMinHeight(top, height) {
+					this.element.css({
+						'min-height': `${(top + height)*this.itemHeight}px`
+					});
+				}
+
 				_updateSylesheet() {
-					this._updateStyleHeight();
-					this._updateStyleTop();
+					var height = this._getMaxHeightSyle(),
+						top = this._getMaxRowStyle();
+					this._updateStyleHeight(height);
+					this._updateStyleTop(top);
+					this._updateGridMinHeight(top, height)
 				}
 
 				isOverlapped(event) {
