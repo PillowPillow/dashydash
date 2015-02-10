@@ -4,8 +4,8 @@ Angular dashboard library
 ### TODO
 --------------------
 
-Add widget resize behaviour
-Add mobile touch-events
+Add widget resize behaviour  
+Add mobile touch-events  
 
 ### Modify and build
 --------------------
